@@ -12,7 +12,7 @@
         "-g",
         "${fileDirname}/${fileBasenameNoExtension}.cpp",
         "-o",
-        "${fileDirname}/${fileBasenameNoExtension}"
+        "${workspaceFolder}/bin/${fileBasenameNoExtension}"
       ],
       "group": {
         "kind": "build",
