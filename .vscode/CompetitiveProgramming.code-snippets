@@ -20,7 +20,14 @@
 				"#include <type_traits>",
 				"#include <vector>",
 				"",
-				"using namespace std;"
+				"using namespace std;",
+				"",
+				"static auto io = [](){",
+				"    ios_base::sync_with_stdio(false);",
+				"    cin.tie(nullptr);",
+				"    return nullptr;",
+				"}();",
+				""
 			],
 		"description": "header"
 	},
