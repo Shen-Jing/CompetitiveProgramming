@@ -30,18 +30,6 @@ static auto io = [](){
 
 enum Edge { neighbor = 0, weight = 1 };
 
-int get_weight(const vector<vector<pair<int, int>>> &adj_list, const int &from, const int &to)
-{
-    for (int e = 0; e < adj_list[from].size(); ++e)
-    {
-        int neighbor = get<Edge::neighbor>(adj_list[from][e]);
-        if (to == neighbor)
-          return get<Edge::weight>(adj_list[from][e]);
-    }
-    /* not found */
-    return -1;
-}
-
 int main(void)
 {
     int NI;
@@ -72,7 +60,7 @@ int main(void)
         cin >> src >> dst;
         
         /* source vertex → all destination */
-        auto shortest_distance = vector<int>(NI, numeric_limits<int>::max());
+        auto shortest_distance = vector<int>(NI, numeric_limits<int>::max() / 2);
         auto path_from = vector<int>(NI, -1);
         shortest_distance[src - 1] = 0;
         for (int e = 0; e < adj_list[src - 1].size(); ++e)
@@ -86,17 +74,15 @@ int main(void)
         for (int v = 0; v < NI; ++v)
         {
             /* relax the shortest distance of all vertex (destination) */
-            if (src - 1 == v)
-                continue;
-            for (int t = 0; t < NI; ++t)
+            for (int e = 0; e < adj_list[v].size(); ++e)
             {
-                int weight = get_weight(adj_list, v, t);
-                if (weight != -1)
-                    if (shortest_distance[t] > shortest_distance[v] + weight)
-                    {
-                        shortest_distance[t] = shortest_distance[v] + weight;
-                        path_from[t] = v;
-                    }
+                int neighbor = get<Edge::neighbor>(adj_list[v][e]);
+                int weight = get<Edge::weight>(adj_list[v][e]);
+                if (shortest_distance[neighbor] > shortest_distance[v] + weight)
+                {
+                    shortest_distance[neighbor] = shortest_distance[v] + weight;
+                    path_from[neighbor] = v;
+                }
             }
         }
 
