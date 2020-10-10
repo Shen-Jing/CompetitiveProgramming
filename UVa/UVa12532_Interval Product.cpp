@@ -38,7 +38,7 @@ class SegmentTree
       int nodes = pow(2, ceil(log2(n)) + 1) - 1;
       range_.assign(nodes, {0, 0});
       seg_tree_.assign(nodes, 0);
-      build(0, n - 1, 0);
+      build(pair<int, int>(0, n - 1), 0);
   }
 
  private:
@@ -56,17 +56,18 @@ class SegmentTree
       return 0;
   }
   
-  void build(int L, int R, int idx)
+  void build(const pair<int, int> &range_pair, int idx)
   {
-      range_[idx] = pair<int, int>(L, R);
+      range_[idx] = range_pair;
+      const int &L = range_pair.first, &R = range_pair.second;
       if (L == R)
       {
           seg_tree_[idx] = operation(data_[L]);
           return;
       }
 
-      build(L              , (L + R) / 2, 2 * idx + 1);
-      build((L + R) / 2 + 1, R          , 2 * idx + 2);
+      build(pair<int, int>(L, (L + R) / 2)    , 2 * idx + 1);
+      build(pair<int, int>((L + R) / 2 + 1, R), 2 * idx + 2);
       seg_tree_[idx] = operation(seg_tree_[2 * idx + 1], seg_tree_[2 * idx + 2]);
   }
 };
