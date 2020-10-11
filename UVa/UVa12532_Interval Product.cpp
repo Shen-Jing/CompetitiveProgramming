@@ -41,6 +41,19 @@ class SegmentTree
       build(pair<int, int>(0, n - 1), 0);
   }
 
+  int query(const pair<int, int> &query_pair, const pair<int, int> &range_pair, const int &idx)
+  {
+      const auto &L = range_[idx].first, &R = range_[idx].second;
+      const auto &q_l = query_pair.first, &q_r = query_pair.second;
+      if (R < q_l || q_r < L)
+          return 1;
+      if (range_[idx] == query_pair || L == R)
+          return seg_tree_[idx];
+
+      return operation(query(query_pair, pair<int, int>(L              , (L + R) / 2), idx * 2 + 1), 
+                       query(query_pair, pair<int, int>((L + R) / 2 + 1, R)          , idx * 2 + 2));
+  }
+
  private:
   vector<int> data_;
   vector<int> seg_tree_;
@@ -102,8 +115,16 @@ int main(void)
             else if (action == 'P')
             {
                 cin >> j;
+                int result = st.query(pair<int, int>(i - 1, j - 1), pair<int, int>(0, N - 1), 0);
+                if (result < 0)
+                    cout << "-";
+                else if (result > 0)
+                    cout << "+";
+                else
+                    cout << "0";
             }
         }
+        cout << "\n";
     }
 
     return 0;
