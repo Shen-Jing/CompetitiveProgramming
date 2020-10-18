@@ -54,6 +54,26 @@ class SegmentTree
                        query(query_pair, pair<int, int>((L + R) / 2 + 1, R)          , idx * 2 + 2));
   }
 
+  inline void set_data(const int &idx, const int &val) { data_[idx] = val; }
+
+  void update(const pair<int, int> &range_pair, const int &cur_idx, const int &targ_idx, const int &val)
+  {
+      const auto &L = range_[cur_idx].first, &R = range_[cur_idx].second;
+      if (L == R)
+      {
+          data_[L] = val;
+          seg_tree_[cur_idx] = operation(data_[L]);
+          return;
+      }
+      
+      const auto &mid = (L + R) / 2;
+      if (targ_idx <= mid)
+          update(pair<int, int>(L, (L + R) / 2)    , 2 * cur_idx + 1, targ_idx, val);
+      else
+          update(pair<int, int>((L + R) / 2 + 1, R), 2 * cur_idx + 2, targ_idx, val);
+      seg_tree_[cur_idx] = operation(seg_tree_[cur_idx * 2 + 1], seg_tree_[cur_idx * 2 + 2]);
+  }
+
  private:
   vector<int> data_;
   vector<int> seg_tree_;
@@ -111,6 +131,7 @@ int main(void)
             if (action == 'C')
             {
                 cin >> val;
+                st.update(pair<int, int>(0, N - 1), 0, i - 1, val);
             }
             else if (action == 'P')
             {
