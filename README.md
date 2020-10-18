@@ -18,32 +18,32 @@ I am just a little enthusiastic about this, and practicing programming for mysel
 
 # Topics
 
+Some of these may have modern C++ version.  
+Or using library of existing projects. (e.g., [Boost](https://www.boost.org/))
+
 ## Segment Tree
 
 - UVa 12532 - Interval Product
 
 ## Graph
 
-### DFS
+### Depth-First Search (DFS)
 
 - UVa 572 - Oil Deposits
     - Flood Fill
-- [ ] UVa 988 - Many Paths, One Destination
 
 ### Single-Source Shortest Path
 
 - UVa 341 - Non-Stop Travel
     - ➕ Boost Graph Library (BGL)
 
-### DAG
+### Directed Acyclic Graph (DAG)
 
 - [ ] UVa 825 - Walking on the Safe Side
 
 ### Topological Sort
 
 - [ ] UVa 10305 - Ordering Tasks
-- [ ] UVa 124 - Following Orders
-- [ ] UVa 200 - Rare Order
 
 ## Tree
 
@@ -55,40 +55,17 @@ I am just a little enthusiastic about this, and practicing programming for mysel
 
 - UVa 514 - Rails
 
-## Large Number
-
-- [ ] 10106 - Product
-
 ## Dynamic Programming
 
-- [ ] UVa 111 - History Grading
-- [ ] UVa 10261 - Ferry Loading
-- [ ] UVa 10534 - Wavio Sequence
-- [ ] UVa 10819 - Trouble of 13-Dots
-- [ ] UVa 10304 - Optimal Binary Search Tree
-- [ ] UVa 216 - Getting in Line
-- [ ] UVa 108 - Maximum Sum
+### 0-1 backpack
+
+- UVa 624 - CD
 - [ ] UVa 10130 - SuperSale
-
-level 2
-
-- [ ] UVa 10069 - Distinct Subsequences
-- [ ] UVa 10911 - Forming Quiz Teams
 
 ### Palindrome
 
 - LeetCode 5. Longest Palindromic Substring
 - UVa 11584 - Partitioning by Palindromes
-
-### More Challenging State-Space Search with BFS or Dijkstra's
-
-- [ ] UVa 1251 - Repeated Substitution with Sed
-
-### String
-
-- [ ] UVa 455 - Periodic Strings
-- [ ] UVa 912 - Live From Mars
-- [ ] UVa 10298 - Power Strings
 
 ### Suffix Trie, Tree, Array
 
@@ -100,11 +77,6 @@ level 2
 - [ ] UVa 10181 - 15-Puzzle Problem
 - [ ] UVa 11212 - Editing a Book
 
-### 0-1 backpack
+## Large Number
 
-- UVa 624 - CD
-- [ ] LeetCode 108. Convert Sorted Array to Binary Search Tree
-- [ ] LeetCode 1277. Count Square Submatrices with All Ones
-- [ ] LeetCode 338. Counting Bits
-- [ ] LeetCode 334. Increasing Triplet Subsequence
-- [ ] LeetCode 376. Wiggle Subsequence
+- [ ] 10106 - Product
