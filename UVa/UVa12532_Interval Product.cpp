@@ -33,30 +33,33 @@ class SegmentTree
  public:
   SegmentTree(vector<int> &data)
   {
+      int n = data.size();
       data_ = move(data);
-      int n = data_.size();
+    //   data_ = data;
+
       int nodes = pow(2, ceil(log2(n)) + 1) - 1;
-      range_.assign(nodes, {0, 0});
       seg_tree_.assign(nodes, 0);
-      build(pair<int, int>(0, n - 1), 0);
+      build(0, 0, n - 1);
   }
 
-  int query(const pair<int, int> &query_pair, const pair<int, int> &range_pair, const int &idx)
+  int query(const int &idx, const pair<int, int> &query_pair, const pair<int, int> &range_pair)
   {
-      const auto &L = range_[idx].first, &R = range_[idx].second;
+      const auto &L = range_pair.first, &R = range_pair.second;
       const auto &q_l = query_pair.first, &q_r = query_pair.second;
       if (R < q_l || q_r < L)
           return 1;
-      if (range_[idx] == query_pair || L == R)
+      if (range_pair == query_pair || L == R)
           return seg_tree_[idx];
 
-      return operation(query(query_pair, pair<int, int>(L              , (L + R) / 2), idx * 2 + 1), 
-                       query(query_pair, pair<int, int>((L + R) / 2 + 1, R)          , idx * 2 + 2));
+      return operation(
+                       query(idx * 2 + 1, query_pair, pair<int, int>(L              , (L + R) / 2)), 
+                       query(idx * 2 + 2, query_pair, pair<int, int>((L + R) / 2 + 1, R))
+                      );
   }
 
-  void update(const pair<int, int> &range_pair, const int &cur_idx, const int &targ_idx, const int &val)
+  void update(const int &cur_idx, const pair<int, int> &range_pair, const int &targ_idx, const int &val)
   {
-      const auto &L = range_[cur_idx].first, &R = range_[cur_idx].second;
+      const auto &L = range_pair.first, &R = range_pair.second;
       if (L == R)
       {
           data_[L] = val;
@@ -64,18 +67,17 @@ class SegmentTree
           return;
       }
       
-      const auto &mid = (L + R) / 2;
+      const auto &&mid = (L + R) / 2;
       if (targ_idx <= mid)
-          update(pair<int, int>(L, (L + R) / 2)    , 2 * cur_idx + 1, targ_idx, val);
+          update(2 * cur_idx + 1, pair<int, int>(L, (L + R) / 2)    , targ_idx, val);
       else
-          update(pair<int, int>((L + R) / 2 + 1, R), 2 * cur_idx + 2, targ_idx, val);
+          update(2 * cur_idx + 2, pair<int, int>((L + R) / 2 + 1, R), targ_idx, val);
       seg_tree_[cur_idx] = operation(seg_tree_[cur_idx * 2 + 1], seg_tree_[cur_idx * 2 + 2]);
   }
 
  private:
   vector<int> data_;
   vector<int> seg_tree_;
-  vector<pair<int, int>> range_;  // left & right index
 
   int operation(int lhs, int rhs = 1)
   {
@@ -87,18 +89,16 @@ class SegmentTree
       return 0;
   }
   
-  void build(const pair<int, int> &range_pair, int idx)
+  void build(const int &idx, const int &L, const int &R)
   {
-      range_[idx] = range_pair;
-      const int &L = range_pair.first, &R = range_pair.second;
       if (L == R)
       {
           seg_tree_[idx] = operation(data_[L]);
           return;
       }
 
-      build(pair<int, int>(L, (L + R) / 2)    , 2 * idx + 1);
-      build(pair<int, int>((L + R) / 2 + 1, R), 2 * idx + 2);
+      build(2 * idx + 1, L              , (L + R) / 2);
+      build(2 * idx + 2, (L + R) / 2 + 1, R);
       seg_tree_[idx] = operation(seg_tree_[2 * idx + 1], seg_tree_[2 * idx + 2]);
   }
 };
@@ -129,12 +129,12 @@ int main(void)
             if (action == 'C')
             {
                 cin >> val;
-                st.update(pair<int, int>(0, N - 1), 0, i - 1, val);
+                st.update(i - 1, pair<int, int>(0, N - 1), 0, val);
             }
             else if (action == 'P')
             {
                 cin >> j;
-                int result = st.query(pair<int, int>(i - 1, j - 1), pair<int, int>(0, N - 1), 0);
+                int result = st.query(0, pair<int, int>(i - 1, j - 1), pair<int, int>(0, N - 1));
                 if (result < 0)
                     cout << "-";
                 else if (result > 0)
