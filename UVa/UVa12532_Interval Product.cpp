@@ -31,10 +31,10 @@ static auto io = [](){
 class SegmentTree
 {
  public:
-  SegmentTree(const vector<int> &data)
+  SegmentTree(vector<int> &data)
   {
-      data_ = data;
-      int n = data.size();
+      data_ = move(data);
+      int n = data_.size();
       int nodes = pow(2, ceil(log2(n)) + 1) - 1;
       range_.assign(nodes, {0, 0});
       seg_tree_.assign(nodes, 0);
@@ -53,8 +53,6 @@ class SegmentTree
       return operation(query(query_pair, pair<int, int>(L              , (L + R) / 2), idx * 2 + 1), 
                        query(query_pair, pair<int, int>((L + R) / 2 + 1, R)          , idx * 2 + 2));
   }
-
-  inline void set_data(const int &idx, const int &val) { data_[idx] = val; }
 
   void update(const pair<int, int> &range_pair, const int &cur_idx, const int &targ_idx, const int &val)
   {
