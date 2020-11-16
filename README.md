@@ -77,6 +77,12 @@ Or using library of existing projects. (e.g., [Boost](https://www.boost.org/))
 - [ ] UVa 10181 - 15-Puzzle Problem
 - [ ] UVa 11212 - Editing a Book
 
+## String
+
+### Knuth-Morris-Pratt’s (KMP) Algorithm
+
+- UVa 11475 - Extend to Palindrome
+
 ## Large Number
 
 - [ ] 10106 - Product
