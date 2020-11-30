@@ -28,20 +28,27 @@ static auto io = [](){
     return nullptr;
 }();
 
-int t;
+enum class VertexStatus
+{
+  kNotVisited = -1,
+  kVisiting = 0,
+  kVisited = 1,
+};
+
 vector<int> tasks;
-vector<bool> visited;
+vector<VertexStatus> all_vertex_status;
 
 void topological_sort(const vector<vector<pair<int, int>>> &edge_lists, int vertex)
 {
-    visited[vertex] = true;
-    tasks.emplace_back(vertex);
+    all_vertex_status[vertex] = VertexStatus::kVisiting;
     for (const auto e : edge_lists[vertex])
     {
         const auto &dst = e.first;
-        if (!visited[dst])
+        if (all_vertex_status[dst] == VertexStatus::kNotVisited)
             topological_sort(edge_lists, dst);
     }
+    all_vertex_status[vertex] = VertexStatus::kVisited;
+    tasks.emplace_back(vertex);
 }
 
 int main(void)
@@ -55,10 +62,9 @@ int main(void)
             break;
 
         /* Initialization */
-        t = 0;
         tasks.clear();
-        visited.clear();
-        visited.assign(num_tasks, false);
+        all_vertex_status.clear();
+        all_vertex_status.assign(num_tasks, VertexStatus::kNotVisited);
         
         /* Data */
         auto edge_lists = vector<vector<pair<int, int>>>(num_tasks, vector<pair<int, int>>());
@@ -70,11 +76,15 @@ int main(void)
         }
 
         for (int src = 0; src < num_tasks; ++src)
-            if (!visited[src])
+            if (all_vertex_status[src] == VertexStatus::kNotVisited)
                 topological_sort(edge_lists, src);
 
-        for (auto t : tasks)
-            cout << (t + 1) << " ";
+        for (auto it = tasks.crbegin(); it != tasks.crend(); ++it)
+        {
+            cout << (*it + 1);
+            if (it != tasks.crend() - 1)
+                cout << " ";
+        }
         cout << "\n";
     }
 
