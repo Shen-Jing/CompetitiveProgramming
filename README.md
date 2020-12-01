@@ -18,6 +18,9 @@ I am just a little enthusiastic about this, and practicing programming for mysel
 
 # Topics
 
+- [LeetCode progress](https://drive.google.com/file/d/1w5vzv4ew7_dGa8UG3B6aOZrAjVKkhSrb/view?usp=sharing)
+- [Problem list]()
+
 Some of these may have modern C++ version.  
 Or using library of existing projects. (e.g., [Boost](https://www.boost.org/))
 
@@ -43,7 +46,7 @@ Or using library of existing projects. (e.g., [Boost](https://www.boost.org/))
 
 ### Topological Sort
 
-- [ ] UVa 10305 - Ordering Tasks
+- UVa 10305 - Ordering Tasks
 
 ## Tree
 
@@ -67,17 +70,24 @@ Or using library of existing projects. (e.g., [Boost](https://www.boost.org/))
 - LeetCode 5. Longest Palindromic Substring
 - UVa 11584 - Partitioning by Palindromes
 
-### Suffix Trie, Tree, Array
-
-- [ ] UVa 11107 - Life Forms
-- [ ] UVa 11512 - GATTACA
-
 ### Meet in the Middle/A*/IDA*
 
 - [ ] UVa 10181 - 15-Puzzle Problem
 - [ ] UVa 11212 - Editing a Book
 
 ## String
+
+### Suffix Trie
+
+- [ ] [UVa 11732 - "strcmp()" Anyone?](https://onlinejudge.org/index.php?option=onlinejudge&Itemid=8&page=show_problem&problem=2832)
+
+### Suffix Tree, Array
+
+- [ ] UVa 11107 - Life Forms
+
+### Aho-Corasick
+
+- [ ] [UVa 11468 - Substring](https://onlinejudge.org/index.php?option=onlinejudge&Itemid=8&page=show_problem&problem=2832)
 
 ### Knuth-Morris-Pratt’s (KMP) Algorithm
 
