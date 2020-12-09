@@ -20,16 +20,28 @@
 
 - [ ] UVa 341 - Non-Stop Travel
     - ➕ Boost Graph Library (BGL)
-
+    - Dijsktra
+- [ ] UVa 558 - Wormholes
+    - Bellman-Ford
+    
 ### Directed Acyclic Graph (DAG)
 
 - [ ] UVa 825 - Walking on the Safe Side
 
 ### Topological Sort
 
-- [ ] UVa 10305 - Ordering Tasks
+- [x] UVa 10305 - Ordering Tasks
 - [ ] UVa 124 - Following Orders
 - [ ] UVa 200 - Rare Order
+
+### Euler Cycle
+
+- [ ] UVa 10129
+
+### Minimum Spanning Tree
+
+- [ ] [UVa 908 - Re-connecting Computer Sites](https://onlinejudge.org/index.php?option=onlinejudge&Itemid=8&page=show_problem&problem=849)
+    - Kruskal's Algorithm
 
 ## Tree
 
@@ -51,6 +63,7 @@
 - [ ] UVa 216 - Getting in Line
 - [ ] UVa 108 - Maximum Sum
 - [ ] UVa 10130 - SuperSale
+- [ ] [UVa 10003 - Cutting Sticks](https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=944)
 
 level 2
 
@@ -97,6 +110,7 @@ level 2
 ### 0-1 backpack
 
 - [x] UVa 624 - CD
+- [ ] [UVa 10003 - Cutting Sticks](https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=944)
 - [ ] UVa 10130 - SuperSale
 - [ ] LeetCode 108. Convert Sorted Array to Binary Search Tree
 - [ ] LeetCode 1277. Count Square Submatrices with All Ones
