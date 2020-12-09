@@ -39,7 +39,11 @@ Or using library of existing projects. (e.g., [Boost](https://www.boost.org/))
 
 - UVa 341 - Non-Stop Travel
     - ➕ Boost Graph Library (BGL)
-
+    - Dijsktra
+        - priority queue
+- [ ] UVa 558 - Wormholes
+    - Bellman-Ford
+    
 ### Directed Acyclic Graph (DAG)
 
 - [ ] UVa 825 - Walking on the Safe Side
@@ -47,6 +51,12 @@ Or using library of existing projects. (e.g., [Boost](https://www.boost.org/))
 ### Topological Sort
 
 - UVa 10305 - Ordering Tasks
+    - [ ] detect cycle
+
+### Minimum Spanning Tree
+
+- [ ] [UVa 908 - Re-connecting Computer Sites](https://onlinejudge.org/index.php?option=onlinejudge&Itemid=8&page=show_problem&problem=849)
+    - Kruskal's Algorithm
 
 ## Tree
 
