@@ -30,9 +30,27 @@ static auto io = [](){
 
 enum Edge { neighbor = 0, weight = 1 };
 
+struct MinHeapNode
+{
+    int dst;
+    int dist;  // shortest distance, not edge weight
+
+    MinHeapNode(const int &dst, const int &dist) : dst(dst), dist(dist) { }
+    bool operator < (const MinHeapNode &rhs) const
+    {
+        return this->dist > rhs.dist;
+    }
+};
+
+/* fastest */
+void set_Dijsktra_queue()
+{
+
+}
+
 int main(void)
 {
-    int NI;
+    int NI;  // the number of intersections
 
     for (int kase = 1; ; ++kase)
     {
@@ -58,38 +76,44 @@ int main(void)
         int src, dst;
         
         cin >> src >> dst;
+        --src, --dst;
         
         /* source vertex → all destination */
         auto shortest_distance = vector<int>(NI, numeric_limits<int>::max() / 2);
         auto path_from = vector<int>(NI, -1);
-        shortest_distance[src - 1] = 0;
-        for (int e = 0; e < adj_list[src - 1].size(); ++e)
-        {
-            int neighbor = get<Edge::neighbor>(adj_list[src - 1][e]);
-            shortest_distance[neighbor] = get<Edge::weight>(adj_list[src - 1][e]);
-            path_from[neighbor] = src - 1;
-        }
 
-        /* can reach new vertex */
-        for (int v = 0; v < NI; ++v)
+        shortest_distance[src] = 0;
+        priority_queue<MinHeapNode> shortest_queue;
+        shortest_queue.push((MinHeapNode){src, 0});
+
+        while (!shortest_queue.empty())
         {
-            /* relax the shortest distance of all vertex (destination) */
-            for (int e = 0; e < adj_list[v].size(); ++e)
+            auto cur_vertex = shortest_queue.top();
+            shortest_queue.pop();
+            
+            /* if done[cur_vertex] (have updated/relaxed to shortest distance) */
+            if (cur_vertex.dist != shortest_distance[cur_vertex.dst])
+                continue;
+            // done[cur_vertex.dst] = true;
+
+            for (int e = 0; e < adj_list[cur_vertex.dst].size(); ++e)
             {
-                int neighbor = get<Edge::neighbor>(adj_list[v][e]);
-                int weight = get<Edge::weight>(adj_list[v][e]);
-                if (shortest_distance[neighbor] > shortest_distance[v] + weight)
+                int neighbor = get<Edge::neighbor>(adj_list[cur_vertex.dst][e]);
+                int weight = get<Edge::weight>(adj_list[cur_vertex.dst][e]);
+
+                if (shortest_distance[neighbor] > shortest_distance[cur_vertex.dst] + weight)
                 {
-                    shortest_distance[neighbor] = shortest_distance[v] + weight;
-                    path_from[neighbor] = v;
+                    shortest_distance[neighbor] = shortest_distance[cur_vertex.dst] + weight;
+                    path_from[neighbor] = cur_vertex.dst;
+                    shortest_queue.push((MinHeapNode){neighbor, shortest_distance[neighbor]});  // update priority
                 }
             }
         }
 
         cout << "Case " << kase << ": Path = " << src << " ";
         auto ans = stack<int>();
-        int next = dst - 1;
-        while (path_from[next] != src - 1)
+        int next = dst;
+        while (path_from[next] != src)
         {
             ans.push(path_from[next] + 1);
             next = path_from[next];
@@ -100,7 +124,7 @@ int main(void)
             ans.pop();
         }
         cout << dst << "; ";
-        cout << shortest_distance[dst - 1] << " second delay\n";
+        cout << shortest_distance[dst] << " second delay\n";
     }
 
     return 0;
