@@ -7,7 +7,39 @@
       "command": "g++-10",
       "args": [
         "-std=c++20",
-        "-Og",
+        "-O2",
+        "-pthread",
+        "-g",
+        "${fileDirname}/${fileBasenameNoExtension}.cpp",
+        "-o",
+        "${workspaceFolder}/bin/${fileBasenameNoExtension}"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": {
+        "owner": "cpp",
+        "fileLocation": [
+          "relative",
+          "${workspaceRoot}"
+        ],
+        "pattern": {
+          "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+          "file": 1,
+          "line": 2,
+          "column": 3,
+          "severity": 4,
+          "message": 5
+        }
+      }
+    },
+    {
+      "label": "Compile Simple Cpp For Debugging (Ubuntu 20.04)",
+      "type": "shell",
+      "command": "g++-10",
+      "args": [
+        "-std=c++20",
         "-pthread",
         "-g",
         "${fileDirname}/${fileBasenameNoExtension}.cpp",

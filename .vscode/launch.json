@@ -9,14 +9,14 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/bin/${fileBasenameNoExtension}",
-            "args": ["<", "${fileDirname}/${fileBasenameNoExtension}.in"],
+            "args": ["<", "${workspaceFolder}/Input and Accepted Answer/${fileBasenameNoExtension}.in"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
             "miDebuggerPath": "/usr/bin/gdb",
-            "preLaunchTask": "Compile Simple Cpp (Ubuntu 20.04)",
+            "preLaunchTask": "Compile Simple Cpp For Debugging (Ubuntu 20.04)",
             "setupCommands": [
                 {
                     "description": "Enable pretty-printing for gdb",
@@ -26,7 +26,7 @@
             ]
         },
         {
-            "name": "(gdb) Simple debug",
+            "name": "(gdb) Simple debug with no input",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/bin/${fileBasenameNoExtension}",
@@ -36,7 +36,7 @@
             "externalConsole": false,
             "MIMode": "gdb",
             "miDebuggerPath": "/usr/bin/gdb",
-            "preLaunchTask": "Compile Simple Cpp (Ubuntu 20.04)",
+            "preLaunchTask": "Compile Simple Cpp For Debugging (Ubuntu 20.04)",
             "setupCommands": [
                 {
                     "description": "Enable pretty-printing for gdb",
