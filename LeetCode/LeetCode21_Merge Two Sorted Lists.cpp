@@ -65,6 +65,23 @@ class Solution
 
         return dummy->next;
     }
+
+    ListNode* mergeTwoLists_recursive(ListNode* l1, ListNode* l2)
+    {
+        if (!l1)
+            return l2;
+        if (!l2)
+            return l1;
+        if (l1->val <= l2->val)
+        {
+            auto new_l1 = l1->next;
+            l1->next = l2;
+            return mergeTwoLists(new_l1, l2);
+        }
+        auto new_l1 = l1->next;
+        l1->next = l2;
+        return mergeTwoLists(new_l1, l2);
+    }
 };
 
 int main(void)
