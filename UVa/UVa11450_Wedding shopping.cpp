@@ -28,17 +28,34 @@ static auto io = [](){
     return nullptr;
 }();
 
+int budget, num_garment, num_model;
+auto garment_price = vector<vector<int>>();
+auto dp = vector<vector<bool>>();
+
+void shop(int cur_garment, int cur_budget)
+{
+    if (cur_garment > num_garment)
+        return;
+    for (const auto &price : garment_price[cur_garment])
+    {
+        if (dp[cur_garment - 1][cur_budget] && cur_budget > price)
+        {
+            dp[cur_garment][cur_budget - price] = true;
+            shop(cur_garment + 1, cur_budget - price);
+        }
+    }
+
+}
+
 int main(void)
 {
-    int kase, budget, num_garment, num_model;
+    int kase;
     cin >> kase;
     for (int k = 0; k < kase; ++k)
     {
         cin >> budget >> num_garment;
 
-        auto garment_price = vector<vector<int>>(num_garment + 1, vector<int>());
-        auto dp = vector<vector<int>>(num_garment + 1, vector<int>(budget + 1, 0));
-
+        garment_price.assign(num_garment + 1, vector<int>());
         for (int g = 1; g <= num_garment; ++g)
         {
             cin >> num_model;
@@ -51,22 +68,24 @@ int main(void)
             }
         }
 
-        for (int g_idx = 1; g_idx <= num_garment; ++g_idx)
+        /* Initialization */
+        dp.assign(num_garment + 1, vector<bool>(budget + 1, false));
+        fill(dp[0].begin(), dp[0].end(), true);
+
+        /* Compute & Output */
+        shop(1, budget);
+        auto remaining = 0;
+        for ( ; remaining <= budget; ++remaining)
         {
-            for (int cur_budget = 1; cur_budget <= budget; ++cur_budget)
+            if (dp[num_garment][remaining])
             {
-                for (int m = 0; m < garment_price[g_idx].size(); ++m)
-                {
-                    if (garment_price[g_idx][m] > cur_budget)
-                        continue;
-                    if (dp[g_idx][cur_budget] < dp[g_idx - 1][cur_budget - garment_price[g_idx][m]] + garment_price[g_idx][m])
-                        dp[g_idx][cur_budget] = dp[g_idx - 1][cur_budget - garment_price[g_idx][m]] + garment_price[g_idx][m];
-                }
+                cout << budget - remaining << "\n";
+                break;
             }
         }
-
+        if (remaining > budget)
+            cout << "no solution\n";
         // traceback(dp, garment_price);
-        cout << dp[num_garment][budget] << "\n";
     }
     return 0;
 }
