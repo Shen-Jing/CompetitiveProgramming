@@ -74,13 +74,14 @@ class Solution
             return l1;
         if (l1->val <= l2->val)
         {
-            auto new_l1 = l1->next;
-            l1->next = l2;
-            return mergeTwoLists(new_l1, l2);
+            l1->next = mergeTwoLists_recursive(l1->next, l2);
+            return l1;
         }
-        auto new_l1 = l1->next;
-        l1->next = l2;
-        return mergeTwoLists(new_l1, l2);
+        else
+        {
+            l2->next = mergeTwoLists_recursive(l1, l2->next);
+            return l2;
+        }
     }
 };
 
