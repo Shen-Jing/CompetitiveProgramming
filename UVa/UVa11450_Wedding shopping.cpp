@@ -38,7 +38,7 @@ void shop(int cur_garment, int cur_budget)
         return;
     for (const auto &price : garment_price[cur_garment])
     {
-        if (dp[cur_garment - 1][cur_budget] && cur_budget > price)
+        if (dp[cur_garment - 1][cur_budget] && cur_budget >= price)
         {
             dp[cur_garment][cur_budget - price] = true;
             shop(cur_garment + 1, cur_budget - price);
