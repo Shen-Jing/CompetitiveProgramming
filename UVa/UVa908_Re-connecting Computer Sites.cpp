@@ -48,8 +48,12 @@ int main(void)
 {
     int num_sites, num_new_lines, num_original_lines;
 
-    while (cin >> num_sites)
+    for (int k = 0; cin >> num_sites; ++k)
     {
+        /* separated by a blank line */
+        if (k != 0)
+            cout << "\n";
+
         /* Initialization */
         edges.clear();
         edges.reserve(num_sites);
@@ -101,13 +105,10 @@ int main(void)
             {
                 total += get<Edge::weight>(e);
                 minimum_spanning_tree.emplace_back(e);
-                parent[dst] = src;
+                parent[parent[dst]] = parent[src];
             }
         }
         cout << total << "\n";
-
-        /* separated by a blank line */
-        cout << "\n";
     }
 
     return 0;
