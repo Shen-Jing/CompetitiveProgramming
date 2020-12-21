@@ -30,15 +30,18 @@ static auto io = [](){
 
 enum Edge
 {
-    neighbor = 0,
-    weight = 1,
+    weight = 0,
+    src_and_dst = 1
 };
 
-vector<vector<pair<int, int>>> edge_list;
+vector<int> parent;
+vector<pair<int, pair<int, int>>> edges;
 
-void union_set(int father, int other)
+int find_root(int vertex)
 {
-
+    if (parent[vertex] == vertex) 
+        return vertex;
+    return (parent[vertex] = find_root(parent[vertex]));
 }
 
 int main(void)
@@ -47,20 +50,24 @@ int main(void)
 
     while (cin >> num_sites)
     {
-        edge_list.clear();
-        edge_list.assign(num_sites, vector<pair<int, int>>());
+        /* Initialization */
+        edges.clear();
+        edges.reserve(num_sites);
+        parent.clear();
+        parent.reserve(num_sites);
+
+        for (int v = 0; v < num_sites; ++v)
+        {
+            parent.emplace_back(v);
+        }
 
         int total{0};
         /* original set T */
-        edge_list[0].reserve(num_sites - 1);
         for (int e = 1; e <= num_sites - 1; ++e)
         {
             int tmp, cost;
             cin >> tmp >> tmp >> cost;
             total += cost;
-
-            /* reserve vector in passing */
-            edge_list[e].reserve(num_sites - 1);
         }
         cout << total << "\n";
 
@@ -71,22 +78,33 @@ int main(void)
             cin >> src >> dst >> weight;
             --src, --dst;
 
-            edge_list[src].emplace_back(make_pair(dst, weight));
-            edge_list[dst].emplace_back(make_pair(src, weight));
+            edges.emplace_back(make_pair(weight, make_pair(src, dst)));
         }
 
         cin >> num_original_lines;
-        for (int e = 0; e < num_new_lines; ++e)
+        for (int e = 0; e < num_original_lines; ++e)
         {
             int src, dst, weight;
             cin >> src >> dst >> weight;
             --src, --dst;
 
-            edge_list[src].emplace_back(make_pair(dst, weight));
-            edge_list[dst].emplace_back(make_pair(src, weight));
+            edges.emplace_back(make_pair(weight, make_pair(src, dst)));
         }
 
-        decltype(edge_list) MST;
+        decltype(edges) minimum_spanning_tree;
+        sort(edges.begin(), edges.end());
+        total = 0;
+        for (const auto &e : edges)
+        {
+            const auto &[src, dst] = get<Edge::src_and_dst>(e);
+            if (find_root(src) != find_root(dst))
+            {
+                total += get<Edge::weight>(e);
+                minimum_spanning_tree.emplace_back(e);
+                parent[dst] = src;
+            }
+        }
+        cout << total << "\n";
 
         /* separated by a blank line */
         cout << "\n";
