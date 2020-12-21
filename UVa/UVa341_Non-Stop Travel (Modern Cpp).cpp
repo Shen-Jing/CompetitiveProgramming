@@ -72,9 +72,9 @@ int main(void)
         }
 
         /* iterate edges */
+        cout << "After reading input, edges are: \n";
         for (auto [e_it, e_end] = boost::edges(g); e_it != e_end; ++e_it)
         {
-            // auto [e, succuess] = boost::edge()
             cout << boost::source(*e_it, g) << " " << boost::target(*e_it, g) << "\n";
         }
         
@@ -86,12 +86,11 @@ int main(void)
         // vector for storing distance property
         vector<int> dist(boost::num_vertices(g));
         // get source vertex iterator
-        auto v_it = boost::vertices(g).first;
+        auto vit_first = boost::vertices(g).first;
         // invoke variant 2 of Dijkstra's algorithm
-        boost::dijkstra_shortest_paths(g, *(v_it + (src - 1)), boost::distance_map(&dist[0]));
-        // cout << "Case " << kase << ": Path = " << src << " ";
-        cout << dist[*(v_it + (dst - 1))] << " second delay\n";
-        break;
+        boost::dijkstra_shortest_paths(g, *(vit_first + (src - 1)), boost::distance_map(&dist[0]));
+        cout << "Case " << kase << ": Path = " << src << " \n";
+        cout << dist[*(vit_first + (dst - 1))] << " second delay\n\n";
     }
 
     return 0;
