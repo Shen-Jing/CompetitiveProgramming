@@ -38,7 +38,10 @@ void solve(int cur_row)
     // if (cur_row == num_of_queens)
     if (cur_row == source_row)
     {
-        cout << ++num_of_solutions;
+        cout << " " << ++num_of_solutions << "      ";
+        cout << *queens_col.cbegin() + 1;
+        for (auto it = queens_col.cbegin() + 1; it != queens_col.cend(); ++it)
+            cout << " " << *it + 1;
         cout << "\n";
         return;
     }
@@ -82,8 +85,8 @@ int main(void)
     while (num_of_datasets--)
     {
         getline(cin, tmp_str);
-        cout << "SOLN COLUMN\n";
-        cout << "# 1 2 3 4 5 6 7 8\n\n";
+        cout << "SOLN       COLUMN\n";
+        cout << " #      1 2 3 4 5 6 7 8\n\n";
 
         cin >> source_row >> source_col;
         --source_row, --source_col;
