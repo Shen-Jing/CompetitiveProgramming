@@ -29,8 +29,9 @@ static auto io = [](){
 }();
 
 int source_row, source_col; // row, col of source (first) queen
-int num_of_queens;
 int num_of_solutions;
+constexpr int num_of_queens{8};
+array<int, num_of_queens> queens_col;  // row order: column of 1st row, 2nd row...
 
 void solve(int cur_row)
 {
@@ -41,12 +42,15 @@ void solve(int cur_row)
     }
 
     /* Try to place queen at all possible column */
+    int prev_row = (cur_row - 1 + 8) % num_of_queens;
+    int prev_col = queens_col[prev_row];
     for (int cur_col = 0; cur_col < num_of_queens; ++cur_col)
     {
-        if (cur_col == source_col
-         || cur_row - cur_col == source_row - source_col
-         || cur_row + cur_col == source_row + source_col)
+        if (cur_col == prev_col
+         || cur_row - cur_col == prev_row - prev_col
+         || cur_row + cur_col == prev_row + prev_col)
             continue;
+        queens_col[cur_row] = cur_col;
         solve((cur_row + 1) % num_of_queens);
     }
     
@@ -69,7 +73,8 @@ int main(void)
         --source_row, --source_col;
 
         num_of_solutions = 0;
-        solve(source_row + 1);
+        queens_col[source_row] = source_col;
+        solve((source_row + 1) % num_of_queens);
         cout << "\n";
     }
 
