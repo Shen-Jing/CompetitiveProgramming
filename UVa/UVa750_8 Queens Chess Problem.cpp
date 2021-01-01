@@ -39,8 +39,11 @@ void solve(int cur_row)
     if (cur_row == source_row)
     {
         cout << " " << ++num_of_solutions << "      ";
-        cout << *queens_col.cbegin() + 1;
-        for (auto it = queens_col.cbegin() + 1; it != queens_col.cend(); ++it)
+        decltype(queens_col) queens_row;  // row of 1st column, 2nd column...
+        for (int row = 0; row < num_of_queens; ++row)
+            queens_row[queens_col[row]] = row;
+        cout << *queens_row.cbegin() + 1;
+        for (auto it = queens_row.cbegin() + 1; it != queens_row.cend(); ++it)
             cout << " " << *it + 1;
         cout << "\n";
         return;
