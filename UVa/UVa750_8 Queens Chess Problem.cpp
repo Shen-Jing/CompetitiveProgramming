@@ -28,20 +28,21 @@ static auto io = [](){
     return nullptr;
 }();
 
-int source_row; // row of source (first) queen
+int source_col; // row of source (first) queen
 int num_of_solutions;
 constexpr int num_of_queens{8};
-array<int, num_of_queens> queens_col;  // row order: column of 1st row, 2nd row...
+array<int, num_of_queens> queens_row;  // column order: row of 1st column, 2nd column...
 
-void solve(int cur_row)
+void solve(int cul_col)
 {
-    // if (cur_row == num_of_queens)
-    if (cur_row == source_row)
+    if (cul_col == source_col)
+        ++cul_col;
+    if (cul_col == num_of_queens)
     {
-        cout << " " << ++num_of_solutions << "      ";
-        decltype(queens_col) queens_row;  // row of 1st column, 2nd column...
-        for (int row = 0; row < num_of_queens; ++row)
-            queens_row[queens_col[row]] = row;
+        ++num_of_solutions;
+        if (num_of_solutions < 10)
+            cout << " ";
+        cout << num_of_solutions << "      ";
         cout << *queens_row.cbegin() + 1;
         for (auto it = queens_row.cbegin() + 1; it != queens_row.cend(); ++it)
             cout << " " << *it + 1;
@@ -50,16 +51,16 @@ void solve(int cur_row)
     }
 
     /* Try to place queen at all possible column */
-    for (int cur_col = 0; cur_col < num_of_queens; ++cur_col)
+    for (int cur_row = 0; cur_row < num_of_queens; ++cur_row)
     {
         bool is_valid{true};
         /* Check with all queens' position */
-        for (int prev_row = 0; prev_row < num_of_queens; ++prev_row)
+        for (int prev_col = 0; prev_col < num_of_queens; ++prev_col)
         {
-            int prev_col = queens_col[prev_row];
-            if (prev_col != -1 && 
-               (cur_col == prev_col ||
-                cur_row - cur_col == prev_row - prev_col || cur_row + cur_col == prev_row + prev_col))
+            int prev_row = queens_row[prev_col];
+            if (prev_row != -1 && 
+               (cur_row == prev_row ||
+                cul_col - cur_row == prev_col - prev_row || cul_col + cur_row == prev_col + prev_row))
             {
                 is_valid = false;
                 break;
@@ -68,11 +69,11 @@ void solve(int cur_row)
 
         if (!is_valid)
             continue;
-        queens_col[cur_row] = cur_col;
-        auto old_queens_col = queens_col;
-        solve((cur_row + 1) % num_of_queens);
-        queens_col = old_queens_col;
-        // solve(cur_row + 1);
+        queens_row[cul_col] = cur_row;
+        auto old_queens_col = queens_row;
+        // solve((cur_row + 1) % num_of_queens);
+        solve(cul_col + 1);
+        queens_row = old_queens_col;
     }
     
 }
@@ -81,7 +82,7 @@ int main(void)
 {
 
     int num_of_datasets;
-    int source_col;
+    int source_row;
     string tmp_str;
 
     cin >> num_of_datasets;
@@ -95,11 +96,11 @@ int main(void)
         --source_row, --source_col;
 
         num_of_solutions = 0;
-        queens_col.fill(-1);
-        queens_col[source_row] = source_col;
-        // solve(0);
-        solve((source_row + 1) % num_of_queens);
-        cout << "\n";
+        queens_row.fill(-1);
+        queens_row[source_col] = source_row;
+        solve(0);
+        if (num_of_datasets)
+            cout << "\n";
     }
 
     return 0;
