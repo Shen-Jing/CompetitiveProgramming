@@ -28,11 +28,6 @@ static auto io = [](){
     return nullptr;
 }();
 
-enum VertexStatus
-{
-    done = -1,
-};
-
 vector<string> beverages;
 map<string, int> beverage2id;
 vector<vector<int>> edges;
@@ -51,7 +46,6 @@ void topological_sort()
     {
         auto cur_vertex = vertex_pq.top();
         vertex_pq.pop();
-        in_degree[cur_vertex] = VertexStatus::done;
         /* traverse all neighbors */
         for (const auto &dst : edges[cur_vertex])
         {
