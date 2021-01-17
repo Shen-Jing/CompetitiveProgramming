@@ -28,37 +28,38 @@ static auto io = [](){
     return nullptr;
 }();
 
-enum Status
+enum VertexStatus
 {
-    unvisited,
-    visiting,
-    visited
+    done = -1,
 };
 
 vector<string> beverages;
 map<string, int> beverage2id;
 vector<vector<int>> edges;
-vector<int> vertex_status;
+vector<int> in_degree;
 vector<int> ans;
 
-void dfs(int src)
-{
-    /* traverse all neighbors */
-    vertex_status[src] = Status::visited;
-    for (const auto &dst : edges[src])
-    {
-        if (vertex_status[dst] == Status::unvisited)
-            dfs(dst);
-    }
-    ans.emplace_back(src);
-}
-
+/* Kahn's Algorithm */
 void topological_sort()
 {
-    for (int i = 0; i < vertex_status.size(); ++i)
+    priority_queue<int, vector<int>, greater<int>> vertex_pq;
+    for (int v = 0; v < in_degree.size(); ++v)
+        if (!in_degree[v])
+            vertex_pq.push(v);
+
+    while (!vertex_pq.empty())
     {
-        if (vertex_status[i] == Status::unvisited)
-            dfs(i);
+        auto cur_vertex = vertex_pq.top();
+        vertex_pq.pop();
+        in_degree[cur_vertex] = VertexStatus::done;
+        /* traverse all neighbors */
+        for (const auto &dst : edges[cur_vertex])
+        {
+            --in_degree[dst];
+            if (!in_degree[dst])
+                vertex_pq.push(dst);
+        }
+        ans.emplace_back(cur_vertex);
     }
 }
 
@@ -66,14 +67,12 @@ int main(void)
 {
     int num_of_beverages;
 
-    for (int kase = 1; cin >> num_of_beverages; ++kase)
-    {
-        if (kase != 1)
-            cout << "\n";
+    for (int kase = 1; cin >> num_of_beverages; ++kase) {
+        /* Initialization */
         beverages.clear();
         beverage2id.clear();
         ans.clear();
-        vertex_status.assign(num_of_beverages, Status::unvisited);
+        in_degree.assign(num_of_beverages, 0);
         for (int b_id = 0; b_id < num_of_beverages; ++b_id)
         {
             string name;
@@ -90,18 +89,19 @@ int main(void)
             string src, dst;
             cin >> src >> dst;
             edges[beverage2id[src]].emplace_back(beverage2id[dst]);
+            ++in_degree[beverage2id[dst]];
         }
         cin.ignore(10, '\n');
         
         cout << "Case #" << kase << ": Dilbert should drink beverages in this order: ";
         topological_sort();
-        for (auto it = ans.crbegin(); it != ans.crend(); ++it)
+        for (auto it = ans.cbegin(); it != ans.cend(); ++it)
         {
             cout << beverages[*it];
-            if (it != ans.crend() - 1)
+            if (it != ans.cend() - 1)
                 cout << " ";
         }
-        cout << "\n";
+        cout << ".\n\n";
     }
 
     return 0;
