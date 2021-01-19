@@ -6,22 +6,42 @@
  *     ListNode(int x) : val(x), next(NULL) {}
  * };
  */
+static auto io = [](){
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr);
+    return nullptr;
+};
 class Solution {
 public:
     bool hasCycle(ListNode *head) {
-        std::vector<ListNode *> vec;
+        ListNode *slow{head};
+        while (slow)
+        {
+            /* faster pointer */
+            if (!head || !head->next)
+                return false;
+            head = head->next->next;
+            slow = slow->next;
+            if (slow == head)
+                return true;
+        }
+        return false;
+    }
+    /*
+    bool hasCycle(ListNode *head) {
+        std::map<ListNode *, int> nd2pos;
+        int pos = 0;
         while (head)
         {
-            vec.emplace_back(head);
+            nd2pos[head] = pos++;
             head = head->next;
-            auto find_iter = std::find(vec.begin(), vec.end(), head);
-            if (find_iter != vec.end())
+            if (nd2pos.count(head))
             {
-                std::cout << find_iter - vec.begin() << std::endl;
-                std::cout << (*find_iter)->val;
+                std::cout << "Position: " << nd2pos[head] << " (val: " << head->val << ")" << std::endl;
                 return true;
             }
         }
         return false;
     }
+    */
 };
