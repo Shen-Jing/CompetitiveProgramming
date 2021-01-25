@@ -51,10 +51,10 @@ class Solution
         vector<int> tmp;
         tmp.resize(nums.size());
         auto sz = nums.size();
-        for (int i = 0; i < data_range; ++i)  // Not stable
+        for (int i = 0; i < sz; ++i)  // Not stable
         {
             tmp[prefix_sum[nums[i] - min_value] - 1] = nums[i];
-            --prefix_sum[nums[i]];
+            --prefix_sum[nums[i] - min_value];
         }
         // swap(nums, tmp); // [ ] memory leak?
         return tmp;
@@ -64,6 +64,7 @@ class Solution
     {
         init(nums);
         return counting_sort(nums);
+        
     }
 
  private:
