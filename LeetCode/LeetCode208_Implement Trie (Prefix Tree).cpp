@@ -102,3 +102,15 @@ class Trie {
  * bool param_2 = obj->search(word);
  * bool param_3 = obj->startsWith(prefix);
  */
+
+int main(void)
+{
+    Trie trie;
+    trie.insert("apple");
+    trie.search("apple");   // returns true
+    trie.search("app");     // returns false
+    trie.startsWith("app"); // returns true
+    trie.insert("app");
+    trie.search("app"); // returns true
+    return 0;
+}
