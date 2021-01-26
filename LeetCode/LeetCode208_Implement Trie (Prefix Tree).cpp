@@ -9,6 +9,7 @@
 #include <iostream>
 #include <list>
 #include <map>
+#include <memory>
 #include <numeric>
 #include <queue>
 #include <tuple>
@@ -31,67 +32,67 @@ static auto io = [](){
 
 const int alphabet_size{26};
 
-struct vertex
+struct Vertex
 {
     int alphabet;
-    vector<vertex *> child;
+    vector<unique_ptr<Vertex>> child;
     bool exist;
-    vertex(char ch) : alphabet(ch), exist(false)
+    Vertex(char ch) : alphabet(ch), exist(false), child(alphabet_size)
     {
-        child.assign(alphabet_size, nullptr);
     }
 };
 
 class Trie {
  private: 
-    vertex *root;
+    unique_ptr<Vertex> root;
 
  public:
     /** Initialize your data structure here. */
     Trie()
     {
-        root = new vertex('!');
+        root.reset(new Vertex('!'));
     }
     
     /** Inserts a word into the trie. */
     void insert(const string &word)
     {
-        vertex *cur = root;
+        auto cur = root.get();
         for (const auto &ch : word)
         {
             auto alpha_num = ch - 'a';
             if (cur->child[alpha_num] == nullptr)
-                cur->child[alpha_num] = new vertex(ch);
-            cur = cur->child[alpha_num];
+                cur->child[alpha_num].reset(new Vertex(ch));
+            cur = cur->child[alpha_num].get();
         }
         cur->exist = true;
     }
     
     /** Returns if the word is in the trie. */
-    bool search(const string &word) {
-        vertex *cur = root;
+    bool search(const string &word)
+    {
+        auto cur = root.get();
         for (const auto &ch : word)
         {
             auto alpha_num = ch - 'a';
             if (cur->child[alpha_num] == nullptr)
                 return false;
-            cur = cur->child[alpha_num];
+            cur = cur->child[alpha_num].get();
         }
         return cur->exist;
     }
     
     /** Returns if there is any word in the trie that starts with the given prefix. */
-    bool startsWith(const string &prefix) {
-        vertex *cur = root;
-        for (const auto &ch : prefix)
+    bool startsWith(const string &word)
+    {
+        auto cur = root.get();
+        for (const auto &ch : word)
         {
             auto alpha_num = ch - 'a';
             if (cur->child[alpha_num] == nullptr)
                 return false;
-            cur = cur->child[alpha_num];
+            cur = cur->child[alpha_num].get();
         }
         return true;
-        
     }
 };
 
@@ -107,10 +108,10 @@ int main(void)
 {
     Trie trie;
     trie.insert("apple");
-    trie.search("apple");   // returns true
-    trie.search("app");     // returns false
-    trie.startsWith("app"); // returns true
+    cout << trie.search("apple") << "\n";   // returns true
+    cout << trie.search("app") << "\n";     // returns false
+    cout << trie.startsWith("app") << "\n"; // returns true
     trie.insert("app");
-    trie.search("app"); // returns true
+    cout << trie.search("app") << "\n"; // returns true
     return 0;
 }
