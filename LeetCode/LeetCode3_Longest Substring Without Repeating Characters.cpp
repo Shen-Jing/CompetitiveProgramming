@@ -35,39 +35,25 @@ class Solution
  public:
     int lengthOfLongestSubstring(string s)
     {
-        int max_length = 0;
+        unordered_map<char, size_t> position;
+        size_t max_length = 0;
         auto sz = s.size();
-        for (size_t sub_start = 0; sub_start < sz; ++sub_start)
+        for (size_t sub_start = 0, idx = 0; idx < sz; ++idx)
         {
-            for (size_t sub_end = sz; sub_end > sub_start; --sub_end)
-            {
-                int cur_length = sub_end - sub_start;
-                if (cur_length < max_length)
-                    break;
-                if (check_unique(s, sub_start, sub_end))
-                    max_length = max(max_length, cur_length);
-            }
+            if (position.count(s[idx]))
+                sub_start = max(sub_start, position[s[idx]] + 1);
+            max_length = max(max_length, idx - sub_start + 1);
+            position[s[idx]] = idx;
         }
         return max_length;
-    }
-
-    bool check_unique(string &str, size_t start, size_t end)
-    {
-        set<int> substr_set;
-        for (size_t i = start; i < end; ++i)
-            if (substr_set.count(str[i]))
-            // if (substr_set.contains(str[i]))  // C++20
-                return false;
-            else
-                substr_set.emplace(str[i]);
-        return true;
     }
 };
 
 int main(void)
 {
     Solution sol;
-    string str{"abcabcbb"};
+    // string str{"abcabcbb"};
+    string str{"tmmzuxt"};
     cout << sol.lengthOfLongestSubstring(str) << "\n";
     return 0;
 }
