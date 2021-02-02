@@ -37,25 +37,24 @@ class Solution
     {
         int max_length = 0;
         auto sz = s.size();
-        for (size_t i = 0; i < sz; ++i)
+        for (size_t sub_start = 0; sub_start < sz; ++sub_start)
         {
-            for (size_t j = sz - 1; j >= i; --j)
+            for (size_t sub_end = sz; sub_end > sub_start; --sub_end)
             {
-                int cur_length = j - i + 1;
+                int cur_length = sub_end - sub_start;
                 if (cur_length < max_length)
                     break;
-                auto tmp_substr = s.substr(i, cur_length);
-                if (check_unique(tmp_substr) && cur_length > max_length)
-                    max_length = cur_length;
+                if (check_unique(s, sub_start, sub_end))
+                    max_length = max(max_length, cur_length);
             }
         }
         return max_length;
     }
 
-    bool check_unique(string &str)
+    bool check_unique(string &str, size_t start, size_t end)
     {
         set<int> substr_set;
-        for (size_t i = 0; i < str.length(); ++i)
+        for (size_t i = start; i < end; ++i)
             if (substr_set.count(str[i]))
             // if (substr_set.contains(str[i]))  // C++20
                 return false;
