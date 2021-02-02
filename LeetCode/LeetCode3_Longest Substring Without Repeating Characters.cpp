@@ -54,10 +54,13 @@ class Solution
 
     bool check_unique(string &str)
     {
-        sort(str.begin(), str.end());
-        for (size_t i = 0; i < str.length() - 1; ++i)
-            if (str[i] == str[i + 1])
+        set<int> substr_set;
+        for (size_t i = 0; i < str.length(); ++i)
+            if (substr_set.count(str[i]))
+            // if (substr_set.contains(str[i]))  // C++20
                 return false;
+            else
+                substr_set.emplace(str[i]);
         return true;
     }
 };
