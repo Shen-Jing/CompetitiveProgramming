@@ -35,20 +35,29 @@ class Solution
     vector<int> twoSum(vector<int>& nums, int target)
     {
         vector<int> ans;
+        map<int, int> value_to_index;
         auto sz = nums.size();
         for (size_t i = 0; i < sz; ++i)
-            for (size_t j = i + 1; j < sz; ++j)
-                if (nums[i] + nums[j] == target)
-                {
-                    ans.emplace_back(i);
-                    ans.emplace_back(j);
-                }
+        {
+            int complement = target - nums[i];
+            if (value_to_index.count(complement))
+            {
+                ans.emplace_back(i);
+                ans.emplace_back(value_to_index[complement]);
+                return ans;
+            }
+            value_to_index[nums[i]] = i;
+        }
         return ans;
     }
 };
 
 int main(void)
 {
+    vector<int> nums{2, 7, 11, 15};
+    int target{9};
+    Solution sol;
+    sol.twoSum(nums, target);
 
     return 0;
 }
