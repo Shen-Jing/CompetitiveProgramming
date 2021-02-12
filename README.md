@@ -2,7 +2,7 @@
 
 ## *The purpose of this project*
 
-I haven't even reached the amateur level.
+I haven't even reached the amateur level.  
 I am just a little enthusiastic about this, and practicing programming for myself. 😊
 
 ## Coding Style
@@ -18,8 +18,11 @@ I am just a little enthusiastic about this, and practicing programming for mysel
 
 # Topics
 
-- [LeetCode progress](https://drive.google.com/file/d/1w5vzv4ew7_dGa8UG3B6aOZrAjVKkhSrb/view?usp=sharing)
-- [Problem list]()
+## Problem List
+
+- [list and progress](https://www.notion.so/Competitive-Programming-Problem-ec2b38fee7d948e6bf2ff760acbbaa65)
+
+![sample](https://i.imgur.com/LjV0DcB.png)
 
 Some of these may have modern C++ version.  
 Or using library of existing projects. (e.g., [Boost](https://www.boost.org/))
@@ -41,21 +44,21 @@ Or using library of existing projects. (e.g., [Boost](https://www.boost.org/))
     - ➕ Boost Graph Library (BGL)
     - Dijsktra
         - priority queue
-- [ ] UVa 558 - Wormholes
+- UVa 558 - Wormholes
     - Bellman-Ford
     
 ### Directed Acyclic Graph (DAG)
 
-- [ ] UVa 825 - Walking on the Safe Side
+- UVa 825 - Walking on the Safe Side
 
 ### Topological Sort
 
 - UVa 10305 - Ordering Tasks
-    - [ ] detect cycle
+    - detect cycle
 
 ### Minimum Spanning Tree
 
-- [ ] [UVa 908 - Re-connecting Computer Sites](https://onlinejudge.org/index.php?option=onlinejudge&Itemid=8&page=show_problem&problem=849)
+- [UVa 908 - Re-connecting Computer Sites](https://onlinejudge.org/index.php?option=onlinejudge&Itemid=8&page=show_problem&problem=849)
     - Kruskal's Algorithm
 
 ## Tree
@@ -72,8 +75,7 @@ Or using library of existing projects. (e.g., [Boost](https://www.boost.org/))
 
 ### 0-1 backpack
 
-- UVa 624 - CD
-- [ ] UVa 10130 - SuperSale
+- UVa 624 - CD (1)
 
 ### Palindrome
 
@@ -82,22 +84,21 @@ Or using library of existing projects. (e.g., [Boost](https://www.boost.org/))
 
 ### Meet in the Middle/A*/IDA*
 
-- [ ] UVa 10181 - 15-Puzzle Problem
-- [ ] UVa 11212 - Editing a Book
+-  UVa 10181 - 15-Puzzle Problem
 
 ## String
 
 ### Suffix Trie
 
-- [ ] [UVa 11732 - "strcmp()" Anyone?](https://onlinejudge.org/index.php?option=onlinejudge&Itemid=8&page=show_problem&problem=2832)
+- [UVa 11732 - "strcmp()" Anyone?](https://onlinejudge.org/index.php?option=onlinejudge&Itemid=8&page=show_problem&problem=2832)
 
 ### Suffix Tree, Array
 
-- [ ] UVa 11107 - Life Forms
+- UVa 11107 - Life Forms
 
 ### Aho-Corasick
 
-- [ ] [UVa 11468 - Substring](https://onlinejudge.org/index.php?option=onlinejudge&Itemid=8&page=show_problem&problem=2832)
+- [UVa 11468 - Substring](https://onlinejudge.org/index.php?option=onlinejudge&Itemid=8&page=show_problem&problem=2832)
 
 ### Knuth-Morris-Pratt’s (KMP) Algorithm
 
@@ -105,4 +106,4 @@ Or using library of existing projects. (e.g., [Boost](https://www.boost.org/))
 
 ## Large Number
 
-- [ ] 10106 - Product
+- 10106 - Product
