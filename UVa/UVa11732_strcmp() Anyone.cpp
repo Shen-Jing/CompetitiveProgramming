@@ -30,6 +30,8 @@ static auto io = [](){
 }();
 
 constexpr int kMaxNodes = 4000 * 1000 + 10;
+char alphanumerals_value[kMaxNodes];
+int sons[kMaxNodes], siblings[kMaxNodes], counts[kMaxNodes];
 int ans = 0;
 
 class Trie
@@ -38,10 +40,11 @@ class Trie
   Trie()
   {
       num_of_nodes = 1;
-      alphanumerals_value.reset(new char [kMaxNodes]);
-      sons.reset(new int [kMaxNodes]);
-      siblings.reset(new int [kMaxNodes]);
-      counts.reset(new int [kMaxNodes]);
+    //   alphanumerals_value.reset(new char [kMaxNodes]);
+    //   sons.reset(new int [kMaxNodes]);
+    //   siblings.reset(new int [kMaxNodes]);
+    //   counts.reset(new int [kMaxNodes]);
+      sons[0] = siblings[0] = counts[0] = 0;
   }
   
   void insert(const string &str)
@@ -77,9 +80,10 @@ class Trie
 
  private:
   int num_of_nodes;
-  unique_ptr<char []> alphanumerals_value;
-  unique_ptr<int []> sons, siblings, counts;
-  /* Segmentation Fault! */
+//   unique_ptr<char []> alphanumerals_value;
+//   unique_ptr<int []> sons, siblings, counts;
+
+  /* Segmentation Fault!!! */
 //   char alphanumerals_value[kMaxNodes];
 //   int sons[kMaxNodes], siblings[kMaxNodes], counts[kMaxNodes];
 };
