@@ -38,10 +38,10 @@ class Trie
   Trie()
   {
       num_of_nodes = 1;
-      alphanumerals_value = make_unique<char []>(kMaxNodes);
-      sons = make_unique<int []>(kMaxNodes);
-      siblings = make_unique<int []>(kMaxNodes);
-      counts = make_unique<int []>(kMaxNodes);
+      alphanumerals_value.reset(new char [kMaxNodes]);
+      sons.reset(new int [kMaxNodes]);
+      siblings.reset(new int [kMaxNodes]);
+      counts.reset(new int [kMaxNodes]);
   }
   
   void insert(const string &str)
@@ -79,6 +79,9 @@ class Trie
   int num_of_nodes;
   unique_ptr<char []> alphanumerals_value;
   unique_ptr<int []> sons, siblings, counts;
+  /* Segmentation Fault! */
+//   char alphanumerals_value[kMaxNodes];
+//   int sons[kMaxNodes], siblings[kMaxNodes], counts[kMaxNodes];
 };
 
 int main(void)
