@@ -8,6 +8,7 @@
 #include <iostream>
 #include <list>
 #include <map>
+#include <memory>
 #include <numeric>
 #include <queue>
 #include <tuple>
@@ -34,24 +35,25 @@ int ans = 0;
 class Trie
 {
  public:
-  int alphabet_size;
-  
-  Trie(int alphabet_size = 26)
+  Trie()
   {
-      num_of_nodes = 0;
-      sons[0] = siblings[0] = counts[0] = 0;
+      num_of_nodes = 1;
+      alphanumerals_value = make_unique<char []>(kMaxNodes);
+      sons = make_unique<int []>(kMaxNodes);
+      siblings = make_unique<int []>(kMaxNodes);
+      counts = make_unique<int []>(kMaxNodes);
   }
   
-  constexpr int insert(const string &str)
+  void insert(const string &str)
   {
       int cur_parent = 0;
       auto len = str.length();
-      for (size_t c = 0; c <= len; ++c)
+      for (size_t i = 0; i <= len; ++i)
       {
           int new_node = 0;
           for (int cur_node = sons[cur_parent]; cur_node; cur_node = siblings[cur_node])
           {
-              if (alphanumerals_value[cur_node] == str[c])
+              if (alphanumerals_value[cur_node] == str[i])
               {
                   new_node = cur_node;
                   ans += counts[cur_node] * 2;
@@ -61,39 +63,38 @@ class Trie
           }
           if (!new_node)
           {
-              ++num_of_nodes;
               new_node = num_of_nodes;
-              alphanumerals_value[new_node] = str[c];
+              ++num_of_nodes;
+              alphanumerals_value[new_node] = str[i];
               counts[new_node] = sons[new_node] = 0;
               siblings[new_node] = sons[cur_parent];
               sons[cur_parent] = new_node;
-              
           }
           ++counts[new_node];
           cur_parent = new_node;
       }
   }
+
  private:
-  char alphanumerals_value[kMaxNodes];
-  int sons[kMaxNodes], siblings[kMaxNodes], counts[kMaxNodes];
   int num_of_nodes;
+  unique_ptr<char []> alphanumerals_value;
+  unique_ptr<int []> sons, siblings, counts;
 };
 
 int main(void)
 {
     int num_of_strings;
-    while (cin >> num_of_strings)
+    for (int kase = 1; cin >> num_of_strings && num_of_strings > 0; ++kase)
     {
         string input;
         Trie trie;
+        ans = 0;
         while (num_of_strings--)
         {
             cin >> input;
             trie.insert(input);
         }
+        cout << "Case " << kase << ": " << ans << "\n";
     }
-
-
-
     return 0;
 }
