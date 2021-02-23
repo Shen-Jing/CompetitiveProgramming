@@ -62,6 +62,40 @@ int main(void)
             }
         }
         cout << edit_distance[query_len][target_len] << "\n";
+        /* Backtracking operations */
+        stack<string> operations;
+        for (size_t q = query_len, t = target_len; q || t; )
+        {
+            string oper;
+            if (edit_distance[q][t] == edit_distance[q][t - 1] + 1)
+            {
+                oper = string("Insert ") + to_string(q) + "," + target[t];
+                --t;
+            }
+            else if (edit_distance[q][t] == edit_distance[q - 1][t] + 1)
+            {
+                oper = string("Delete ") + to_string(q);
+                --q;
+            }
+            else if (edit_distance[q][t] == edit_distance[q - 1][t - 1])
+            {
+                --q, --t;
+                continue;
+            }
+            else if (edit_distance[q][t] == edit_distance[q - 1][t - 1] + 1)
+            {
+                oper = string("Replace ") + to_string(q) + "," + target[t];
+                --q, --t;
+            }
+            operations.push(oper);
+        }
+        int oper_id = 1;
+        while (!operations.empty())
+        {
+            cout << oper_id++ << " ";
+            cout << operations.top() << "\n";
+            operations.pop();
+        }
         cout << "\n";
     }
 
