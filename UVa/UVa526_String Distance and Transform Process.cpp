@@ -36,6 +36,10 @@ int main(void)
     string query, target;
     constexpr int k_max_str_size{80};
     array<array<int, k_max_str_size>, k_max_str_size> edit_distance;
+    for (size_t c = 1; c < edit_distance[c].size(); ++c)
+        edit_distance[0][c] = c;
+    for (size_t r = 1; r < edit_distance[r].size(); ++r)
+        edit_distance[r][0] = r;
     while (cin >> query)
     {
         cin >> target;
@@ -48,7 +52,7 @@ int main(void)
         {
             for (size_t t = 0; t <= target_len; ++t)
             {
-                if (!q && !t)
+                if (!q || !t)
                     continue;
                 edit_distance[q][t] = min(edit_distance[q - 1][t] + 1, edit_distance[q][t - 1] + 1);
                 if (query[q] == target[t])
@@ -58,6 +62,7 @@ int main(void)
             }
         }
         cout << edit_distance[query_len][target_len] << "\n";
+        cout << "\n";
     }
 
     return 0;
