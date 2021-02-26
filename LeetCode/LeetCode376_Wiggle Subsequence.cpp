@@ -35,9 +35,8 @@ class Solution
  public:
     int wiggleMaxLength(vector<int>& nums)
     {
-        auto sz = nums.size();
-        if (sz < 2)
-            return sz;
+        if (nums.size() < 2)
+            return nums.size();
         return recursive_wiggle_max_length(nums);
     }
 
@@ -64,6 +63,33 @@ class Solution
         }
         return max_count;
     }
+
+    /* 2. Normal Dynamic Programming */
+    int get_dp(const vector<int> &nums)
+    {
+        auto sz = nums.size();
+        /* the max length of the current wiggle direction */
+        vector<int> up(sz, 0), down(sz, 0);
+        for (size_t anchor_idx = 0; anchor_idx < sz; ++anchor_idx)
+        {
+            for (size_t i = anchor_idx + 1; i < sz; ++i)
+            {
+                if (nums[i] > nums[anchor_idx])
+                {
+                    up[i] = up[anchor_idx] + 1;
+                    down[i] = down[i - 1] + 1;
+                }
+                else
+                {
+                    up[i] = up[i - 1];
+                    down[i] = down[i - 1];
+                }
+
+            }
+        }
+        return 1 + max(up[sz - 1], down[sz - 1]);
+    }
+    
 };
 
 int main(void)
