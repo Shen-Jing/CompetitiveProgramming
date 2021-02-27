@@ -21,6 +21,7 @@
 #include <string>
 #include <type_traits>
 #include <vector>
+#include "utils.hpp"
 
 using namespace std;
 
@@ -37,7 +38,8 @@ class Solution
     {
         if (nums.size() < 2)
             return nums.size();
-        return recursive_wiggle_max_length(nums);
+        // return recursive_wiggle_max_length(nums);
+        return get_normal_dp_ans(nums);
     }
 
  private:
@@ -65,35 +67,43 @@ class Solution
     }
 
     /* 2. Normal Dynamic Programming */
-    int get_dp(const vector<int> &nums)
+    int get_normal_dp_ans(const vector<int> &nums)
     {
         auto sz = nums.size();
         /* the max length of the current wiggle direction */
         vector<int> up(sz, 0), down(sz, 0);
-        for (size_t anchor_idx = 0; anchor_idx < sz; ++anchor_idx)
+        for (size_t anchor_idx = 1; anchor_idx < sz; ++anchor_idx)
         {
-            for (size_t i = anchor_idx + 1; i < sz; ++i)
+            for (size_t i = 0; i < anchor_idx; ++i)
             {
-                if (nums[i] > nums[anchor_idx])
-                {
-                    up[i] = up[anchor_idx] + 1;
-                    down[i] = down[i - 1] + 1;
-                }
-                else
-                {
-                    up[i] = up[i - 1];
-                    down[i] = down[i - 1];
-                }
-
+                if (nums[anchor_idx] > nums[i])
+                    up[anchor_idx] = max(up[anchor_idx], down[i] + 1);
+                else if (nums[anchor_idx] < nums[i] )
+                    down[anchor_idx] = max(down[anchor_idx], up[i] + 1);
             }
         }
         return 1 + max(up[sz - 1], down[sz - 1]);
     }
-    
 };
 
 int main(void)
 {
+    Solution sol;
+    string input, delim{","};
+    while (getline(cin, input))
+    {
+        vector<int> nums;
+        vector<string> split_result;
+        /**
+        * Example: [1,7,4,9,2,5]
+        * String Length: 13
+        */
+        input = input.substr(1, input.length() - 2);
+        split(split_result, input, delim);
+        for (auto &&token : split_result)
+            nums.emplace_back(stoi(token));
+        cout << sol.wiggleMaxLength(nums) << "\n";
+    }
 
     return 0;
 }
