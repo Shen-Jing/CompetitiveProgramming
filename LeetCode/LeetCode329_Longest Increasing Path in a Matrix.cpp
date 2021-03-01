@@ -39,13 +39,12 @@ class Solution
             return 0;
         row_size = matrix.size();
         col_size = matrix[0].size();
+        auto length_memo = vector<vector<int>>(matrix.size(), vector<int>(matrix[0].size(), 0));
         int longest_len = 0;
         for (size_t r = 0; r < row_size; ++r)
             for (size_t c = 0; c < col_size; ++c)
             {
-                int path_len = 1;
-                dfs(matrix, r, c, path_len);
-                longest_len = max(longest_len, path_len);
+                longest_len = max(longest_len, 1 + dfs(matrix, r, c, length_memo));
             }
         return longest_len;
     }
@@ -60,10 +59,13 @@ class Solution
         return true;
     }
 
-    void dfs(const vector<vector<int>>& matrix, const int &cur_row, const int &cur_col, int &cur_path_len)
+    int dfs(const vector<vector<int>>& matrix, const int &cur_row, const int &cur_col, vector<vector<int>> &length_memo)
     {
+        if (length_memo[cur_row][cur_col])
+            return length_memo[cur_row][cur_col];
+
         array<int, 3> dir{-1, 0, 1};
-        auto old_len = cur_path_len;
+        int max_len = 0;
         for (const auto &row_offset : dir)
             for (const auto &col_offset : dir)
             {
@@ -75,11 +77,9 @@ class Solution
                     !check_valid_boundary(next_row, next_col) ||
                     matrix[next_row][next_col] <= matrix[cur_row][cur_col])
                     continue;
-                ++cur_path_len;
-                dfs(matrix, next_row, next_col, cur_path_len);
+                max_len = dfs(matrix, next_row, next_col, length_memo);
             }
-        cur_path_len = old_len;
-        return;
+        return length_memo[cur_row][cur_col] = max_len;
     }
 };
 
