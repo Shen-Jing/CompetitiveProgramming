@@ -40,18 +40,12 @@ class Solution
 
         sort(nums.begin(), nums.end());
         auto result_it = find_if(nums.begin(), nums.end(), [](int i){ return i >= 0; });
-        if (*result_it >= 2)
-          return 1;
-        bool found{false};
-        for ( ; result_it != nums.end() - 2; ++result_it)
-            if (*(result_it + 1) - *result_it != 1)
-            {
-                found = true;
+        if (result_it == nums.end() || *result_it >= 2)
+            return 1;
+        for ( ; result_it != nums.end() - 1; ++result_it)
+            if (*(result_it + 1) - *result_it > 1)
                 break;
-            }
-        if (found)
-            return *result_it + 1;
-        return *(result_it + 1) + 1;
+        return *result_it + 1;
     }
 };
 
