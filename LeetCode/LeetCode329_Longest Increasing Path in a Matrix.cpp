@@ -44,7 +44,7 @@ class Solution
         for (size_t r = 0; r < row_size; ++r)
             for (size_t c = 0; c < col_size; ++c)
             {
-                longest_len = max(longest_len, 1 + dfs(matrix, r, c, length_memo));
+                longest_len = max(longest_len, dfs(matrix, r, c, length_memo));
             }
         return longest_len;
     }
@@ -65,7 +65,7 @@ class Solution
             return length_memo[cur_row][cur_col];
 
         array<int, 3> dir{-1, 0, 1};
-        int max_len = 0;
+        int max_len = 1;
         for (const auto &row_offset : dir)
             for (const auto &col_offset : dir)
             {
@@ -77,7 +77,7 @@ class Solution
                     !check_valid_boundary(next_row, next_col) ||
                     matrix[next_row][next_col] <= matrix[cur_row][cur_col])
                     continue;
-                max_len = dfs(matrix, next_row, next_col, length_memo);
+                max_len = max(max_len, 1 + dfs(matrix, next_row, next_col, length_memo));
             }
         return length_memo[cur_row][cur_col] = max_len;
     }
