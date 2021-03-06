@@ -73,7 +73,7 @@ class Solution
                            next_col = cur_col + col_offset;
 
                 /* No diagonal && visited */
-                if (row_offset == col_offset ||
+                if (row_offset == col_offset || row_offset + col_offset == 0 ||
                     !check_valid_boundary(next_row, next_col) ||
                     matrix[next_row][next_col] <= matrix[cur_row][cur_col])
                     continue;
