@@ -1,4 +1,5 @@
 #include <vector>
+#include <sstream>
 #include <string>
 #include <string_view>
 #include <type_traits>
@@ -32,14 +33,30 @@ class Serializer
     {
     }
 
+    /* Assume:
+       - list: empty (nullptr)
+       - Data example: 2 4 3
+    */
     void deserialize(std::string data, ListNode *list)
     {
-        /* Data example: [2,4,3] */
+        std::istringstream iss(data);
+        ListNode *cur = list = new ListNode();
+        int value;
+        while (iss >> value)
+        {
+            cur->next = new ListNode(value);
+            cur = cur->next;
+        }
+        list = list->next;
     }
 
+    /* Assume:
+       - list: empty (nullptr)
+       - Data example: [1,2,3,null,null,4,5]
+    */
     void deserialize(std::string data, TreeNode *root)
     {
-        /* Data example: [1,2,3,null,null,4,5] */
+
     }
 };
 
