@@ -21,6 +21,28 @@ struct TreeNode
     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 
+class Serializer
+{
+ public:
+    std::string serialize(ListNode *list)
+    {
+    }
+
+    std::string serialize(TreeNode *root)
+    {
+    }
+
+    void deserialize(std::string data, ListNode *list)
+    {
+        /* Data example: [2,4,3] */
+    }
+
+    void deserialize(std::string data, TreeNode *root)
+    {
+        /* Data example: [1,2,3,null,null,4,5] */
+    }
+};
+
 // template <typename T>
 // void split(std::vector<T> &tokens, std::string &target, std::string &delim)
 void split(std::vector<std::string> &tokens, std::string &target, std::string &delim)
