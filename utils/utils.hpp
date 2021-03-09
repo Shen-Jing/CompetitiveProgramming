@@ -9,9 +9,7 @@ struct ListNode
 {
     int val;
     ListNode *next;
-    ListNode() : val(0), next(nullptr) {}
-    ListNode(int x) : val(x), next(nullptr) {}
-    ListNode(int x, ListNode *next) : val(x), next(next) {}
+    ListNode(int value = 0, ListNode *next = nullptr) : val(value), next(next) {}
 };
 
 struct TreeNode
