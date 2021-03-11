@@ -44,9 +44,10 @@ class Solution
         for (size_t i = 0; i < sz - 1; ++i)
         {
             cur_len = 1;
-            while (i < sz - 1 && nums[i] + 1 == nums[i + 1])
+            while (i < sz - 1 && nums[i + 1] - nums[i] <= 1)
             {
-                ++cur_len;
+                if (nums[i] + 1 == nums[i + 1])
+                    ++cur_len;
                 ++i;
             }
             max_len = max(max_len, cur_len);
