@@ -46,7 +46,7 @@ class Solution
         
         for (const auto &num : nums)
         {
-            if (!occurencies.count(num - 1))
+            if (occurencies[num])
             {
                 int cur_streak{1};
                 for (auto cur_num = num + 1; occurencies.count(cur_num) >= 1; ++cur_num)
@@ -58,12 +58,10 @@ class Solution
 
                 if (cur_streak == k)
                 {
-                    /* Removing current set of k consecutive numbers */
+                    /* Decrease frequency of current set of k consecutive numbers */
                     for (int value{num}; value < num + k; ++value)
                     {
                         --occurencies[value];
-                        if (!occurencies[value])
-                            occurencies.erase(value);
                     }
                 }
                 else
@@ -77,7 +75,7 @@ class Solution
 int main(void)
 {
     Solution sol;
-    vector<int> nums{1,2,3,3,4,4,5,6};
+    vector<int> nums{3,3,2,2,1,1};
     sol.isPossibleDivide(nums, 4);
     return 0;
 }
