@@ -64,10 +64,11 @@ class Solution
                         --occurencies[value];
                     }
                 }
-                else
-                    return false;
             }
         }
+        for (const auto &[num, freq] : occurencies)
+            if (freq != 0)
+                return false;
         return true;
     }
 };
