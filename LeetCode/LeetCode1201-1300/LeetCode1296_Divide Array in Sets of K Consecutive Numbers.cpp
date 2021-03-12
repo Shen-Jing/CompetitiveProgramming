@@ -44,6 +44,7 @@ class Solution
             ++occurencies[num];
         }
         
+        sort(nums.begin(), nums.end());
         for (const auto &num : nums)
         {
             if (occurencies[num])
@@ -76,7 +77,7 @@ class Solution
 int main(void)
 {
     Solution sol;
-    vector<int> nums{10,9,8,1,2,3,2,3,4,4,5,6,10,11,12};
+    vector<int> nums{9,10,11,5,6,7,5,6,7,7,8,9};
     sol.isPossibleDivide(nums, 3);
     return 0;
 }
