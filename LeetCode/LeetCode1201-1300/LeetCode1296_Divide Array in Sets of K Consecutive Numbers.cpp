@@ -49,7 +49,7 @@ class Solution
             if (occurencies[num])
             {
                 int cur_streak{1};
-                for (auto cur_num = num + 1; occurencies.count(cur_num) >= 1; ++cur_num)
+                for (auto cur_num = num + 1; occurencies[cur_num] >= 1; ++cur_num)
                 {
                     ++cur_streak;
                     if (cur_streak == k)
@@ -76,7 +76,7 @@ class Solution
 int main(void)
 {
     Solution sol;
-    vector<int> nums{3,3,2,2,1,1};
-    sol.isPossibleDivide(nums, 4);
+    vector<int> nums{10,9,8,1,2,3,2,3,4,4,5,6,10,11,12};
+    sol.isPossibleDivide(nums, 3);
     return 0;
 }
