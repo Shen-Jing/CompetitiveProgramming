@@ -37,26 +37,29 @@ class Solution
     bool isValid(string s) 
     {
         /* round, curly, square */
-        array<stack<char>, 3> brackets_stack;
-        map<char, int> open_brackets {{'(', 0}, {'[', 1}, {'{', 2}};
-        map<char, int> close_brackets{{')', 0}, {']', 1}, {'}', 2}};
+        stack<char> open_brackets;
+        map<char, char> bracket_mapping{ {'(', ')'}, {'[', ']'}, {'{', '}'} };
         for (const auto &bracket : s)
         {
-            if (open_brackets.count(bracket))
-                brackets_stack[open_brackets[bracket]].emplace(bracket);
+            if (bracket_mapping.count(bracket))  // C++20: .contains
+                open_brackets.push(bracket);
             else
-                brackets_stack[close_brackets[bracket]].pop();
+            {
+                if (open_brackets.empty() || bracket_mapping[open_brackets.top()] != bracket)
+                    return false;
+                open_brackets.pop();
+            }
         }
 
-        for (const auto &bracket : brackets_stack)
-            if (!bracket.empty())
-                return false;
+        if (!open_brackets.empty())
+            return false;
         return true;
     }
 };
 
 int main(void)
 {
-
+    Solution sol;
+    sol.isValid("())");
     return 0;
 }
