@@ -58,8 +58,7 @@ class Codec
         ss.str(data);
         ss.clear();
         auto root = new TreeNode(0);
-        sub_deserialize(root->left);
-        return root->left;
+        return sub_deserialize();
     }
 
  private:
@@ -77,19 +76,20 @@ class Codec
             ss << "# ";
     }
 
-    void sub_deserialize(TreeNode *node)
+    TreeNode* sub_deserialize()
     {
         string val;
         ss >> val;
         if (val == "#")
         {
-            node = nullptr;
+            return nullptr;
         }
         else
         {
-            node = new TreeNode(stoi(val));
-            sub_deserialize(node->left);
-            sub_deserialize(node->right);
+            auto root = new TreeNode(stoi(val));
+            root->left = sub_deserialize();
+            root->right = sub_deserialize();
+            return root;
         }
     }
 };
