@@ -57,7 +57,6 @@ class Codec
     {
         ss.str(data);
         ss.clear();
-        auto root = new TreeNode(0);
         return sub_deserialize();
     }
 
