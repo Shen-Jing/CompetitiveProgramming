@@ -44,6 +44,8 @@ class Solution
         sort(nums.begin(), nums.end());  // For a <= b <= c in (a, b, c)
         for (size_t i = 0; i <= sz - 3; ++i)
         {
+            if (i && nums[i] == nums[i - 1])
+                continue;
             size_t start = i + 1, last = sz - 1;
             int target = 0 - nums[i];
             while (start < last)
