@@ -42,21 +42,29 @@ class Solution
  private:
     bool word_break_BFS(string s, vector<string> &word_dict)
     {
+        auto len = s.length();
+        vector<bool> visited(len);
+        set<string> words{word_dict.begin(), word_dict.end()};
         queue<size_t> q;
         q.push(0);
         while (!q.empty())
         {
-            auto cur_idx = q.front();
+            auto start = q.front();
             q.pop();
 
-            if (cur_idx == s.length())
-                return true;
+            if (visited[start])
+                continue;
 
-            for (const auto &word : word_dict)
+            for (size_t end{start + 1}; end <= len; ++end)
             {
-                if (cur_idx == s.find(word))
-                    q.push(cur_idx + word.length());
+                if (words.find(s.substr(start, end - start)) != words.end())
+                {
+                    if (end == s.length())
+                        return true;
+                    q.push(end);
+                }
             }
+            visited[start] = true;
         }
         return false;
     }
@@ -68,8 +76,15 @@ int main(void)
 
     string s{"applepenapple"};
     vector<string> word_dict{"apple", "pen"};
+    sol.wordBreak(s, word_dict);  // True
 
-    sol.wordBreak(s, word_dict);
+    s.assign("catsandog");
+    word_dict.assign({"cats", "dog", "sand", "and", "cat"});
+    sol.wordBreak(s, word_dict);  // False
+    
+    s.assign("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab");
+    word_dict.assign({"a","aa","aaa","aaaa","aaaaa","aaaaaa","aaaaaaa","aaaaaaaa","aaaaaaaaa","aaaaaaaaaa"});
+    sol.wordBreak(s, word_dict);  // False or TLE
     
     return 0;
 }
