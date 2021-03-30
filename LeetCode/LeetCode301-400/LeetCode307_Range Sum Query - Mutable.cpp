@@ -65,7 +65,7 @@ class FenwickTree
     
     int query(int left, int right)
     {
-        return (left == 1) ? query(right) : query(right) - query(left - 1);
+        return query(right) - query(left - 1);
     }
 
   private:
