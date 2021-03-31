@@ -35,7 +35,7 @@ class Serializer
        - list: empty (nullptr)
        - Data example: 2 4 3
     */
-    void deserialize(std::string data, ListNode *list)
+    void deserialize(std::string data, ListNode *&list)
     {
         std::istringstream iss(data);
         ListNode *cur = list = new ListNode();
@@ -45,7 +45,9 @@ class Serializer
             cur->next = new ListNode(value);
             cur = cur->next;
         }
+        auto to_removed = list;
         list = list->next;
+        free(to_removed);
     }
 
     /* Assume:
