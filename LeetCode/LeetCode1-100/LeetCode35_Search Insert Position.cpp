@@ -36,23 +36,23 @@ class Solution
  public:
     int searchInsert(vector<int>& nums, int target) 
     {
-        size_t sz = nums.size();
-        size_t first{0}, last = sz - 1;
-        size_t mid = (first + last) / 2;
-        for ( ; mid < sz; mid = (first + last) / 2)
+        return my_lower_bound(nums.begin(), nums.end(), target) - nums.begin();
+    }
+
+ private:
+    template<typename ForwardIt, typename T>
+    ForwardIt my_lower_bound(ForwardIt first, ForwardIt last, const T &value)
+    {
+        ForwardIt mid;
+        while (first < last)
         {
-            if (nums[mid] == target)
-                return mid;
-            else if (nums[mid] < target)
-            {
-                first = mid;
-            }
-            else
-            {
+            mid = first + (last - first) / 2;
+            if (*mid >= value) /* [first, mid) */
                 last = mid;
-            }
+            else /* [mid + 1, last) */
+                first = mid + 1;
         }
-        return -1;
+        return first;
     }
 };
 
