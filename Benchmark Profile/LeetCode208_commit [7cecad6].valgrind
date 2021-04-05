@@ -1,0 +1,200 @@
+==981== Memcheck, a memory error detector
+==981== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==981== Using Valgrind-3.15.0-608cb11914-20190413 and LibVEX; rerun with -h for copyright info
+==981== Command: ./bin/LeetCode208_Implement\ Trie\ (Prefix\ Tree)
+==981== 
+--981-- Valgrind options:
+--981--    --leak-check=full
+--981--    --show-leak-kinds=all
+--981--    --verbose
+--981-- Contents of /proc/version:
+--981--   Linux version 4.19.128-microsoft-standard (oe-user@oe-host) (gcc version 8.2.0 (GCC)) #1 SMP Tue Jun 23 12:58:10 UTC 2020
+--981-- 
+--981-- Arch and hwcaps: AMD64, LittleEndian, amd64-cx16-lzcnt-rdtscp-sse3-ssse3-avx-avx2-bmi-f16c-rdrand
+--981-- Page sizes: currently 4096, max supported 4096
+--981-- Valgrind library directory: /usr/lib/x86_64-linux-gnu/valgrind
+--981-- Reading syms from /mnt/d/Backup_Sync/Programming/CompetitiveProgramming/bin/LeetCode208_Implement Trie (Prefix Tree)
+--981-- Reading syms from /usr/lib/x86_64-linux-gnu/ld-2.31.so
+--981--   Considering /usr/lib/x86_64-linux-gnu/ld-2.31.so ..
+--981--   .. CRC mismatch (computed 6cded93a wanted 1af57820)
+--981--   Considering /lib/x86_64-linux-gnu/ld-2.31.so ..
+--981--   .. CRC mismatch (computed 6cded93a wanted 1af57820)
+--981--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/ld-2.31.so ..
+--981--   .. CRC is valid
+--981-- Reading syms from /usr/lib/x86_64-linux-gnu/valgrind/memcheck-amd64-linux
+--981--    object doesn't have a symbol table
+--981--    object doesn't have a dynamic symbol table
+--981-- Scheduler: using generic scheduler lock implementation.
+--981-- Reading suppressions file: /usr/lib/x86_64-linux-gnu/valgrind/default.supp
+==981== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-981-by-shenjing-on-???
+==981== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-981-by-shenjing-on-???
+==981== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-981-by-shenjing-on-???
+==981== 
+==981== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==981== don't want to do, unless you know exactly what you're doing,
+==981== or are doing some strange experiment):
+==981==   /usr/lib/x86_64-linux-gnu/valgrind/../../bin/vgdb --pid=981 ...command...
+==981== 
+==981== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==981==   /path/to/gdb ./bin/LeetCode208_Implement Trie (Prefix Tree)
+==981== and then give GDB the following command
+==981==   target remote | /usr/lib/x86_64-linux-gnu/valgrind/../../bin/vgdb --pid=981
+==981== --pid is optional if only one valgrind process is running
+==981== 
+--981-- REDIR: 0x4022d80 (ld-linux-x86-64.so.2:strlen) redirected to 0x580c9ce2 (???)
+--981-- REDIR: 0x4022b50 (ld-linux-x86-64.so.2:index) redirected to 0x580c9cfc (???)
+--981-- Reading syms from /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_core-amd64-linux.so
+--981--    object doesn't have a symbol table
+--981-- Reading syms from /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so
+--981--    object doesn't have a symbol table
+==981== WARNING: new redirection conflicts with existing -- ignoring it
+--981--     old: 0x04022d80 (strlen              ) R-> (0000.0) 0x580c9ce2 ???
+--981--     new: 0x04022d80 (strlen              ) R-> (2007.0) 0x0483f060 strlen
+--981-- REDIR: 0x401f560 (ld-linux-x86-64.so.2:strcmp) redirected to 0x483ffd0 (strcmp)
+--981-- REDIR: 0x40232e0 (ld-linux-x86-64.so.2:mempcpy) redirected to 0x4843a20 (mempcpy)
+--981-- Reading syms from /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28
+--981--    object doesn't have a symbol table
+--981-- Reading syms from /usr/lib/x86_64-linux-gnu/libgcc_s.so.1
+--981--    object doesn't have a symbol table
+--981-- Reading syms from /usr/lib/x86_64-linux-gnu/libpthread-2.31.so
+--981--   Considering /usr/lib/debug/.build-id/4f/c5fc33f4429136a494c640b113d76f610e4abc.debug ..
+--981--   .. build-id is valid
+--981-- Reading syms from /usr/lib/x86_64-linux-gnu/libc-2.31.so
+--981--   Considering /usr/lib/x86_64-linux-gnu/libc-2.31.so ..
+--981--   .. CRC mismatch (computed cd1655d1 wanted 09373696)
+--981--   Considering /lib/x86_64-linux-gnu/libc-2.31.so ..
+--981--   .. CRC mismatch (computed cd1655d1 wanted 09373696)
+--981--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libc-2.31.so ..
+--981--   .. CRC is valid
+--981-- Reading syms from /usr/lib/x86_64-linux-gnu/libm-2.31.so
+--981--   Considering /usr/lib/x86_64-linux-gnu/libm-2.31.so ..
+--981--   .. CRC mismatch (computed b88da5c9 wanted 1658d783)
+--981--   Considering /lib/x86_64-linux-gnu/libm-2.31.so ..
+--981--   .. CRC mismatch (computed b88da5c9 wanted 1658d783)
+--981--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libm-2.31.so ..
+--981--   .. CRC is valid
+--981-- REDIR: 0x4b19600 (libc.so.6:memmove) redirected to 0x48331d0 (_vgnU_ifunc_wrapper)
+--981-- REDIR: 0x4b18900 (libc.so.6:strncpy) redirected to 0x48331d0 (_vgnU_ifunc_wrapper)
+--981-- REDIR: 0x4b19930 (libc.so.6:strcasecmp) redirected to 0x48331d0 (_vgnU_ifunc_wrapper)
+--981-- REDIR: 0x4b18220 (libc.so.6:strcat) redirected to 0x48331d0 (_vgnU_ifunc_wrapper)
+--981-- REDIR: 0x4b18960 (libc.so.6:rindex) redirected to 0x48331d0 (_vgnU_ifunc_wrapper)
+--981-- REDIR: 0x4b1add0 (libc.so.6:rawmemchr) redirected to 0x48331d0 (_vgnU_ifunc_wrapper)
+--981-- REDIR: 0x4b35e60 (libc.so.6:wmemchr) redirected to 0x48331d0 (_vgnU_ifunc_wrapper)
+--981-- REDIR: 0x4b359a0 (libc.so.6:wcscmp) redirected to 0x48331d0 (_vgnU_ifunc_wrapper)
+--981-- REDIR: 0x4b19760 (libc.so.6:mempcpy) redirected to 0x48331d0 (_vgnU_ifunc_wrapper)
+--981-- REDIR: 0x4b19590 (libc.so.6:bcmp) redirected to 0x48331d0 (_vgnU_ifunc_wrapper)
+--981-- REDIR: 0x4b18890 (libc.so.6:strncmp) redirected to 0x48331d0 (_vgnU_ifunc_wrapper)
+--981-- REDIR: 0x4b182d0 (libc.so.6:strcmp) redirected to 0x48331d0 (_vgnU_ifunc_wrapper)
+--981-- REDIR: 0x4b196c0 (libc.so.6:memset) redirected to 0x48331d0 (_vgnU_ifunc_wrapper)
+--981-- REDIR: 0x4b35960 (libc.so.6:wcschr) redirected to 0x48331d0 (_vgnU_ifunc_wrapper)
+--981-- REDIR: 0x4b187f0 (libc.so.6:strnlen) redirected to 0x48331d0 (_vgnU_ifunc_wrapper)
+--981-- REDIR: 0x4b183b0 (libc.so.6:strcspn) redirected to 0x48331d0 (_vgnU_ifunc_wrapper)
+--981-- REDIR: 0x4b19980 (libc.so.6:strncasecmp) redirected to 0x48331d0 (_vgnU_ifunc_wrapper)
+--981-- REDIR: 0x4b18350 (libc.so.6:strcpy) redirected to 0x48331d0 (_vgnU_ifunc_wrapper)
+--981-- REDIR: 0x4b19ad0 (libc.so.6:memcpy@@GLIBC_2.14) redirected to 0x48331d0 (_vgnU_ifunc_wrapper)
+--981-- REDIR: 0x4b370d0 (libc.so.6:wcsnlen) redirected to 0x48331d0 (_vgnU_ifunc_wrapper)
+--981-- REDIR: 0x4b359e0 (libc.so.6:wcscpy) redirected to 0x48331d0 (_vgnU_ifunc_wrapper)
+--981-- REDIR: 0x4b189a0 (libc.so.6:strpbrk) redirected to 0x48331d0 (_vgnU_ifunc_wrapper)
+--981-- REDIR: 0x4b18280 (libc.so.6:index) redirected to 0x48331d0 (_vgnU_ifunc_wrapper)
+--981-- REDIR: 0x4b187b0 (libc.so.6:strlen) redirected to 0x48331d0 (_vgnU_ifunc_wrapper)
+--981-- REDIR: 0x4b21d20 (libc.so.6:memrchr) redirected to 0x48331d0 (_vgnU_ifunc_wrapper)
+--981-- REDIR: 0x4b199d0 (libc.so.6:strcasecmp_l) redirected to 0x48331d0 (_vgnU_ifunc_wrapper)
+--981-- REDIR: 0x4b19550 (libc.so.6:memchr) redirected to 0x48331d0 (_vgnU_ifunc_wrapper)
+--981-- REDIR: 0x4b35ab0 (libc.so.6:wcslen) redirected to 0x48331d0 (_vgnU_ifunc_wrapper)
+--981-- REDIR: 0x4b18c60 (libc.so.6:strspn) redirected to 0x48331d0 (_vgnU_ifunc_wrapper)
+--981-- REDIR: 0x4b198d0 (libc.so.6:stpncpy) redirected to 0x48331d0 (_vgnU_ifunc_wrapper)
+--981-- REDIR: 0x4b19870 (libc.so.6:stpcpy) redirected to 0x48331d0 (_vgnU_ifunc_wrapper)
+--981-- REDIR: 0x4b1ae10 (libc.so.6:strchrnul) redirected to 0x48331d0 (_vgnU_ifunc_wrapper)
+--981-- REDIR: 0x4b19a20 (libc.so.6:strncasecmp_l) redirected to 0x48331d0 (_vgnU_ifunc_wrapper)
+--981-- REDIR: 0x4c01490 (libc.so.6:__strrchr_avx2) redirected to 0x483ea10 (rindex)
+--981-- REDIR: 0x4b13260 (libc.so.6:malloc) redirected to 0x483b780 (malloc)
+--981-- REDIR: 0x4c01660 (libc.so.6:__strlen_avx2) redirected to 0x483ef40 (strlen)
+--981-- REDIR: 0x4bfdc50 (libc.so.6:__memcmp_avx2_movbe) redirected to 0x48421e0 (bcmp)
+--981-- REDIR: 0x4bfcb60 (libc.so.6:__strcmp_avx2) redirected to 0x483fed0 (strcmp)
+--981-- REDIR: 0x4901c70 (libstdc++.so.6:operator new[](unsigned long)) redirected to 0x483c510 (operator new[](unsigned long))
+--981-- REDIR: 0x4901c10 (libstdc++.so.6:operator new(unsigned long)) redirected to 0x483bdf0 (operator new(unsigned long))
+--981-- REDIR: 0x4c04670 (libc.so.6:__memcpy_avx_unaligned_erms) redirected to 0x48429f0 (memmove)
+--981-- REDIR: 0x48ffe70 (libstdc++.so.6:operator delete(void*, unsigned long)) redirected to 0x483d160 (operator delete(void*, unsigned long))
+--981-- REDIR: 0x4b13850 (libc.so.6:free) redirected to 0x483c9d0 (free)
+==981== 
+==981== HEAP SUMMARY:
+==981==     in use at exit: 122,880 bytes in 6 blocks
+==981==   total heap usage: 19 allocs, 13 frees, 197,072 bytes allocated
+==981== 
+==981== Searching for pointers to 6 not-freed blocks
+==981== Checked 137,504 bytes
+==981== 
+==981== 8,192 bytes in 1 blocks are still reachable in loss record 1 of 6
+==981==    at 0x483C583: operator new[](unsigned long) (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==981==    by 0x4962F63: std::basic_filebuf<char, std::char_traits<char> >::_M_allocate_internal_buffer() (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+==981==    by 0x4960D49: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+==981==    by 0x4912B47: std::ios_base::sync_with_stdio(bool) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+==981==    by 0x1094B4: operator() (LeetCode208_Implement Trie (Prefix Tree).cpp:28)
+==981==    by 0x1094B4: __static_initialization_and_destruction_0 (LeetCode208_Implement Trie (Prefix Tree).cpp:31)
+==981==    by 0x1094B4: _GLOBAL__sub_I_main (LeetCode208_Implement Trie (Prefix Tree).cpp:117)
+==981==    by 0x109ABC: __libc_csu_init (in /mnt/d/Backup_Sync/Programming/CompetitiveProgramming/bin/LeetCode208_Implement Trie (Prefix Tree))
+==981==    by 0x4A9D03F: (below main) (libc-start.c:264)
+==981== 
+==981== 8,192 bytes in 1 blocks are still reachable in loss record 2 of 6
+==981==    at 0x483C583: operator new[](unsigned long) (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==981==    by 0x4962F63: std::basic_filebuf<char, std::char_traits<char> >::_M_allocate_internal_buffer() (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+==981==    by 0x4960D49: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+==981==    by 0x4912B68: std::ios_base::sync_with_stdio(bool) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+==981==    by 0x1094B4: operator() (LeetCode208_Implement Trie (Prefix Tree).cpp:28)
+==981==    by 0x1094B4: __static_initialization_and_destruction_0 (LeetCode208_Implement Trie (Prefix Tree).cpp:31)
+==981==    by 0x1094B4: _GLOBAL__sub_I_main (LeetCode208_Implement Trie (Prefix Tree).cpp:117)
+==981==    by 0x109ABC: __libc_csu_init (in /mnt/d/Backup_Sync/Programming/CompetitiveProgramming/bin/LeetCode208_Implement Trie (Prefix Tree))
+==981==    by 0x4A9D03F: (below main) (libc-start.c:264)
+==981== 
+==981== 8,192 bytes in 1 blocks are still reachable in loss record 3 of 6
+==981==    at 0x483C583: operator new[](unsigned long) (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==981==    by 0x4962F63: std::basic_filebuf<char, std::char_traits<char> >::_M_allocate_internal_buffer() (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+==981==    by 0x4960D49: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+==981==    by 0x4912B88: std::ios_base::sync_with_stdio(bool) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+==981==    by 0x1094B4: operator() (LeetCode208_Implement Trie (Prefix Tree).cpp:28)
+==981==    by 0x1094B4: __static_initialization_and_destruction_0 (LeetCode208_Implement Trie (Prefix Tree).cpp:31)
+==981==    by 0x1094B4: _GLOBAL__sub_I_main (LeetCode208_Implement Trie (Prefix Tree).cpp:117)
+==981==    by 0x109ABC: __libc_csu_init (in /mnt/d/Backup_Sync/Programming/CompetitiveProgramming/bin/LeetCode208_Implement Trie (Prefix Tree))
+==981==    by 0x4A9D03F: (below main) (libc-start.c:264)
+==981== 
+==981== 32,768 bytes in 1 blocks are still reachable in loss record 4 of 6
+==981==    at 0x483C583: operator new[](unsigned long) (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==981==    by 0x4964D76: std::basic_filebuf<wchar_t, std::char_traits<wchar_t> >::_M_allocate_internal_buffer() (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+==981==    by 0x4960F39: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+==981==    by 0x4912BFD: std::ios_base::sync_with_stdio(bool) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+==981==    by 0x1094B4: operator() (LeetCode208_Implement Trie (Prefix Tree).cpp:28)
+==981==    by 0x1094B4: __static_initialization_and_destruction_0 (LeetCode208_Implement Trie (Prefix Tree).cpp:31)
+==981==    by 0x1094B4: _GLOBAL__sub_I_main (LeetCode208_Implement Trie (Prefix Tree).cpp:117)
+==981==    by 0x109ABC: __libc_csu_init (in /mnt/d/Backup_Sync/Programming/CompetitiveProgramming/bin/LeetCode208_Implement Trie (Prefix Tree))
+==981==    by 0x4A9D03F: (below main) (libc-start.c:264)
+==981== 
+==981== 32,768 bytes in 1 blocks are still reachable in loss record 5 of 6
+==981==    at 0x483C583: operator new[](unsigned long) (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==981==    by 0x4964D76: std::basic_filebuf<wchar_t, std::char_traits<wchar_t> >::_M_allocate_internal_buffer() (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+==981==    by 0x4960F39: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+==981==    by 0x4912C17: std::ios_base::sync_with_stdio(bool) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+==981==    by 0x1094B4: operator() (LeetCode208_Implement Trie (Prefix Tree).cpp:28)
+==981==    by 0x1094B4: __static_initialization_and_destruction_0 (LeetCode208_Implement Trie (Prefix Tree).cpp:31)
+==981==    by 0x1094B4: _GLOBAL__sub_I_main (LeetCode208_Implement Trie (Prefix Tree).cpp:117)
+==981==    by 0x109ABC: __libc_csu_init (in /mnt/d/Backup_Sync/Programming/CompetitiveProgramming/bin/LeetCode208_Implement Trie (Prefix Tree))
+==981==    by 0x4A9D03F: (below main) (libc-start.c:264)
+==981== 
+==981== 32,768 bytes in 1 blocks are still reachable in loss record 6 of 6
+==981==    at 0x483C583: operator new[](unsigned long) (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==981==    by 0x4964D76: std::basic_filebuf<wchar_t, std::char_traits<wchar_t> >::_M_allocate_internal_buffer() (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+==981==    by 0x4960F39: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+==981==    by 0x4912C30: std::ios_base::sync_with_stdio(bool) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+==981==    by 0x1094B4: operator() (LeetCode208_Implement Trie (Prefix Tree).cpp:28)
+==981==    by 0x1094B4: __static_initialization_and_destruction_0 (LeetCode208_Implement Trie (Prefix Tree).cpp:31)
+==981==    by 0x1094B4: _GLOBAL__sub_I_main (LeetCode208_Implement Trie (Prefix Tree).cpp:117)
+==981==    by 0x109ABC: __libc_csu_init (in /mnt/d/Backup_Sync/Programming/CompetitiveProgramming/bin/LeetCode208_Implement Trie (Prefix Tree))
+==981==    by 0x4A9D03F: (below main) (libc-start.c:264)
+==981== 
+==981== LEAK SUMMARY:
+==981==    definitely lost: 0 bytes in 0 blocks
+==981==    indirectly lost: 0 bytes in 0 blocks
+==981==      possibly lost: 0 bytes in 0 blocks
+==981==    still reachable: 122,880 bytes in 6 blocks
+==981==         suppressed: 0 bytes in 0 blocks
+==981== 
+==981== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
