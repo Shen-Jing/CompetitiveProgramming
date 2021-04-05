@@ -21,47 +21,64 @@
 #include <type_traits>
 #include <vector>
 
-using namespace std;
-
 static auto io = []() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
+    std::ios_base::sync_with_stdio(false);
+    std::cin.tie(nullptr);
     return nullptr;
 }();
 
 int main(void){
-    cout << "***Case 0: ***\n";
+    std::cout << "***Case 0: ***\n";
     bool b;
-    cout << "Size of boolean type: " << sizeof(b) << "\n";
+    std::cout << "Size of boolean type: " << sizeof(b) << "\n";
 
-    cout << "***Case 1: ***\n";
-    cout << std::stoi("01000101", nullptr, 2) << endl;
-    cout << std::stoi("265", nullptr, 16) << endl;
-    stringstream ss;
-    bitset<8> byte_test("00010010");
-    cout << "initial value: " << byte_test << '\n';
-    cout << byte_test.count() << '\n';
-    ss << hex << "265";
+    std::cout << "***Case 1: ***\n";
+    std::cout << std::stoi("01000101", nullptr, 2) << "\n";
+    std::cout << std::stoi("265", nullptr, 16) << "\n";
+    std::stringstream ss;
+    std::bitset<8> byte_test("00010010");
+    std::cout << "initial value: " << byte_test << '\n';
+    std::cout << byte_test.count() << '\n';
+    ss << std::hex << "265";
     int n;
     ss >> n;
-    cout << n << endl;
+    std::cout << n << "\n";
 
     printf("***Case 2: ***\n");
-    istringstream input("1 22 333");
-    istream_iterator<int> begin(input);
-    istream_iterator<int> end;
+    std::istringstream input("1 22 333");
+    std::istream_iterator<int> begin(input);
+    std::istream_iterator<int> end;
 
-    vector<int> data;
+    std::vector<int> data;
     data.insert(data.begin(), begin, end);
     for (const auto &i : data)
-      cout << i << endl;
+      std::cout << i << std::endl;
 
     printf("***Case 3: ***\n");
     // void* memset( void* dest, int ch, std::size_t count );
     int a[10];
     auto uch = static_cast<unsigned char>(-1);
-    cout << uch << '\n';
+    std::cout << uch << '\n';
     memset(a, 1, sizeof a);
     for (int ai : a)
       std::cout << ai << " ";
+    
+    printf("***Case 4: Striping suffix #***\n");
+    std::vector<std::string> headers
+    {
+      ">Read=10000;length=16492bp;startpos=3486810;chromosome=NC_000913.3_Escherichia_coli_K-12_MG1655,_complete_genome;numberOfErrors=3554;totalErrorProb=0.2056;passes=1.5688284802086048;passesLeft=1;passesRight=2;cutPosition=7111#0",
+      ">Read=10000;length=16492bp;startpos=3486810;chromosome=NC_000913.3_Escherichia_coli_K-12_MG1655,_complete_genome;numberOfErrors=3554;totalErrorProb=0.2056;passes=1.5688284802086048;passesLeft=1;passesRight=2;cutPosition=7111#2"
+    };
+
+    for (auto &header : headers)
+    {
+        auto pos = header.rfind("#");
+        header = header.substr(0, header.rfind("#"));
+    }
+
+    printf("***Case 5: Lower bound***\n");
+    std::string target{"applepen"};
+    auto lower = std::lower_bound(target.begin(), target.end(), std::string("apple"));
+
+    return 0;
 }
