@@ -41,8 +41,8 @@ class Solution
             return nullptr;
 
         swap(root->left, root->right);
-        root->left = (root->left) ? invertTree(root->left) : nullptr;
-        root->right = (root->right) ? invertTree(root->right) : nullptr;
+        invertTree(root->left);
+        invertTree(root->right);
         return root;
     }
 };
