@@ -37,12 +37,13 @@ class Solution
  public:
     ListNode* removeNthFromEnd(ListNode* head, int n)
     {
-        ListNode *fast = head, *slow = head;
+        ListNode dummy_head = ListNode(0, head);
+        ListNode *fast = head, *slow = &dummy_head;
         
-        for (int steps = 0; steps <= n; ++steps)
+        for (int steps = 0; steps < n - 1; ++steps)
             fast = fast->next;
 
-        while (fast)
+        while (fast->next)
         {
             fast = fast->next;
             slow = slow->next;
@@ -51,7 +52,7 @@ class Solution
         ListNode *deleted = slow->next;
         slow->next = slow->next->next;
 
-        return head;
+        return dummy_head.next;
     }
 };
 
@@ -64,5 +65,7 @@ int main(void)
     serializer.deserialize("1 2 3 4 5", head);
     cout << serializer.serialize(sol.removeNthFromEnd(head, 2)) << "\n";
 
+    serializer.deserialize("1", head);
+    cout << serializer.serialize(sol.removeNthFromEnd(head, 1)) << "\n";
     return 0;
 }
