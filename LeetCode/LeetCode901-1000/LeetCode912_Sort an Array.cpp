@@ -60,11 +60,52 @@ class Solution
         return tmp;
     }
 
+    void merge(vector<int> &nums, size_t left, size_t right)
+    {
+        auto mid = left + ((right - left) >> 1);
+        auto sub_left  = vector<int>{nums.begin() + left, nums.begin() + mid};
+        auto sub_right = vector<int>{nums.begin() + mid, nums.begin() + right};
+
+        vector<int> tmp_out;
+        tmp_out.reserve(right - left);
+        size_t l_idx = left, r_idx = mid;
+        while (l_idx < mid && r_idx < right)
+        {
+            if (sub_left[l_idx] <= sub_right[r_idx])
+                tmp_out.emplace_back(sub_left[l_idx]);
+            else
+                tmp_out.emplace_back(sub_right[r_idx]);
+        }
+
+        /* Only  */
+        for ( ; l_idx < mid; ++l_idx)
+            tmp_out.emplace_back(sub_left[l_idx]);
+        for ( ; r_idx < right; ++r_idx)
+            tmp_out.emplace_back(sub_right[r_idx]);
+        
+        for (size_t i = left, out_idx = 0; i < right; ++i, ++out_idx)
+            nums[i] = tmp_out[out_idx];
+    }
+
+    void merge_sort(vector<int> &nums, size_t left, size_t right, vector<int> &output)
+    {
+        if (left < right)
+        {
+            auto mid = left + ((right - left) >> 1);
+            merge_sort(nums, left, mid, output);
+            merge_sort(nums, mid, right, output);
+            merge(nums, left, right);
+        }
+        return;
+    }
+
     vector<int> sortArray(vector<int> &nums)
     {
         init(nums);
+        vector<int> output(nums.size(), 0);
+        merge_sort(nums, 0, nums.size(), output);
+        return nums;
         return counting_sort(nums);
-        
     }
 
  private:
@@ -78,7 +119,12 @@ int main(void)
 {
 
     Solution sol;
-    vector<int> nums{3, 7, 7, 7, 10, 4, 4, 11, 11, 11, 11};
+
+    vector<int> nums{5, 2, 3, 1, 4};
     sol.sortArray(nums);
+
+    nums = {5, 1, 1, 2, 0, 0};
+    sol.sortArray(nums);
+
     return 0;
 }
