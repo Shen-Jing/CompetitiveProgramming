@@ -37,20 +37,16 @@ class Solution
     int maxSubArray(vector<int>& nums)
     {
         const auto sz = nums.size();
-        vector<vector<int>> max_range_sum(sz, vector<int>(sz, 0));
 
         /* Range: [start, end] */
         int max_sum = numeric_limits<int>::min();
-        for (size_t start = 0; start < sz; ++start)
+        int cur_sum = 0;
+        for (size_t i = 0; i < sz; ++i)
         {
-            for (size_t end = start; end < sz; ++end)
-            {
-                max_range_sum[start][end] = 
-                                    (start == end) 
-                                    ? nums[start]
-                                    : max_range_sum[start][end] = max_range_sum[start][end - 1] + nums[end];
-                max_sum = max(max_sum, max_range_sum[start][end]);
-            }
+            cur_sum += nums[i];
+            max_sum = max(max_sum, cur_sum);
+            if (cur_sum < 0)
+                cur_sum = 0;
         }
         return max_sum;
     }
@@ -58,6 +54,10 @@ class Solution
 
 int main(void)
 {
+    Solution sol;
+
+    vector<int> nums{-2, 1, -3, 4, -1, 2, 1, -5, 4};
+    cout << sol.maxSubArray(nums) << "\n";
 
     return 0;
 }
