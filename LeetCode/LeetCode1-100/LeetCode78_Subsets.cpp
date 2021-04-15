@@ -39,12 +39,12 @@ class Solution
         auto sz = nums.size();
         is_set.resize(sz);
         set_bits(nums, 0);
-        return vector<vector<int>>{ans.begin(), ans.end()};
+        return ans;
     }
 
   private:
     vector<bool> is_set;
-    set<vector<int>> ans;
+    vector<vector<int>> ans;
 
     void get_subset(const vector<int> &nums)
     {
@@ -54,23 +54,21 @@ class Solution
             if (is_set[i])
                 elements.emplace_back(nums[i]);
         }
-        ans.emplace(elements);
+        ans.emplace_back(elements);
     }
 
     void set_bits(const vector<int> &nums, size_t idx)
     {
         if (idx == nums.size())
-            return;
-        for ( ; idx < nums.size(); ++idx)
         {
-            is_set[idx] = true;
-            set_bits(nums, idx + 1);
             get_subset(nums);
-
-            is_set[idx] = false;
-            set_bits(nums, idx + 1);
-            get_subset(nums);
+            return;
         }
+
+        is_set[idx] = false;
+        set_bits(nums, idx + 1);
+        is_set[idx] = true;
+        set_bits(nums, idx + 1);
     }
 };
 
