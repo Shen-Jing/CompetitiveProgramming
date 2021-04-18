@@ -38,6 +38,7 @@ class Solution
     {
         k_rows = grid.size();
         k_cols = grid[0].size();
+        min_sum.assign(k_rows, vector<int>(k_cols, 0));
     }
 
     int minPathSum(vector<vector<int>>& grid) 
@@ -48,6 +49,7 @@ class Solution
 
  private:
     int k_rows, k_cols;
+    vector<vector<int>> min_sum;
     const array<pair<int, int>, 2> dirs{make_pair(-1, 0), make_pair(0, -1)};
 
     bool is_out_of_bound(int r, int c)
@@ -61,19 +63,21 @@ class Solution
     {
         if (!r && !c)
             return grid[r][c];
+        if (min_sum[r][c])
+            return min_sum[r][c];
         
-        int min_sum = numeric_limits<int>::max();
+        int tmp_sum = numeric_limits<int>::max();
         for (const auto &dir : dirs)
         {
             const auto new_r = r + dir.first, 
                        new_c = c + dir.second;
             if (is_out_of_bound(new_r, new_c))
                 continue;
-            min_sum = min(min_sum, 
+            tmp_sum = min(tmp_sum, 
                           grid[r][c] + top_down_recursive(grid, new_r, new_c)
                          );
         }
-        return min_sum;
+        return min_sum[r][c] = tmp_sum;
     }
 };
 
