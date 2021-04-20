@@ -16,6 +16,7 @@
 #include <utility>
 #include <regex>
 #include <set>
+#include <span>
 #include <stack>
 #include <string>
 #include <type_traits>
@@ -60,34 +61,6 @@ class Solution
         return tmp;
     }
 
-    void merge_by_alloc_new_sub(vector<int> &nums, size_t left, size_t right)
-    {
-        auto mid = left + ((right - left) >> 1);
-        auto sub_left  = vector<int>{nums.begin() + left, nums.begin() + mid};
-        auto sub_right = vector<int>{nums.begin() + mid, nums.begin() + right};
-
-        vector<int> tmp_out;
-        tmp_out.reserve(right - left);
-        size_t l_idx = 0, r_idx = 0;
-        size_t l_len = mid - left, r_len = right - mid;
-        while (l_idx < l_len && r_idx < r_len)
-        {
-            if (sub_left[l_idx] <= sub_right[r_idx])
-                tmp_out.emplace_back(sub_left[l_idx++]);
-            else
-                tmp_out.emplace_back(sub_right[r_idx++]);
-        }
-
-        /* Only one of the following (2 loops) will be executed  */
-        for ( ; l_idx < l_len; ++l_idx)
-            tmp_out.emplace_back(sub_left[l_idx]);
-        for ( ; r_idx < r_len; ++r_idx)
-            tmp_out.emplace_back(sub_right[r_idx]);
-        
-        for (size_t i = left, out_idx = 0; i < right; ++i, ++out_idx)
-            nums[i] = tmp_out[out_idx];
-    }
-
     void merge_sort(vector<int> &nums, size_t left, size_t right, vector<int> &output)
     {
         if (right - left > 1)
@@ -110,10 +83,41 @@ class Solution
     }
 
  private:
-     /* Counting Sort */
-     int min_value, max_value;
-     int data_range;
-     vector<int> prefix_sum;
+    /* Counting Sort */
+    int min_value, max_value;
+    int data_range;
+    vector<int> prefix_sum;
+
+    void merge_by_alloc_new_sub(vector<int> &nums, size_t left, size_t right)
+    {
+        auto mid = left + ((right - left) >> 1);
+        /* Not inplace: allocate 2 new subarray */
+        auto sub_left  = span(nums.begin() + left, nums.begin() + mid);
+        auto sub_right = span(nums.begin() + mid, nums.begin() + right);
+        // auto sub_left  = vector<int>{nums.begin() + left, nums.begin() + mid};
+        // auto sub_right = vector<int>{nums.begin() + mid, nums.begin() + right};
+
+        vector<int> tmp_out;
+        tmp_out.reserve(right - left);
+        size_t l_idx = 0, r_idx = 0;
+        size_t l_len = mid - left, r_len = right - mid;
+        while (l_idx < l_len && r_idx < r_len)
+        {
+            if (sub_left[l_idx] <= sub_right[r_idx])
+                tmp_out.emplace_back(sub_left[l_idx++]);
+            else
+                tmp_out.emplace_back(sub_right[r_idx++]);
+        }
+
+        /* Only one of the following (2 loops) will be executed  */
+        for ( ; l_idx < l_len; ++l_idx)
+            tmp_out.emplace_back(sub_left[l_idx]);
+        for ( ; r_idx < r_len; ++r_idx)
+            tmp_out.emplace_back(sub_right[r_idx]);
+        
+        for (size_t i = left, out_idx = 0; i < right; ++i, ++out_idx)
+            nums[i] = tmp_out[out_idx];
+    }
 };
 
 int main(void)
