@@ -68,7 +68,8 @@ class Solution
             auto mid = left + ((right - left) >> 1);
             merge_sort(nums, left, mid, output);
             merge_sort(nums, mid, right, output);
-            merge_by_alloc_new_sub(nums, left, right);
+            merge_inplace(nums, left, right);
+            // merge_by_alloc_new_sub(nums, left, right);
         }
         return;
     }
@@ -116,6 +117,27 @@ class Solution
             tmp_out.emplace_back(sub_right[r_idx]);
         
         for (size_t i = left, out_idx = 0; i < right; ++i, ++out_idx)
+            nums[i] = tmp_out[out_idx];
+    }
+
+    /* Range: [left, right) */
+    void merge_inplace(vector<int> &nums, size_t left, size_t right)
+    {
+        auto mid = left + ((right - left) >> 1);
+
+        vector<int> tmp_out;
+        tmp_out.reserve(right - left);
+        size_t l_idx{left}, r_idx{mid}, t_idx{0};
+
+        while (l_idx < mid || r_idx < right)
+        {
+            if (r_idx >= right || (l_idx < mid && nums[l_idx] <= nums[r_idx]))
+                tmp_out[t_idx++] = nums[l_idx++];
+            else /* r_idx < right && (l_idx >= mid || nums[l_idx] > nums[r_idx]) */
+                tmp_out[t_idx++] = nums[r_idx++];
+        }
+
+        for (size_t i{left}, out_idx{0}; out_idx < t_idx; ++i, ++out_idx)
             nums[i] = tmp_out[out_idx];
     }
 };
