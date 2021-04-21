@@ -32,25 +32,39 @@ static auto io = [](){
     return nullptr;
 }();
 
+enum class IndexType
+{
+    k_Good = 0,
+    k_Bad,
+    k_Unknown
+};
+
 class Solution
 {
  public:
     bool canJump(vector<int>& nums)
     {
+        can_jump.assign(nums.size(), IndexType::k_Unknown);
+        can_jump.back() = IndexType::k_Good;
         return can_jump_recursive(nums, 0);
     }
   
   private:
+    vector<IndexType> can_jump;
     bool can_jump_recursive(const vector<int> &nums, int cur_idx)
     {
         int sz = nums.size();
-        if (cur_idx == sz - 1)
-            return true;
+        if (can_jump[cur_idx] != IndexType::k_Unknown)
+            return (can_jump[cur_idx] == IndexType::k_Good) ? true : false;
 
-        int furthest_jump = min(cur_idx + nums[cur_idx], sz - 1);
-        for (int jump = furthest_jump; jump >= 1; --jump)
-            if (can_jump_recursive(nums, cur_idx + jump))
+        int furthest_idx = min(cur_idx + nums[cur_idx], sz - 1);
+        for (int next_idx = furthest_idx; next_idx >= cur_idx + 1; --next_idx)
+            if (can_jump_recursive(nums, next_idx))
+            {
+                can_jump[cur_idx] = IndexType::k_Good;
                 return true;
+            }
+        can_jump[cur_idx] = IndexType::k_Bad;
         return false;
     }
 };
