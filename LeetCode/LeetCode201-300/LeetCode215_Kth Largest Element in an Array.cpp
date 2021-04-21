@@ -51,7 +51,7 @@ class Solution
             if (pivot_pos == k)
                 return pivot_pos;
             else if (pivot_pos < k)
-                return get_Kth_smallest_index(nums, pivot_pos + 1, last, k - pivot_pos);
+                return get_Kth_smallest_index(nums, pivot_pos + 1, last, k);
             else
                 return get_Kth_smallest_index(nums, first, pivot_pos - 1, k);
         }
@@ -84,13 +84,13 @@ int main(void)
     Solution sol;
 
     vector<int> nums{3,2,1,5,6,4};
-    nums = {7,6,5,4,3,2,1};
-    sol.findKthLargest(nums, 2);
     sol.findKthLargest(nums, 2);
 
     nums = {3,2,3,1,2,4,5,5,6};
     sol.findKthLargest(nums, 4);
 
+    nums = {7,6,5,4,3,2,1};
+    sol.findKthLargest(nums, 2);
 
     return 0;
 }
