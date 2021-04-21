@@ -37,22 +37,21 @@ class Solution
  public:
     bool canJump(vector<int>& nums)
     {
-        bool ans_existence{false};
-        can_jump_recursive(nums, 0, ans_existence);
-        return ans_existence;
+        return can_jump_recursive(nums, 0);
     }
   
   private:
-    void can_jump_recursive(const vector<int> &nums, int cur_idx, bool &ans_existence)
+    bool can_jump_recursive(const vector<int> &nums, int cur_idx)
     {
-        if (cur_idx == nums.size() - 1)
-        {
-            ans_existence = true;
-            return;
-        }
-        for (int jump = 1; jump <= nums[cur_idx] && cur_idx + jump < nums.size(); ++jump)
-            can_jump_recursive(nums, cur_idx + jump, ans_existence);
-        return;
+        int sz = nums.size();
+        if (cur_idx == sz - 1)
+            return true;
+
+        int furthest_jump = min(cur_idx + nums[cur_idx], sz - 1);
+        for (int jump = furthest_jump; jump >= 1; --jump)
+            if (can_jump_recursive(nums, cur_idx + jump))
+                return true;
+        return false;
     }
 };
 
