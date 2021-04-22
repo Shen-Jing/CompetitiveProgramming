@@ -36,35 +36,52 @@ class Solution
  public:
     double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) 
     {
-        if (nums1.size() >= nums2.size())
-            nums1.swap(nums2);
+        if (nums1.size() > nums2.size())
+            return findMedianSortedArrays(nums2, nums1);
         
         auto m = nums1.size(), n = nums2.size();
-        size_t i = 0, j;
+        size_t i, j;
         size_t first{0}, last{m};
 
-        while (first < last)
+        /* mid (range): [first, last] */
+        while (first <= last)
         {
-            auto mid = first + (last - first) >> 1;  // role: i
-            j = (n + m) >> 1 - mid;
-            if (nums1[mid] >= nums2[j - 1])
-                last = mid;
-            else
-                first = mid + 1;
+            auto i = first + ((last - first) >> 1);  // role: mid
+            j = ((n + m) >> 1) - i;
+
+            auto left_max_1  = (i == 0) ? numeric_limits<int>::min() : nums1[i - 1];
+            auto right_min_1 = (i == m) ? numeric_limits<int>::max() : nums1[i];
+
+            auto left_max_2 = (j == 0) ? numeric_limits<int>::min() : nums2[j - 1];
+            auto right_min_2 = (j == n) ? numeric_limits<int>::max() : nums2[j];
+
+            if (left_max_1 <= right_min_2 && left_max_2 <= right_min_1)
+            {
+                if ((m + n) & 1)
+                    return min(right_min_1, right_min_2);
+                return (max(left_max_1, left_max_2) + min(right_min_1, right_min_2)) * 0.5;
+            }
+            else if (left_max_1 > right_min_2)
+                last = i;
+            else if (right_min_1 < left_max_2)
+                first = i + 1;
         }
         
-        j = (n + m) >> 1 - first;
-        if ((m + n) & 1)
-            return max(nums1[first - 1], nums2[j - 1]);
-        return (max(nums1[first - 1], nums2[j - 1]) + min(nums1[first], nums2[j])) / 2;
+        return 0;
     }
 };
 
 int main(void)
 {
     Solution sol;
+
     vector<int> nums1{1, 3};
     vector<int> nums2{2};
-    sol.findMedianSortedArrays(nums1, nums2);
+    cout << sol.findMedianSortedArrays(nums1, nums2) << "\n";
+
+    nums1 = {1, 2};
+    nums2 = {3, 4};
+    cout << sol.findMedianSortedArrays(nums1, nums2) << "\n";
+
     return 0;
 }
