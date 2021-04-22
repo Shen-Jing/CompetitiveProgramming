@@ -46,6 +46,7 @@ class Solution
     {
         can_jump.assign(nums.size(), IndexType::k_Unknown);
         can_jump.back() = IndexType::k_Good;
+        return can_jump_greedy(nums);
         return can_jump_bottom_up_DP(nums);
         return can_jump_recursive(nums, 0);
     }
@@ -84,6 +85,18 @@ class Solution
                 }
         }
         return can_jump[0] == IndexType::k_Good;
+    }
+
+    bool can_jump_greedy(const vector<int> &nums)
+    {
+        int sz = nums.size();
+        int smallest_good_index = sz - 1;
+        for (int i = sz - 2; i >= 0; --i)
+        {
+            if (i + nums[i] >= smallest_good_index)
+                smallest_good_index = i;
+        }
+        return smallest_good_index == 0;
     }
 };
 
