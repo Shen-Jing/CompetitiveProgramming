@@ -46,11 +46,13 @@ class Solution
     {
         can_jump.assign(nums.size(), IndexType::k_Unknown);
         can_jump.back() = IndexType::k_Good;
+        return can_jump_bottom_up_DP(nums);
         return can_jump_recursive(nums, 0);
     }
   
   private:
     vector<IndexType> can_jump;
+
     bool can_jump_recursive(const vector<int> &nums, int cur_idx)
     {
         int sz = nums.size();
@@ -66,6 +68,22 @@ class Solution
             }
         can_jump[cur_idx] = IndexType::k_Bad;
         return false;
+    }
+
+    bool can_jump_bottom_up_DP(const vector<int> &nums)
+    {
+        int sz = nums.size();
+        for (int i = sz - 2; i >= 0; --i)
+        {
+            int furthest_idx = min(i + nums[i], sz - 1);
+            for (int next_idx = furthest_idx; next_idx >= i + 1; --next_idx)
+                if (can_jump[next_idx] == IndexType::k_Good)
+                {
+                    can_jump[i] = IndexType::k_Good;
+                    break;
+                }
+        }
+        return can_jump[0] == IndexType::k_Good;
     }
 };
 
