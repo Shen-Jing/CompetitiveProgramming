@@ -42,7 +42,7 @@ class Solution
  private:
     bool is_overlapping(vector<int> &first, vector<int> &second)
     {
-        if (first[0] <= second[0] && first[1] >= second[0] && first[1] <= second[1])
+        if (first[0] <= second[0] && first[1] >= second[0])
             return true;
         return false;
     }
