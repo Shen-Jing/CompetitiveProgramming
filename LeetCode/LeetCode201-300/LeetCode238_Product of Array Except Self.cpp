@@ -1,21 +1,60 @@
-class Solution {
-public:
-    vector<int> productExceptSelf(vector<int>& nums) {
-        vector<int> forward_mul{nums};
-        vector<int> backward_mul{nums};
-        int sz{nums.size()};
-        for (int i = 0; i < sz; ++i)
+#include <algorithm>
+#include <bitset>
+#include <cmath>
+#include <cstdio>
+#include <cstdlib>
+#include <fstream>
+#include <functional>
+#include <initializer_list>
+#include <iostream>
+#include <list>
+#include <map>
+#include <memory>
+#include <numeric>
+#include <queue>
+#include <tuple>
+#include <type_traits>
+#include <utility>
+#include <regex>
+#include <set>
+#include <span>
+#include <stack>
+#include <sstream>
+#include <string>
+#include <type_traits>
+#include <vector>
+
+using namespace std;
+
+static auto io = [](){
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+    return nullptr;
+}();
+
+class Solution
+{
+ public:
+    vector<int> productExceptSelf(vector<int>& nums)
+    {
+        size_t sz{nums.size()};
+        vector<int> ans(sz, 1);
+        /* left product */
+        for (int i = 1; i < sz; ++i)
+            ans[i] = ans[i - 1] * nums[i - 1];
+        /* right product */
+        int right = 1;
+        for (int i = sz - 1; i >= 0; --i)
         {
-            forward_mul[i] = accumulate(nums.begin(), nums.begin() + i + 1, nums[0], multiplies<int>());
-            backward_mul[sz - i - 1] = accumulate(nums.rbegin(), nums.rbegin() + i + 1, nums[sz - 1], multiplies<int>());
+            ans[i] *= right;
+            right *= nums[i];
         }
-        
-        vector<int> ans{forward_mul};
-        for (int i = 0; i < sz - 1; ++i)
-        {
-            ans[i] *= backward_mul[]
-        }
-        
         return ans;
     }
 };
+
+int main(void)
+{
+
+    return 0;
+}
