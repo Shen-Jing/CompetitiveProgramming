@@ -42,17 +42,18 @@ class Solution
  
  private:
     int upper_limit, lower_limit;
-    TreeNode *prev;
+    TreeNode *prev_;
+
     bool check_BST_inorder(TreeNode *root)
     {
         if (!root)
             return true;
-        if (check_BST_inorder(root->left))
-            return true;
-
-        if (prev != nullptr && prev->val <= root->val)
+        if (!check_BST_inorder(root->left))
             return false;
-        check_BST_inorder(root->right);
+        if (prev_ != nullptr && root->val <= prev_->val)
+            return false;
+        prev_ = root;
+        return check_BST_inorder(root->right);
     }
 };
 
