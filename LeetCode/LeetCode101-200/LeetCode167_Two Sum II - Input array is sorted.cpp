@@ -51,7 +51,7 @@ class Solution
             auto cur_num = nums[i];
             if (num_to_index.count(target - cur_num))
             {
-                ans_[0] = num_to_index[target - cur_num];
+                ans_[0] = num_to_index[target - cur_num] + 1;
                 ans_[1] = i + 1;
                 break;
             }
