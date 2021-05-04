@@ -44,7 +44,6 @@ void shop(int cur_garment, int cur_budget)
             shop(cur_garment + 1, cur_budget - price);
         }
     }
-
 }
 
 int main(void)
@@ -74,16 +73,16 @@ int main(void)
 
         /* Compute & Output */
         shop(1, budget);
-        auto remaining = 0;
-        for ( ; remaining <= budget; ++remaining)
+        auto remains = 0;
+        for ( ; remains <= budget; ++remains)
         {
-            if (dp[num_garment][remaining])
+            if (dp[num_garment][remains])
             {
-                cout << budget - remaining << "\n";
+                cout << budget - remains << "\n";
                 break;
             }
         }
-        if (remaining > budget)
+        if (remains > budget)
             cout << "no solution\n";
         // traceback(dp, garment_price);
     }
