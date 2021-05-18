@@ -51,6 +51,7 @@ class Solution
         
         ListNode *deleted = slow->next;
         slow->next = slow->next->next;
+        delete deleted;
 
         return dummy_head.next;
     }
