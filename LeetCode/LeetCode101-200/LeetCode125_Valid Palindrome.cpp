@@ -37,6 +37,15 @@ class Solution
  public:
     bool isPalindrome(string s)
     {
+        return is_palindrome_by_two_pointers(s);
+
+        /* Recursive */
+        string valid_str = preprocess(s);
+        return is_palindrome(valid_str);
+    }
+
+    string preprocess(const string &s)
+    {
         string valid_str;
         for (const auto &ch : s)
             if (
@@ -45,7 +54,7 @@ class Solution
                 ('a' <= ch && ch <= 'z')
                )
                 valid_str += tolower(ch);
-        return is_palindrome(valid_str);
+        return valid_str;
     }
 
     bool is_palindrome(const string &s)
@@ -53,6 +62,25 @@ class Solution
         if (s.empty())
             return true;
         return s.front() == s.back() && is_palindrome(s.substr(1, s.length() - 2));
+    }
+
+    bool is_palindrome_by_two_pointers(const string &s)
+    {
+        for (int left = 0, right = s.length() - 1; left < right; )
+        {
+            if (!isalnum(s[left]))
+                ++left;
+            else if (!isalnum(s[right]))
+                --right;
+            else if (tolower(s[left]) == tolower(s[right]))
+            {
+                ++left;
+                --right;
+            }
+            else
+                return false;
+        }
+        return true;
     }
 };
 
