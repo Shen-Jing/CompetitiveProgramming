@@ -44,16 +44,17 @@ class Solution
             last_pos[s[i] - 'a'] = i;
 
         vector<int> partition_lens;
-        size_t last_partition_pos = 0;
+        /* Range: (closed) [start, end] */
+        size_t last_partition_start = 0, last_partition_end = 0;
         for (size_t i = 0; i < len; ++i)
         {
-            if (i == last_pos[s[i] - 'a'])
+            last_partition_end = max(last_partition_end, last_pos[s[i] - 'a']);
+            if (i == last_partition_end)
             {
-                partition_lens.emplace_back(i - last_partition_pos + 1);
-                last_partition_pos = i;
+                partition_lens.emplace_back(last_partition_end - last_partition_start + 1);
+                last_partition_start = i + 1;
             }
         }
-        partition_lens.emplace_back(len - last_partition_pos);
         return partition_lens;
     }
 };
