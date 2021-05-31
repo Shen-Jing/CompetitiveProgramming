@@ -42,6 +42,12 @@ class Solution
         prefix_sum.assign(data_range, 0);
     }
 
+    /**
+     * @brief Counting sort 
+     * 
+     * @param nums 
+     * @return Sorted result
+     */
     auto counting_sort(vector<int> &nums)
     {
         for (const auto &value : nums)
@@ -61,13 +67,23 @@ class Solution
         return tmp;
     }
 
-    void merge_sort(vector<int> &nums, size_t left, size_t right, vector<int> &output)
+    /**
+     * @brief Merge Sort
+     * 
+     * @param nums 
+     * @param left range start (closed)
+     * @param right range end (open, not included)
+     * 
+     * merge_sort(nums, 0, nums.size());
+     * return nums;
+     */
+    void merge_sort(vector<int> &nums, size_t left, size_t right)
     {
         if (right - left > 1)
         {
             auto mid = left + ((right - left) >> 1);
-            merge_sort(nums, left, mid, output);
-            merge_sort(nums, mid, right, output);
+            merge_sort(nums, left, mid);
+            merge_sort(nums, mid, right);
             merge_inplace(nums, left, right);
             // merge_by_alloc_new_sub(nums, left, right);
         }
@@ -77,10 +93,6 @@ class Solution
     vector<int> sortArray(vector<int> &nums)
     {
         init(nums);
-        vector<int> output(nums.size(), 0);
-        merge_sort(nums, 0, nums.size(), output);
-        return nums;
-        return counting_sort(nums);
     }
 
  private:
