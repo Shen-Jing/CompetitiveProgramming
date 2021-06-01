@@ -43,6 +43,22 @@ class Solution
     }
 
     /**
+     * @brief Insertion Sort
+     * 
+     * @param nums 
+     * @return auto 
+     */
+    auto insertion_sort(vector<int> &nums)
+    {
+        const auto sz = nums.size();
+        for (int idx = 1; idx < sz; ++idx)
+            for (int sorted_i = idx - 1; sorted_i >= 0; --sorted_i)
+                if (nums[sorted_i] > nums[idx])
+                    swap(nums[sorted_i], nums[idx]);
+        return nums;
+    }
+
+    /**
      * @brief Counting sort 
      * 
      * @param nums 
