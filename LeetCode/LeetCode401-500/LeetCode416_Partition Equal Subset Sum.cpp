@@ -41,6 +41,7 @@ class Solution
         if (sum & 1)
             return false;
         int target = sum / 2;
+        return can_partition_by_bottom_up(nums, target);
         return can_partition_by_backtrack(nums, nums.size() - 1, target);
     }
 
@@ -54,30 +55,39 @@ class Solution
         return can_partition_by_backtrack(nums, idx - 1, target - nums[idx]) || can_partition_by_backtrack(nums, idx - 1, target);
     }
 
-    bool can_partition_by_bottom_up(const vector<int> &nums, int idx, int target)
+    bool can_partition_by_bottom_up(const vector<int> &nums, const int &target)
     {
         int sz = nums.size();
         vector<vector<bool>> dp(target + 1, vector<bool>(sz + 1, false));
 
+        /* Init */
         for (size_t i = 0; i < sz; ++i)
         {
-            dp[nums[i]][i] = true;
+            if (nums[i] <= target)
+                dp[nums[i]][i] = true;
             dp[0][i] = true;
         }
-        for (int t = 0; t <= target; ++t)
-            for (int i = 1; i < sz; ++i)
+        dp[0][sz] = true;
+
+        /* Build table */
+        for (int t = 1; t <= target; ++t)
+            for (int i = 1; i <= sz; ++i)
             {
-                if (t >= nums[i])
+                if (t >= nums[i - 1])
                 {
-                    dp[t][i] = (dp[t - nums[i]][i - 1]);
+                    dp[t][i] = dp[t - nums[i - 1]][i - 1] || dp[t][i - 1];
                 }
             }
-        return dp[target][sz - 1];
+        return dp[target][sz];
     }
 };
 
 int main(void)
 {
+    Solution sol;
+
+    vector<int> nums{1, 2, 5};
+    sol.canPartition(nums);
 
     return 0;
 }
