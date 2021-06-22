@@ -64,7 +64,7 @@ class Solution
         for (size_t i = 0; i < sz; ++i)
         {
             if (nums[i] <= target)
-                dp[nums[i]][i] = true;
+                dp[nums[i]][i + 1] = true;
             dp[0][i] = true;
         }
         dp[0][sz] = true;
@@ -74,9 +74,9 @@ class Solution
             for (int i = 1; i <= sz; ++i)
             {
                 if (t >= nums[i - 1])
-                {
                     dp[t][i] = dp[t - nums[i - 1]][i - 1] || dp[t][i - 1];
-                }
+                else
+                    dp[t][i] = dp[t][i - 1];
             }
         return dp[target][sz];
     }
@@ -87,6 +87,12 @@ int main(void)
     Solution sol;
 
     vector<int> nums{1, 2, 5};
+    sol.canPartition(nums);
+
+    nums = {2, 2, 3, 5};
+    sol.canPartition(nums);
+
+    nums = {1, 5, 10, 6};
     sol.canPartition(nums);
 
     return 0;
