@@ -51,10 +51,20 @@ class Solution
     auto insertion_sort(vector<int> &nums)
     {
         const auto sz = nums.size();
-        for (int idx = 1; idx < sz; ++idx)
-            for (int sorted_i = idx - 1; sorted_i >= 0; --sorted_i)
-                if (nums[sorted_i] > nums[idx])
-                    swap(nums[sorted_i], nums[idx]);
+        for (int unsorted_idx = 0; unsorted_idx < sz; ++unsorted_idx)
+        {
+            for (int sorted_i = unsorted_idx - 1, curr = unsorted_idx; sorted_i >= 0; --sorted_i)
+            {
+                if (nums[sorted_i] > nums[curr])
+                {
+                    swap(nums[sorted_i], nums[curr]);
+                    curr = sorted_i;
+                }
+                else
+                    break;
+               
+            }
+        }
         return nums;
     }
 
