@@ -53,17 +53,14 @@ class Solution
         const auto sz = nums.size();
         for (int unsorted_idx = 0; unsorted_idx < sz; ++unsorted_idx)
         {
-            for (int sorted_i = unsorted_idx - 1, curr = unsorted_idx; sorted_i >= 0; --sorted_i)
+            auto curr_unsorted_value = nums[unsorted_idx];
+            int sorted_idx = unsorted_idx - 1;
+            while (sorted_idx >= 0 && nums[sorted_idx] > curr_unsorted_value)
             {
-                if (nums[sorted_i] > nums[curr])
-                {
-                    swap(nums[sorted_i], nums[curr]);
-                    curr = sorted_i;
-                }
-                else
-                    break;
-               
+                nums[sorted_idx + 1] = nums[sorted_idx];
+                --sorted_idx;
             }
+            nums[sorted_idx + 1] = curr_unsorted_value;
         }
         return nums;
     }
