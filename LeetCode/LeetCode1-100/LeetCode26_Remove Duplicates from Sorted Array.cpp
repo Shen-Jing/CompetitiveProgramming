@@ -35,8 +35,22 @@ static auto io = [](){
 class Solution
 {
  public:
+    /* Returning the number of dupicates */
     int removeDuplicates(vector<int> &nums)
     {
+        int sz = nums.size();
+        if (sz == 0)
+            return 0;
+        int slow = 0;
+        for (int fast = 1; fast < sz; ++fast)
+        {
+            if (nums[slow] != nums[fast])
+            {
+                ++slow;
+                nums[slow] = nums[fast];
+            }
+        }
+        return slow + 1;
     }
 
     /* First method: out-of-place  */
