@@ -64,7 +64,7 @@ class Solution
                 int down_min  = get_minHP(r + 1, c);
                 
                 int next_hp = min(right_min, down_min);
-                if (min_hp[r][c] == numeric_limits<int>::max())
+                if (next_hp == numeric_limits<int>::max())
                     min_hp[r][c] = (dungeon[r][c] >= 0) ? 1 : 1 - dungeon[r][c];
                 else
                     min_hp[r][c] = max(1, next_hp - dungeon[r][c]);
