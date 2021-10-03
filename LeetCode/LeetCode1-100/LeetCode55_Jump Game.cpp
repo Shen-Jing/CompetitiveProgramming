@@ -104,13 +104,13 @@ int main(void)
 {
     Solution sol;
 
-    vector<int> nums{3,2,1,0,4};
+    vector<int> nums{3,2,1,0,4};  // False 
     cout << sol.canJump(nums) << "\n";
 
-    nums = {3,2,2,0,4};
+    nums = {3,2,2,0,4};  // True 
     cout << sol.canJump(nums) << "\n";
 
-    nums = {2, 0};
+    nums = {2, 0};  // True 
     cout << sol.canJump(nums) << "\n";
 
     return 0;
