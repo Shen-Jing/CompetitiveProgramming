@@ -1,55 +1,81 @@
-#include <cstdio>
 #include <algorithm>
+#include <bitset>
+#include <cmath>
+#include <cstdio>
+#include <cstdlib>
+#include <fstream>
+#include <functional>
+#include <initializer_list>
 #include <iostream>
-#include <iterator>
+#include <list>
+#include <map>
+#include <memory>
+#include <numeric>
 #include <queue>
+#include <tuple>
+#include <type_traits>
+#include <utility>
+#include <regex>
+#include <set>
+#include <span>
+#include <stack>
+#include <sstream>
 #include <string>
+#include <type_traits>
 #include <vector>
 
-static auto io = []()
-{
-    std::ios::sync_with_stdio(false);
-    std::cin.tie(nullptr);
+using namespace std;
+
+static auto io = [](){
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
     return nullptr;
 }();
 
-bool out_of_bound(int idx, int length)
+class Solution
 {
-    if (idx < 0 || idx >= length)
-        return true;
-    return false;
-}
+ public:
+    int islandPerimeter(vector<vector<int>> &grid)
+    {
+        rows = grid.size();
+        cols = grid[0].size();
+        return simple_count(grid);
+    }
 
-class Solution {
-public:
-    int islandPerimeter(std::vector<std::vector<int>>& grid) {
-        int cnt = 0;
-        auto rows = grid.size();
-        auto cols = grid[0].size();
+ private:
+    int rows, cols;
+    bool out_of_bound(int row, int col)
+    {
+        if (row < 0 || row >= rows || col < 0 || col >= cols)
+            return true;
+        return false;
+    }
+
+    int simple_count(const vector<vector<int>> &grid)
+    {
+        int length = 0;
         for (int r = 0; r < rows; ++r)
-        {
             for (int c = 0; c < cols; ++c)
             {
                 if (grid[r][c])
                 {
-                    if (out_of_bound(c - 1, cols) || !grid[r][c - 1])
-                        ++cnt;
-                    if (out_of_bound(c + 1, cols) || !grid[r][c + 1])
-                        ++cnt;
-                    if (out_of_bound(r - 1, rows) || !grid[r - 1][c])
-                        ++cnt;
-                    if (out_of_bound(r + 1, rows) || !grid[r + 1][c])
-                        ++cnt;
+                    /* Order: Up, Down, Left, Right */
+                    if (out_of_bound(r - 1, c) || !grid[r - 1][c])
+                        ++length;
+                    if (out_of_bound(r + 1, c) || !grid[r + 1][c])
+                        ++length;
+                    if (out_of_bound(r, c - 1) || !grid[r][c - 1])
+                        ++length;
+                    if (out_of_bound(r, c + 1) || !grid[r][c + 1])
+                        ++length;
                 }
             }
-        }
-        return cnt;
+        return length;
     }
 };
 
 int main(void)
 {
-    Solution sol;
 
     return 0;
 }
