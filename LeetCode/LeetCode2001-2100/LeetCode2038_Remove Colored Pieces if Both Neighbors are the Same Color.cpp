@@ -37,7 +37,16 @@ class Solution
  public:
     bool winnerOfGame(string colors)
     {
-        return smarter_simulate(colors);
+        /* AAA, BBB */
+        array<int, 2> cnt{0, 0};
+        for (int i = 0; i <= static_cast<int>(colors.length()) - 3; ++i)
+        {
+            if (colors.substr(i, 3) == "AAA")
+                ++cnt[0];
+            else if (colors.substr(i, 3) == "BBB")
+                ++cnt[1];
+        }
+        return cnt[0] > cnt[1];
     }
 
     /* Brute Force */
