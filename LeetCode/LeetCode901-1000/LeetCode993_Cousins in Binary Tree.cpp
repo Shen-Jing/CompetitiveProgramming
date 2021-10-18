@@ -38,29 +38,49 @@ class Solution
  public:
     bool isCousins(TreeNode* root, int x, int y)
     {
-        array<TreeNode *, 2> parents;
-        array<int, 2> depths;
-        parents[0] = root;
-        parents[1] = root;
-
-        depths[0] = get_depth(root, parents[0], 0, x);
-        depths[1] = get_depth(root, parents[1], 0, y);
+        parents[0] = nullptr;
+        parents[1] = nullptr;
+        targets[0] = x;
+        targets[1] = y;
+        preorder(root, 0);
         return parents[0] != parents[1] && depths[0] == depths[1];
     }
 
  private:
-    int get_depth(TreeNode *root, TreeNode *parent, int depth, int target)
+    array<TreeNode *, 2> parents;
+    array<int, 2> depths;
+    array<int, 2> targets;
+    void preorder(TreeNode *root, int depth)
     {
         if (!root)
-            return 0;
-        if (root->val == target)
-            return depth;
-        return get_depth(root->left, root, depth + 1, target) + get_depth(root->right, root, depth + 1, target);
+            return;
+        if (root->left)
+        {
+            auto result = find(targets.begin(), targets.end(), root->left->val);
+            if (result != targets.end())
+            {
+                size_t target_idx = result - targets.begin();
+                parents[target_idx] = root;
+                depths[target_idx] = depth + 1;
+            }
+        }
+        if (root->right)
+        {
+            auto result = find(targets.begin(), targets.end(), root->right->val);
+            if (result != targets.end())
+            {
+                size_t target_idx = result - targets.begin();
+                parents[target_idx] = root;
+                depths[target_idx] = depth + 1;
+            }
+        }
+        preorder(root->left, depth + 1);
+        preorder(root->right, depth + 1);
     }
 };
 
 int main(void)
 {
-
+    Solution sol;
     return 0;
 }
