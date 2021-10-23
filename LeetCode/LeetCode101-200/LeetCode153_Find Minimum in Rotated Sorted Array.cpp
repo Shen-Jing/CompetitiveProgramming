@@ -38,8 +38,6 @@ class Solution
     int findMin(vector<int> &nums)
     {
         auto peak_idx = find_peak_index(nums);
-        if (nums.size() == 1)
-            return nums[0];
         if (peak_idx == nums.size() - 1)
             return nums.front();
         return nums[peak_idx + 1];
@@ -48,8 +46,6 @@ class Solution
  private:
     int find_peak_index(const vector<int> &nums)
     {
-        if (nums.size() == 1)
-            return 0;
         if (nums.front() < nums.back())
             return nums.size() - 1;
 
@@ -64,7 +60,7 @@ class Solution
             else
                 last = mid;
         }
-        return -1;
+        return first;
     }
 };
 
