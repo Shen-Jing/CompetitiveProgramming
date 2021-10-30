@@ -37,7 +37,27 @@ class Solution
  public:
     int countHighestScoreNodes(vector<int> &parents)
     {
-        num_of_nodes = parents.size();
+        num_of_nodes_ = parents.size();
+        adj_list_.resize(num_of_nodes_);
+        for (int v = 1; v < num_of_nodes_; ++v)
+            adj_list_[parents[v]].emplace_back(v);
+        count_nodes(0);
+        return scores_.crbegin()->second;
+    }
+
+    int count_nodes(int node_idx)
+    {
+        uint64_t product = 1, nodes = 0;
+        /* Count each branch/children */
+        for (const auto &v : adj_list_[node_idx])
+        {
+            int branch_nodes = count_nodes(v);
+            nodes += branch_nodes;
+            product *= branch_nodes;
+        }
+        product *= max(1ul, num_of_nodes_ - 1 - nodes);
+        ++scores_[product];
+        return nodes + 1;
     }
 
     int my_path_compression(vector<int> &parents)
@@ -48,7 +68,7 @@ class Solution
         parents[0] = 0;
         int max_score{1};
         vector<int> scores;
-        for (int i = 0; i < num_of_nodes; ++i)
+        for (int i = 0; i < num_of_nodes_; ++i)
         {
             scores.emplace_back(get_score(parents, i));
             max_score = max(max_score, scores[i]);
@@ -61,7 +81,9 @@ class Solution
     }
 
  private:
-    int num_of_nodes;  // [1, 10^5]
+    int num_of_nodes_;  // [1, 10^5]
+    vector<vector<int>> adj_list_; 
+    map<uint64_t, int> scores_;  // score ➡ the count of score
     /* Find with path compression */
     int find_parent(vector<int> &parents, int label_id)
     {
@@ -74,7 +96,7 @@ class Solution
     {
         /* Set to my def: Removed node point to itself */
         parents[removed_target] = removed_target;
-        for (int i = 0; i < num_of_nodes; ++i)
+        for (int i = 0; i < num_of_nodes_; ++i)
         {
             if (parents[i] == removed_target)
                 parents[i] = i;
@@ -85,8 +107,8 @@ class Solution
             find_parent(parents, i);
 
         /* node ➡ the number of nodes after removing it */
-        vector<int> tree_nodes(num_of_nodes, 0);
-        for (int i = 0; i < num_of_nodes; ++i)
+        vector<int> tree_nodes(num_of_nodes_, 0);
+        for (int i = 0; i < num_of_nodes_; ++i)
             ++tree_nodes[parents[i]];
         int score{1};
         for (const auto &nodes : tree_nodes)
