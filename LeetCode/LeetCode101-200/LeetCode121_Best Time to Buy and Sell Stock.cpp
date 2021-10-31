@@ -36,12 +36,29 @@ class Solution
  public:
     int maxProfit(vector<int>& prices)
     {
+        return one_pass(prices);
+    }
+
+ private:
+    int brute_force(vector<int>& prices)
+    {
         auto sz = prices.size();
         int max_profit{0};
         for (size_t i = 1; i < sz; ++i)
         {
             auto max_price = *max_element(prices.begin() + i + 1, prices.end());
             max_profit = max(max_profit, max_price - prices[i]);
+        }
+        return max_profit;
+    }
+    
+    int one_pass(const vector<int> &prices)
+    {
+        int max_profit{0}, min_price = numeric_limits<int>::max();
+        for (const auto &price : prices)
+        {
+            min_price = min(min_price, price);
+            max_profit = max(max_profit, price - min_price);
         }
         return max_profit;
     }
