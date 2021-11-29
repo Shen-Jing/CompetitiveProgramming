@@ -35,6 +35,7 @@ static auto io = [](){
 class Solution
 {
  public:
+    /* Only answer list, O(1) */
     vector<int> productExceptSelf(vector<int>& nums)
     {
         size_t sz{nums.size()};
@@ -49,6 +50,26 @@ class Solution
             ans[i] *= right;
             right *= nums[i];
         }
+        return ans;
+    }
+
+    vector<int> two_lists(vector<int> &nums)
+    {
+        auto sz = nums.size();
+        vector<int> left(sz, 1), right(sz, 1), ans;
+        ans.reserve(sz);
+
+        /* Preprocessing */
+        left.front() = 1;
+        right.back() = 1;
+        for (int i = 1; i < sz; ++i)
+        {
+            left[i] = left[i - 1] * nums[i - 1];
+            right[(sz - 1) - i] = right[sz - i] * nums[sz - i];
+        }
+
+        for (int i = 0; i < sz; ++i)
+            ans.emplace_back(left[i] * right[i]);
         return ans;
     }
 };
