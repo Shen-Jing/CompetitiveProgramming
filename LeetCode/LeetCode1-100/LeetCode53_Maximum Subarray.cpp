@@ -34,21 +34,31 @@ static auto io = [](){
 class Solution
 {
  public:
-    int maxSubArray(vector<int>& nums)
+    int maxSubArray(vector<int> &nums)
+    {
+    }
+
+ private:
+    int brute_force(vector<int> &nums)
     {
         const auto sz = nums.size();
 
         /* Range: [start, end] */
-        int max_sum = numeric_limits<int>::min();
-        int cur_sum = 0;
-        for (size_t i = 0; i < sz; ++i)
+        int max_subarray_sum = numeric_limits<int>::min();
+        for (size_t start = 0; start < sz; ++start)
         {
-            cur_sum += nums[i];
-            max_sum = max(max_sum, cur_sum);
-            if (cur_sum < 0)
-                cur_sum = 0;
+            int cur_subarray_sum{0};
+            for (size_t end = start; end < sz; ++end)
+            {
+                cur_subarray_sum += nums[end];
+                max_subarray_sum = max(max_subarray_sum, cur_subarray_sum);
+            }
         }
-        return max_sum;
+        return max_subarray_sum;
+    }
+
+    int get_max_by_DP(vector<int> &nums)
+    {
     }
 };
 
