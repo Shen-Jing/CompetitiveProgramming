@@ -38,11 +38,15 @@ class Solution
  public:
     int rob(TreeNode *root)
     {
+        return recursive_with_memo(root);
     }
 
  private:
-    int recursive(TreeNode *root)
+    unordered_map<TreeNode *, int> rob_node_money;
+    int recursive_with_memo(TreeNode *root)
     {
+        if (rob_node_money.count(root) != 0)
+            return rob_node_money[root];
         if (!root)
             return 0;
         if (!root->left && !root->right)
@@ -53,10 +57,11 @@ class Solution
             no_left_child_money = rob(root->left->left) + rob(root->left->right);
         if (root->right)
             no_right_child_money = rob(root->right->left) + rob(root->right->right);
-        /* Not rob the current or
+        /* Not rob the current || 
            rob the current (no left & right child) */
-        return max(rob(root->left) + rob(root->right),
-                   root->val + no_left_child_money + no_right_child_money); 
+        return rob_node_money[root] = 
+            max(rob(root->left) + rob(root->right),
+                root->val + no_left_child_money + no_right_child_money); 
     }
 };
 
