@@ -36,6 +36,7 @@ class Solution
  public:
     int maxSubArray(vector<int> &nums)
     {
+        return get_max_by_DP(nums);
     }
 
  private:
@@ -57,8 +58,18 @@ class Solution
         return max_subarray_sum;
     }
 
+    /* Kadane's Algorithm */
     int get_max_by_DP(vector<int> &nums)
     {
+        auto sz = nums.size();
+        int max_sum, cur_sum;
+        max_sum = cur_sum = nums[0];
+        for (int i = 1; i < sz; ++i)
+        {
+            cur_sum = max(cur_sum + nums[i], nums[i]);
+            max_sum = max(max_sum, cur_sum);
+        }
+        return max_sum;
     }
 };
 
