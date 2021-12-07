@@ -37,7 +37,8 @@ class Solution
  public:
     int numTrees(int n)
     {
-        num_of_BSTs.fill(-1);
+        num_of_BSTs.fill(0);
+        return num_of_trees_bottom_up(n);
         return num_of_trees_top_down(n);
     }
 
@@ -56,6 +57,15 @@ class Solution
             sum += num_of_trees_top_down(root_idx - 1) * num_of_trees_top_down(n - root_idx);
         }
         return num_of_BSTs[n] = sum;
+    }
+
+    int num_of_trees_bottom_up(int n)
+    {
+        num_of_BSTs[1] = num_of_BSTs[0] = 1;
+        for (int i = 2; i <= n; ++i)
+            for (int root_idx = 1; root_idx <= i; ++root_idx)
+                num_of_BSTs[i] += num_of_BSTs[root_idx - 1] * num_of_BSTs[i - root_idx];
+        return num_of_BSTs[n];
     }
 };
 
