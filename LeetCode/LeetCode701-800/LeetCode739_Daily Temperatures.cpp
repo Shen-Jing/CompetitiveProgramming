@@ -37,28 +37,29 @@ class Solution
  public:
     vector<int> dailyTemperatures(vector<int> &temperatures)
     {
+        return use_prev_ans_info(temperatures);
+    }
+
+ private:
+    vector<int> use_prev_ans_info(const vector<int> &temperatures)
+    {
         auto sz = temperatures.size();
         vector<int> ans(sz, 0);
-        for (int i = sz - 2; i >= 0; --i)
+        int hottest_val{0};
+        for (int cur_day = sz - 1; cur_day >= 0; --cur_day)
         {
-            int next_i{i + 1};
-            while (next_i < sz)
+            if (temperatures[cur_day] >= hottest_val)
             {
-                if (temperatures[next_i] > temperatures[i])
-                {
-                    ans[i] = next_i - i;
-                    break;
-                }
-                else
-                {
-                    next_i = next_i + ans[next_i];
-                    if (next_i == sz - 1)
-                    {
-                        ans[i] = 0;
-                        break;
-                    }
-                }
+                hottest_val = temperatures[cur_day];
+                continue;
             }
+
+            int days{1};
+            while (temperatures[cur_day + days] <= temperatures[cur_day])
+            {
+                days += ans[cur_day + days];
+            }
+            ans[cur_day] = days;
         }
         return ans;
     }
@@ -66,6 +67,10 @@ class Solution
 
 int main(void)
 {
+    Solution sol;
+
+    vector<int> data{45, 43, 45, 43, 45, 31, 32, 33, 50};
+    sol.dailyTemperatures(data);
 
     return 0;
 }
