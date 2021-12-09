@@ -39,23 +39,26 @@ class Solution
     {
         const auto sz = arr.size();
         seen.assign(sz, false);
-        int target_pos = find(arr.begin(), arr.end(), 0) - arr.begin();
-        return can_reach(arr, start, target_pos);
+        set<int> targets;
+        for (int i = 0; i < sz; ++i)
+            if (!arr[i])
+                targets.emplace(i);
+        return can_reach(arr, start, targets);
     }
 
  private:
     vector<bool> seen;
-    bool can_reach(const vector<int> &arr, int start, int target)
+    bool can_reach(const vector<int> &arr, int start, const set<int> &targets)
     {
         if (start < 0 || start >= arr.size() ||
             seen[start])
             return false;
-        if (start == target)
+        if (targets.count(start))
             return true;
 
         seen[start] = true;
-        return can_reach(arr, start + arr[start], target) ||
-               can_reach(arr, start - arr[start], target);
+        return can_reach(arr, start + arr[start], targets) ||
+               can_reach(arr, start - arr[start], targets);
     }
 };
 
