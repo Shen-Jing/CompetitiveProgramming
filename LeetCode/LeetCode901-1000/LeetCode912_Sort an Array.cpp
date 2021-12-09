@@ -75,8 +75,8 @@ class Solution
     {
         for (const auto &value : nums)
             ++prefix_sum[value - min_value];
-        for (int value = min_value + 1; value <= max_value; ++value)
-            prefix_sum[value - min_value] += prefix_sum[value - min_value - 1];
+        for (int i = 1; i < data_range; ++i)
+            prefix_sum[i] += prefix_sum[i - 1];
         
         vector<int> tmp;
         tmp.resize(nums.size());
