@@ -63,6 +63,23 @@ class Solution
         }
         return ans;
     }
+
+    vector<int> monotonic_stack(const vector<int> &temperatures)
+    {
+        auto sz = temperatures.size();
+        vector<int> ans(sz, 0);
+        stack<size_t> stk;
+        for (int i = 0; i < sz; ++i)
+        {
+            while (!stk.empty() && temperatures[i] > temperatures[stk.top()])
+            {
+                ans[stk.top()] = i - stk.top();
+                stk.pop();
+            }
+            stk.push(i);
+        }
+        return ans;
+    }
 };
 
 int main(void)
