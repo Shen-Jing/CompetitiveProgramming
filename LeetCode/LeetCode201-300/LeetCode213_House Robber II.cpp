@@ -38,21 +38,24 @@ class Solution
     int rob(vector<int> &nums)
     {
         int sz = nums.size();
-        max_profit.assign(sz, -1);
-        return max(rob_from(nums, 0, sz - 2), rob_from(nums, 1, sz - 1));
+        return max(rob_from(nums, 0, sz - 1), rob_from(nums, 1, sz));
     }
 
  private:
     vector<int> max_profit;
-    int rob_from(const vector<int> &nums, int cur_idx, const int &end_idx)
+    /* Range: [first, last) */
+    int rob_from(const vector<int> &nums, const int &first, const int &last)
     {
-        if (cur_idx > end_idx)
-            return 0;
-        if (max_profit[cur_idx] != -1)
-            return max_profit[cur_idx];
-        return max_profit[cur_idx] = 
-            max(rob_from(nums, cur_idx + 1, end_idx), 
-                rob_from(nums, cur_idx + 2, end_idx) + nums[cur_idx]);
+        /* Bottom Up DP */
+        int max_profit{0}, prev_profit, prev_prev_profit;
+        prev_profit = prev_prev_profit = 0;
+        for (int i = last - 1; i >= first; --i)
+        {
+            max_profit = max(prev_profit, nums[i] + prev_prev_profit);
+            prev_prev_profit = prev_profit;
+            prev_profit = max_profit;
+        }
+        return max_profit;
     }
 };
 
