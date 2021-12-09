@@ -39,31 +39,31 @@ class Solution
     {
         const auto sz = arr.size();
         seen.assign(sz, false);
-        set<int> targets;
-        for (int i = 0; i < sz; ++i)
-            if (!arr[i])
-                targets.emplace(i);
-        return can_reach(arr, start, targets);
+        return my_can_reach(arr, start, 0);
     }
 
  private:
     vector<bool> seen;
-    bool can_reach(const vector<int> &arr, int start, const set<int> &targets)
+    bool my_can_reach(const vector<int> &arr, int start, int target_value)
     {
         if (start < 0 || start >= arr.size() ||
             seen[start])
             return false;
-        if (targets.count(start))
+        if (arr[start] == target_value)
             return true;
 
         seen[start] = true;
-        return can_reach(arr, start + arr[start], targets) ||
-               can_reach(arr, start - arr[start], targets);
+        return my_can_reach(arr, start + arr[start], target_value) ||
+               my_can_reach(arr, start - arr[start], target_value);
     }
 };
 
 int main(void)
 {
+    Solution sol;
+
+    vector<int> arr{0,3,0,6,3,3,4};
+    sol.canReach(arr, 6);  // True
 
     return 0;
 }
