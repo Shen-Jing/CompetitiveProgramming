@@ -40,6 +40,17 @@ class Solution
     }
 
  private:
+    int cmp_common_prefix(const int &left, const int &right)
+    {
+        bitset<32> b_left(left), b_right(right);
+        for (int i = 31; i >= 1; --i)
+        {
+            if (b_left[i] & b_right[i])
+                return pow(2, i);
+        }
+        return 0;
+    }
+
     int bitand_loop(const int &left, const int &right)
     {
         int ans = left;
