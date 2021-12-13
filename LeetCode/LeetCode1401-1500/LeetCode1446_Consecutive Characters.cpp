@@ -32,33 +32,24 @@ static auto io = [](){
     return nullptr;
 }();
 
-constexpr int alphabet_size{26};
-
 class Solution
 {
  public:
     int maxPower(string s)
     {
-        max_lengths.fill(0);
-        int cur_len{1};
+        int cur_cnt{1}, max_cnt{1};
         for (size_t i = 1; i < s.size(); ++i)
         {
             if (s[i] != s[i - 1])
-            {
-                int ch_ascii = s[i - 1] - 'a';
-                max_lengths[ch_ascii] = max(max_lengths[ch_ascii], cur_len);
-                cur_len = 1;
-            }
+                cur_cnt = 1;
             else
-                ++cur_len;
+                ++cur_cnt;
+            max_cnt = max(max_cnt, cur_cnt);
         }
-        int ch_ascii = s[s.size() - 1] - 'a';
-        max_lengths[ch_ascii] = max(max_lengths[ch_ascii], cur_len);
-        return *max_element(begin(max_lengths), end(max_lengths));
+        return max_cnt;
     }
 
  private:
-    array<int, alphabet_size> max_lengths;
 };
 
 int main(void)
