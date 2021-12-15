@@ -39,27 +39,31 @@ class Solution
     ListNode* insertionSortList(ListNode *head)
     {
         ListNode *dummy_min = new ListNode(numeric_limits<int>::min()),
-                 *dummy_max = new ListNode(numeric_limits<int>::max());
-        ListNode *sorted_head{dummy_min}, *prev, *curr{head};
+                 *dummy_max = new ListNode(numeric_limits<int>::max()),
+                 *dummy = new ListNode();
+        ListNode *sorted_head{dummy_min}, *prev{dummy}, *curr{head};
         dummy_min->next = dummy_max;
+        dummy->next = head;
 
         while (curr)
         {
-            ListNode *sorted_prev{sorted_head}, *sorted_iter{sorted_head->next};
-            while (sorted_iter && sorted_iter->val <= curr->val)
+            ListNode *sorted_prev{sorted_head}, *sorted_iter{sorted_head};
+            while (sorted_iter)
             {
-                sorted_prev = sorted_iter;
+                if (sorted_iter->val <= curr->val && curr->val <= sorted_iter->next->val)
+                    break;
                 sorted_iter = sorted_iter->next;
             }
             /* Unsorted node is removed from original (unsorted) list */
             prev->next = curr->next;
             /* Inserting unsorted node into sorted list */
-            sorted_prev->next = curr;
-            curr->next = sorted_iter;
-            /* Iterating unsorted list */
+            curr->next = sorted_iter->next;
+            sorted_iter->next = curr;
+            /* Move forward (iterator) */
             curr = prev->next;
         }
-        return sorted_head;
+        delete dummy, dummy_min, dummy_max;
+        return sorted_head->next;
     }
 };
 
