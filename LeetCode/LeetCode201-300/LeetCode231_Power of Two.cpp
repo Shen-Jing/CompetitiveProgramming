@@ -39,19 +39,17 @@ class Solution
  public:
     bool isPowerOfTwo(int n)
     {
-        check_table(n);
+        return check_table(n);
     }
 
     bool check_table(const int &n)
     {
         if (!Solution::powers_of_two.size())
         {
-            Solution::powers_of_two.emplace(1);
-            for (int pow_n = 1; pow_n <= 31; ++pow_n)
+            for (int pow_n = 0; pow_n <= 31; ++pow_n)
             {
                 int64_t num = static_cast<int64_t>(pow(2, pow_n));
                 Solution::powers_of_two.emplace(num);
-                Solution::powers_of_two.emplace(-num);
             }
         }
         return Solution::powers_of_two.count(n) == 1;
