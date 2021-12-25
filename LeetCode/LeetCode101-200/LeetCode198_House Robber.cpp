@@ -38,6 +38,8 @@ class Solution
  public:
     int rob(std::vector<int> &nums)
     {
+        rob_profit_.assign(nums.size(), -1);
+        return rob_from(nums, 0);
         auto sz = nums.size();
         std::vector<std::vector<int>> dp;
         dp.emplace_back(sz, -1);
@@ -57,6 +59,22 @@ class Solution
             dp[1][house_idx] = dp[0][house_idx - 1] + nums[house_idx];
         }
         return std::max(dp[0][sz - 1], dp[1][sz - 1]);
+    }
+ private:
+    /* The maximum profit of robbery at the current index */
+    vector<int> rob_profit_;
+
+    /* (Top down) With memo table */
+    int rob_from(const vector<int> &nums, int cur_idx)
+    {
+        if (cur_idx >= nums.size())
+            return 0;
+        if (rob_profit_[cur_idx] != -1)
+            return rob_profit_[cur_idx];
+        
+        return rob_profit_[cur_idx] = 
+            max(rob_from(nums, cur_idx + 1),
+                nums[cur_idx] + rob_from(nums, cur_idx + 2));
     }
 };
 
