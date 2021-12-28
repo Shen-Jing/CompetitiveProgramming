@@ -39,7 +39,7 @@ class LRUCache
     
     int get(const int &key)
     {
-        print("get", key);
+        // print("get", key);
         if (key_to_val_.count(key))
         {
             key_to_iter_[key] = update(key);
@@ -50,7 +50,7 @@ class LRUCache
     
     void put(const int &key, const int &value)
     {
-        print("put", key, value);
+        // print("put", key, value);
         /* If the key is not in the cache,
            and the cache has no more space to insert. */
         if (!key_to_val_.count(key) && key_to_val_.size() == capacity_)
@@ -70,8 +70,8 @@ class LRUCache
  private:
     int capacity_;
     unordered_map<int, int> key_to_val_;
-    unordered_map<int, deque<int>::iterator> key_to_iter_;
-    deque<int> keys_;
+    unordered_map<int, list<int>::iterator> key_to_iter_;
+    list<int> keys_;
 
     void print(string cmd, int key, int value = -1)
     {
@@ -96,7 +96,7 @@ class LRUCache
         }
         /*  (re) Insert */
         keys_.emplace_back(key);
-        return keys_.end() - 1;
+        return prev(keys_.end());
     }
 };
 
