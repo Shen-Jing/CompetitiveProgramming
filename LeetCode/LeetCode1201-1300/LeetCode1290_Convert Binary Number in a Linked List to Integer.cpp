@@ -38,10 +38,24 @@ class Solution
  public:
     int getDecimalValue(ListNode *head)
     {
+        return classical_arithmetic(head);
         return my_bitset(head);
     }
 
  private:
+    int classical_arithmetic(ListNode *head)
+    {
+        ListNode *curr{head};
+        int result = 0;
+        while (curr)
+        {
+            result *= 2;
+            result += curr->val;
+            curr = curr->next;
+        }
+        return result;
+    }
+
     int my_bitset(ListNode *head)
     {
         bitset<32> b;
