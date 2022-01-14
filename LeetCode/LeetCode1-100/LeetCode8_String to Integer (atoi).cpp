@@ -45,27 +45,22 @@ class Solution
  private:
     int reinvent(string str)
     {
-        bool is_positive{true}, done{false};
+        int sign{1};
         int result{0};
-        for (size_t i{0}; i < str.length(); ++i)
+        size_t i{0};
+
+        while (str[i] == ' ')
+            ++i;
+        if (str[i] == '-' || str[i] == '+')
+            sign = (str[i++] == '+') ? 1 : -1;
+
+        for ( ; i < str.length() && isdigit(str[i]); ++i)
         {
-            if (str[i] == '-' || str[i] == '+')
-            {
-                is_positive = (str[i] == '+') ? true : false;
-                if (i == str.length() - 1 || !isdigit(str[i + 1]))
-                    return 0;
-            }
-            if (isdigit(str[i]) && !done)
-            {
-                for ( ; isdigit(str[i]) ; ++i)
-                    result = result * 10 + (str[i] - '0');
-                done = true;
-            }
-            if (done)
-                break;
+            if (result > INT32_MAX / 10 || (result == INT32_MAX / 10 && str[i] - '0' > INT32_MAX % 10))
+                return (sign == 1) ? INT32_MAX : INT32_MIN;
+            result = result * 10 + (str[i] - '0');
         }
-        result = is_positive ? result : -result;
-        return result;
+        return sign * result;
     }
 };
 
