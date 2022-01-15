@@ -39,8 +39,10 @@ class Solution
  public:
     int subarraySum(vector<int> &nums, int k)
     {
+        return prefix(nums, k);
     }
 
+ private:
     int my_2D_DP(vector<int> &nums, int k)
     {
         int total{0};
@@ -61,10 +63,36 @@ class Solution
 
         return total;
     }
+
+    int prefix(const vector<int> &nums, const int &k)
+    {
+        auto sz = nums.size();
+        vector<int> prefix_sums(sz, 0);
+        prefix_sums.front() = nums.front();
+        for (int i = 1; i < sz; ++i)
+        {
+            prefix_sums[i] = prefix_sums[i - 1] + nums[i];
+        }
+
+        unordered_map<int, int> prefix_sums_cnts;
+        int cnt{0};
+        for (int i = 0; i < sz; ++i)
+        {
+            if (prefix_sums[i] == k)
+                ++cnt;
+            cnt += prefix_sums_cnts[prefix_sums[i] - k];
+            ++prefix_sums_cnts[prefix_sums[i]];
+        }
+        return cnt;
+    }
 };
 
 int main(void)
 {
+    Solution sol;
+
+    vector<int> nums{1};
+    sol.subarraySum(nums, 0);  // 0
 
     return 0;
 }
