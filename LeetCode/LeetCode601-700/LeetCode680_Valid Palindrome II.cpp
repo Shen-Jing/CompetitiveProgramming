@@ -39,6 +39,7 @@ class Solution
  public:
     bool validPalindrome(string s)
     {
+        return is_valid_palindrome_deleteK(s, 0, s.length() - 1, 1);
         return brute_force(s);
     }
 
@@ -67,6 +68,21 @@ class Solution
         for (size_t i = 0; i < s.size(); ++i)
             if (is_valid_palindrome(s, i))
                 return true;
+        return false;
+    }
+
+    bool is_valid_palindrome_deleteK(const string &s, size_t left, size_t right, size_t k)
+    {
+        if (left >= right)
+            return true;
+        if (s[left] == s[right])
+            return is_valid_palindrome_deleteK(s, ++left, --right, k);
+        if (k)
+        {
+            --k;
+            return is_valid_palindrome_deleteK(s, left + 1, right, k)
+                || is_valid_palindrome_deleteK(s, left, right - 1, k);
+        }
         return false;
     }
 };
