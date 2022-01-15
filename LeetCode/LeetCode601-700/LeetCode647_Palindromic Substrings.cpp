@@ -37,16 +37,39 @@ class Solution
  public:
     int countSubstrings(string s)
     {
+        return count_top_down(s);
         return count_substrings_by_DP(s);
     }
  
  private:
+    /* [start][end]: palindromic lenght of substr(start, end - start + 1) */
+    vector<vector<int>> palindrome_len;
+    vector<vector<int>> memo;
+
+    int count_top_down(const string &s)
+    {
+        int cnt{0};
+        memo.assign(s.length(), vector<int>(s.length(), -1));
+        for (int start = 0; start < s.length(); ++start)
+            for (int end = start; end < s.length(); ++end)
+                cnt += is_palindrome(s, start, end);
+        return cnt;
+    }
+
+    int is_palindrome(const string &input, int start, int end)
+    {
+        auto &memo_ref = memo[start][end];
+        if (memo_ref != -1)
+            return memo_ref;
+        if (start >= end)
+            return 1;
+        return memo_ref = (input[start] == input[end]) ? is_palindrome(input, start + 1, end - 1) : 0;
+    }
+
     int count_substrings_by_DP(const string &input)
     {
         const int len = input.length();
-        /* [start][end]: palindromic lenght of substr(start, end - start + 1) */
-        vector<vector<int>> palindrome_len(len, vector<int>(len, 0));
-
+        palindrome_len.assign(len, vector<int>(len, 0));
         /* [Start, End] */
         for (int s = len - 1; s >= 0; --s)
             for (int e = s; e < len; ++e)
