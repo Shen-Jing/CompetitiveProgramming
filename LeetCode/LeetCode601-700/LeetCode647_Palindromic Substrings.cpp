@@ -37,6 +37,7 @@ class Solution
  public:
     int countSubstrings(string s)
     {
+        return count_by_extend(s);
         return count_top_down(s);
         return count_substrings_by_DP(s);
     }
@@ -86,6 +87,42 @@ class Solution
         for (auto &outer : palindrome_len)
             for (auto &inner : outer)
                 cnt += (inner != 0);
+        return cnt;
+    }
+
+    int count_by_extend(const string &str)
+    {
+        int cnt{0};
+        for (int center_idx{0}; center_idx < str.length(); ++center_idx)
+        {
+            /* Odd length */
+            ++cnt;
+            for (int left_idx = center_idx - 1,
+                     right_idx = center_idx + 1;
+                 left_idx >= 0 && right_idx < str.length();
+                 --left_idx, ++right_idx)
+            {
+                if (str[left_idx] == str[right_idx])
+                    ++cnt;
+                else
+                    break;
+            }
+            /* Even length */
+            if (center_idx + 1 < str.length() && str[center_idx] == str[center_idx + 1])
+            {
+                ++cnt;
+                for (int left_idx = center_idx - 1,
+                        right_idx = center_idx + 2;
+                    left_idx >= 0 && right_idx < str.length();
+                    --left_idx, ++right_idx)
+                {
+                    if (str[left_idx] == str[right_idx])
+                        ++cnt;
+                    else
+                        break;
+                }
+            }
+        }
         return cnt;
     }
 };
