@@ -36,10 +36,8 @@ class Solution
 {
  public:
     vector<vector<int>> permute(vector<int>& nums) {
-        vector<vector<int>> ans;
-        int sz{nums.size()};
-        my_permute(ans, nums, 0, sz);
-        return ans;
+        my_permute(nums, 0);
+        return ans_;
     }
  private:
     vector<vector<int>> ans_;
@@ -53,19 +51,18 @@ class Solution
         } while (next_permutation(nums.begin(), nums.end()));
     }
 
-    void my_permute(vector<vector<int>> &ans, vector<int> &nums, int idx, int &sz)
+    void my_permute(vector<int> &nums, size_t first)
     {
-        if (idx == sz - 1)
+        if (first == nums.size())
+            ans_.emplace_back(nums);
+        else
         {
-            ans.emplace_back(nums);
-            return;
+            for (size_t i = first; i < nums.size(); ++i)
+            {
+                swap(nums[first], nums[i]);
+                my_permute(nums, first + 1);
+                swap(nums[first], nums[i]);
+            }
         }
-        for (int i = idx; i < sz; ++i)
-        {
-            swap(nums[idx], nums[i]);
-            my_permute(ans, nums, idx + 1, sz);
-            swap(nums[idx], nums[i]);
-        }
-        return;
     }
 };
