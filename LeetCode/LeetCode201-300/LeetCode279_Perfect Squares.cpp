@@ -39,10 +39,11 @@ class Solution
  public:
     Solution()
     {
-        memo.fill(kN);
+        memo_.fill(kN);
         /* Base cases */
-        for (int i{0}, max_root = sqrt(kN); i <= max_root; ++i)
-            memo[i * i] = 1;
+        memo_[0] = 0;
+        for (int i{1}, max_root = sqrt(kN); i <= max_root; ++i)
+            memo_[i * i] = 1;
     }
 
     int numSquares(int n)
@@ -52,15 +53,21 @@ class Solution
 
  private:
     inline static const int kN{10001};
-    array<int, kN> memo;
+    array<int, kN> memo_;
 
     int top_down(const int &n)
     {
-        if (memo[n] != kN)
-            return memo[n];
-        for (int i = 1; i <= (n >> 1); ++i)
-            memo[n] = min(memo[n], top_down(i) + top_down(n - i));
-        return memo[n];
+        if (memo_[n] != kN)
+            return memo_[n];
+        int sqrt_root_n = sqrt(n);
+        for (int i = 1; i <= sqrt_root_n; ++i)
+            memo_[n] = min(memo_[n], top_down(n - i * i) + 1);
+        return memo_[n];
+    }
+
+    int bottom_up(const int &n)
+    {
+        return memo_[n];
     }
 };
 
