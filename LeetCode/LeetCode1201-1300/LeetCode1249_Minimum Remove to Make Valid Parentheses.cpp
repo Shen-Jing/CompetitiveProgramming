@@ -39,11 +39,19 @@ class Solution
  public:
     string minRemoveToMakeValid(string s)
     {
-        return my_try(s);
     }
 
  private:
-    string my_try(const string &str)
+    string two_pass_and_reverse(string s)
+    {
+        s = remove_invalid_close_parenthesis(s);
+        reverse(s.begin(), s.end());
+        s = remove_invalid_close_parenthesis(s, {')', '('});
+        reverse(s.begin(), s.end());
+        return s;
+    }
+
+    string remove_invalid_close_parenthesis(const string &str, const pair<char, char> paren_pair = {'(', ')'})
     {
         auto len = str.length();
         vector<size_t> removed_indices;
@@ -51,13 +59,14 @@ class Solution
         int balance{0};
         for (size_t i = 0; i < len; ++i)
         {
-            if (str[i] == '(')
+            if (str[i] == paren_pair.first)
                 ++balance;
-            else if (str[i] == ')')
+            else if (str[i] == paren_pair.second)
             {
-                --balance;
-                if (balance < 0)
+                if (balance == 0)
                     removed_indices.emplace_back(i);
+                else
+                    --balance;
             }
         }
         removed_indices.emplace_back(len);
