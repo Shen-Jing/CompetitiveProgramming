@@ -51,7 +51,14 @@ class MedianFinder
         }
         if (min_heap_.empty())
         {
-            min_heap_.emplace(num);
+            if (num <= max_heap_.top())
+            {
+                min_heap_.emplace(max_heap_.top());
+                max_heap_.pop();
+                max_heap_.emplace(num);
+            }
+            else
+                min_heap_.emplace(num);
             return;
         }
 
@@ -77,7 +84,7 @@ class MedianFinder
     
     double findMedian()
     {
-        if ((max_heap_.size() + min_heap_.size()) % 1)
+        if ((max_heap_.size() + min_heap_.size()) & 1)
             return max_heap_.top();
         return (double)(max_heap_.top() + min_heap_.top()) / 2;
     }
