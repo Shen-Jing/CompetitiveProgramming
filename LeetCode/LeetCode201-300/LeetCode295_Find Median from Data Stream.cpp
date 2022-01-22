@@ -64,7 +64,7 @@ class MedianFinder
 
         auto min_of_min_heap_ = min_heap_.top(),
              max_of_max_heap_ = max_heap_.top();
-        if (num > min_of_min_heap_)
+        if (num >= min_of_min_heap_)
             min_heap_.emplace(num);
         else if (num <= max_of_max_heap_)
             max_heap_.emplace(num);
