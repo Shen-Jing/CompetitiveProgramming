@@ -27,26 +27,36 @@ I am just a little enthusiastic about this, and practicing programming for mysel
 Some of these may have modern C++ version.  
 Or using library of existing projects. (e.g., [Boost](https://www.boost.org/))
 
-## Segment Tree
+## Tree
+
+- LeetCode 110. Balanced Binary Tree
+
+### Segment Tree
 
 - UVa 12532 - Interval Product
+
+### Fenwick Tree (Binary Indexed Tree)
+
+> Range Sum Queries (RSQ)
+
+- LeetCode 307. Range Sum Query - Mutable
 
 ## Graph
 
 ### Depth-First Search (DFS)
 
 - UVa 572 - Oil Deposits
-    - Flood Fill
+  - Flood Fill
 
 ### Single-Source Shortest Path
 
 - UVa 341 - Non-Stop Travel
-    - ➕ Boost Graph Library (BGL)
-    - Dijsktra
-        - priority queue
+  - ➕ Boost Graph Library (BGL)
+  - Dijsktra
+    - priority queue
 - UVa 558 - Wormholes
-    - Bellman-Ford
-    
+  - Bellman-Ford
+
 ### Directed Acyclic Graph (DAG)
 
 - UVa 825 - Walking on the Safe Side
@@ -54,24 +64,46 @@ Or using library of existing projects. (e.g., [Boost](https://www.boost.org/))
 ### Topological Sort
 
 - UVa 10305 - Ordering Tasks
-    - detect cycle
+  - detect cycle
 
 ### Minimum Spanning Tree
 
 - [UVa 908 - Re-connecting Computer Sites](https://onlinejudge.org/index.php?option=onlinejudge&Itemid=8&page=show_problem&problem=849)
-    - Kruskal's Algorithm
+  - Kruskal's Algorithm
 
-## Tree
+## Sorting
 
-- LeetCode 110. Balanced Binary Tree
+- [LeetCode 912. Sort an Array](https://leetcode.com/problems/sort-an-array/)
+  - Insertion Sort
+  - Counting Sort
+  - Merge Sort
+    - ➕ C++20 `std::span`
 
 ## Other data structures
 
 ### Stack
 
 - UVa 514 - Rails
+- LeetCode 20. Valid Parentheses
+
+### Monotonic Stack
+
+- [LeetCode 739. Daily Temperatures](https://leetcode.com/problems/daily-temperatures/)
+
+## Recursion
+
+- [LeetCode 60. Permutation Sequence](https://leetcode.com/problems/permutation-sequence/)
+
+## Backtracking
+
+- UVa 750 - 8 Queens Chess Problem
+- LeetCode 22. Generate Parentheses
+- LeetCode 46. Permutations
+- LeetCode 78. Subsets
 
 ## Dynamic Programming
+
+- LeetCode 376. Wiggle Subsequence
 
 ### 0-1 backpack
 
@@ -84,9 +116,11 @@ Or using library of existing projects. (e.g., [Boost](https://www.boost.org/))
 
 ### Meet in the Middle/A*/IDA*
 
--  UVa 10181 - 15-Puzzle Problem
+- UVa 10181 - 15-Puzzle Problem
 
 ## String
+
+- [LeetCode 31. Next Permutation](https://leetcode.com/problems/next-permutation/)
 
 ### Suffix Trie
 
