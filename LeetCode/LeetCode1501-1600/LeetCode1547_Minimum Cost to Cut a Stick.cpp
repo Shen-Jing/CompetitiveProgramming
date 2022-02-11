@@ -44,26 +44,28 @@ class Solution
 
  private:
     vector<vector<int>> costs_;
-    int top_down(int n, const vector<int> &cuts)
+    int top_down(int n, vector<int> &cuts)
     {
-        costs_.assign(n + 1, vector<int>(n + 1, numeric_limits<int>::max()));
-        return cut(cuts, 0, n);
+        sort(cuts.begin(), cuts.end());
+        cuts.insert(cuts.begin(), 0);
+        cuts.emplace_back(n);
+        costs_.assign(cuts.size(), vector<int>(cuts.size(), numeric_limits<int>::max()));
+        return cut(cuts, 0, cuts.size() - 1);
     }
 
+    /* left, right: index of cuts */
     int cut(const vector<int> &cuts, int left, int right)
     {
         if (right <= left + 1)
             return 0;
         if (costs_[left][right] != numeric_limits<int>::max())
             return costs_[left][right];
-        for (const auto &cut_pos : cuts)
+        for (int cut_idx = left + 1; cut_idx < right; ++cut_idx)
         {
-            if (cut_pos <= left || cut_pos >= right)
-                continue;
             costs_[left][right] = min(costs_[left][right], 
-                                      (right - left) + cut(cuts, left, cut_pos) + cut(cuts, cut_pos, right));
+                                      (cuts[right] - cuts[left]) + cut(cuts, left, cut_idx) + cut(cuts, cut_idx, right));
         }
-        return (costs_[left][right] == numeric_limits<int>::max()) ? (right - left) : costs_[left][right];
+        return costs_[left][right];
     }
 };
 
