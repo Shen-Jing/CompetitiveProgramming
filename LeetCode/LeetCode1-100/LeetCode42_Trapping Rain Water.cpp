@@ -47,7 +47,8 @@ class Solution
         int sz = heights.size();
         for (int idx = 1; idx <= sz - 2; ++idx)
         {
-            int left_max = 0, right_max = 0;
+            int left_max, right_max;
+            left_max = right_max = heights[idx];
             int left = idx, 
                 right = idx;
             while (--left >= 0)
@@ -55,8 +56,7 @@ class Solution
             while (++right < sz)
                 right_max = max(right_max, heights[right]);
 
-            int water = min(left_max, right_max) - heights[idx];
-            trap_water += (water < 0) ? 0 : water;
+            trap_water += min(left_max, right_max) - heights[idx];
         }
         return trap_water;
     }
