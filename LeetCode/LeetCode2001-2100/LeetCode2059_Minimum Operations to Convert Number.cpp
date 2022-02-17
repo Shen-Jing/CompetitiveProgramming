@@ -45,7 +45,7 @@ class Solution
         unordered_set<int> seen{start};
         while (!Q.empty())
         {
-            const auto &[curr_num, curr_opers] = Q.front();
+            const auto [curr_num, curr_opers] = Q.front();
             Q.pop();
 
             const int num_opers = curr_opers + 1;
