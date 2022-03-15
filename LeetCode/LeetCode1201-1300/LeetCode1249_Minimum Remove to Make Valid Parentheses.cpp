@@ -42,6 +42,36 @@ class Solution
     }
 
  private:
+    string use_classical_stack(const string &s)
+    {
+        int len = s.length();
+        /* Indices of open parenthesis */
+        vector<int> open_idx;
+        unordered_set<size_t> removed_indices;
+        removed_indices.reserve(len >> 2);
+        for (int i = 0; i < len; ++i)
+        {
+            if (s[i] == '(')
+                open_idx.emplace_back(i);
+            else if (s[i] == ')')
+            {
+                if (open_idx.empty())
+                    removed_indices.emplace(i);
+                else
+                    open_idx.pop_back();
+            }
+        }
+
+        for (const auto &i : open_idx)
+            removed_indices.emplace(i);
+        
+        string valid_str;
+        for (int i = 0; i < len; ++i)
+            if (!removed_indices.count(i))
+                valid_str += s[i];
+        return valid_str;
+    }
+
     string two_pass_and_reverse(string s)
     {
         s = remove_invalid_close_parenthesis(s);
