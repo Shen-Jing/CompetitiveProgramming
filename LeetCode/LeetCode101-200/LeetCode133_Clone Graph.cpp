@@ -69,29 +69,49 @@ class Solution
 
         int num_of_nodes{0};
         Node *first_node;
-        unordered_set<Node *> seen;
+        unordered_map<Node *, Node *> copies{{node, new Node(node->val)}};
         queue<Node *> Q;
         Q.emplace(node);
         while (!Q.empty())
         {
-            ++num_of_nodes;
-            Node *new_node = new Node(node->val);
-            if (num_of_nodes == 1)
-                first_node = new_node;
-
             Node *curr = Q.front();
             Q.pop();
-            seen.emplace(curr);
+
             for (const auto neighbor : curr->neighbors)
             {
-                new_node->neighbors.emplace_back(new Node(neighbor->val));
-                if (seen.count(neighbor))
-                    continue;
-                Q.emplace(neighbor);
+                if (!copies.count(neighbor))
+                {
+                    copies.emplace(neighbor, new Node(neighbor->val));
+                    Q.emplace(neighbor);
+                }
+                copies[curr]->neighbors.emplace_back(copies[neighbor]);
             }
         }
 
-        return first_node;
+        return copies[node];
+    }
+
+    /* BFS print for debugging */
+    void let_me_see(Node *node)
+    {
+        queue<Node *> Q;
+        unordered_set<Node *> seen{node};
+        Q.emplace(node);
+        while (!Q.empty())
+        {
+            Node *curr = Q.front();
+            Q.pop();
+            cout << "Current: " << curr->val << " - ";
+            for (const auto neighbor : curr->neighbors)
+            {
+                cout << neighbor->val << " ";
+                if (seen.count(neighbor))
+                    continue;
+                Q.emplace(neighbor);
+                seen.emplace(neighbor);
+            }
+            cout << endl;
+        }
     }
 };
 
