@@ -48,71 +48,34 @@ class Solution
         {
             if (nums[i] == nums[i - 1])
                 continue;
-            if (is_hill(nums, i))
+            if (is_extremity(nums, i, less<int>{}))
                 ++ans;
-            else if (is_valley(nums, i))
+            else if (is_extremity(nums, i, greater<int>{}))
                 ++ans;
         }
         return ans;
     }
 
  private:
-    bool is_hill(const vector<int> &nums, int idx)
+    template <typename Compare>
+    bool is_extremity(const vector<int> &nums, int idx, Compare comp)
     {
         bool left_flag{false}, right_flag{false};
         for (int left = idx - 1; left >= 0; --left)
         {
-            if (nums[left] < nums[idx])
-            {
-                left_flag = true;
-                break;
-            }
-            else if (nums[left] == nums[idx])
+            if (nums[left] == nums[idx])
                 continue;
-            else
-                break;
+            if (comp(nums[idx], nums[left]))
+                left_flag = true;
+            break;
         }
         for (int right = idx + 1; right < nums.size(); ++right)
         {
-            if (nums[right] < nums[idx])
-            {
+            if (nums[right] == nums[idx])
+                continue;
+            if (comp(nums[idx], nums[right]))
                 right_flag = true;
-                break;
-            }
-            else if (nums[right] == nums[idx])
-                continue;
-            else
-                break;
-        }
-        return (left_flag && right_flag);
-    }
-
-    bool is_valley(const vector<int> &nums, int idx)
-    {
-        bool left_flag{false}, right_flag{false};
-        for (int left = idx - 1; left >= 0; --left)
-        {
-            if (nums[left] > nums[idx])
-            {
-                left_flag = true;
-                break;
-            }
-            else if (nums[left] == nums[idx])
-                continue;
-            else
-                break;
-        }
-        for (int right = idx + 1; right < nums.size(); ++right)
-        {
-            if (nums[right] > nums[idx])
-            {
-                right_flag = true;
-                break;
-            }
-            else if (nums[right] == nums[idx])
-                continue;
-            else
-                break;
+            break;
         }
         return (left_flag && right_flag);
     }
