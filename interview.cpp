@@ -94,6 +94,76 @@ int find_half_max(ListNode *head)
     return max_val;
 }
 
+/* sorted 
+   A = [1, 2, 6, 8]
+   B = [4, 3, 5] 
+   A = [1, 3, 5] 
+   B = [2, 4, 6, 8]
+   A = [1, 2, 3] 
+   B = [4, 5, 6, 8]
+   Ans = [1, 2, 3, 4, 5, 6] */
+vector<int> merge_array_inplace(vector<int> &nums1, vector<int> &nums2)
+{
+    int sz1 = nums1.size(), sz2 = nums2.size();
+    if (sz1 > sz2)
+        return merge_array(nums2, nums1);
+    vector<int> ans;
+    ans.reserve(sz1 + sz2);
+    int idx1{0}, idx2{0};
+    for (; idx1 < sz1 && idx2 < sz2; )
+    {
+        if (nums1[idx1] <= nums2[idx2])
+        {
+            ++idx1;
+            if (nums1[idx1] >= nums2[idx2])
+                swap(nums1[idx1 + 1], nums2[idx2]);
+            for (int j = idx2 + 1; j < sz2; ++j)
+            {
+                if (nums2[j - 1] > nums[j])
+                    swap(nums2[j - 1], nums[j]);
+            }
+        }
+        else
+        {
+            if (nums2[idx2 + 1] >= nums2[idx2])
+                swap(nums1[idx1 + 1], nums2[idx2]);
+            for (int j = idx2 + 1; j < sz2; ++j)
+            {
+                if (nums2[j - 1] > nums[j])
+                    swap(nums2[j - 1], nums[j]);
+            }
+        }
+    }
+    for (; idx2 < sz2; ++idx2)
+        ans.emplace_back(nums2[idx2]);
+    return ans;
+}
+
+vector<int> merge_array(vector<int> &nums1, vector<int> &nums2)
+{
+    int sz1 = nums1.size(), sz2 = nums2.size();
+    if (sz1 > sz2)
+        return merge_array(nums2, nums1);
+    vector<int> ans;
+    ans.reserve(sz1 + sz2);
+    int idx1{0}, idx2{0};
+    for (; idx1 < sz1 && idx2 < sz2; )
+    {
+        if (nums1[idx1] <= nums2[idx2])
+        {
+            ans.emplace_back(nums1[idx1]);
+            ++idx1;
+        }
+        else
+        {
+            ans.emplace_back(nums2[idx2]);
+            ++idx2;
+        }
+    }
+    for (; idx2 < sz2; ++idx2)
+        ans.emplace_back(nums2[idx2]);
+    return ans;
+}
 
 int main(void)
 {
