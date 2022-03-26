@@ -39,6 +39,17 @@ class Solution
  public:
     int digArtifacts(int n, vector<vector<int>>& artifacts, vector<vector<int>>& dig)
     {
+        vector<vector<bool>> dug_grid(n, vector<bool>(n, false));
+        for (const auto &d : dig)
+            dug_grid[d[0]][d[1]] = true;
+
+        int ans{0};
+        for (const auto &artifact_pos : artifacts)
+        {
+            if (can_extract_by_hash_table(artifact_pos, dug_grid))
+                ++ans;
+        }
+        return ans;
     }
 
  private:
@@ -73,6 +84,20 @@ class Solution
         
         for (const auto &d : done_dig)
             todo_dig.erase(d);
+        int num_of_cells = (artifact_pos[2] - artifact_pos[0] + 1) * (artifact_pos[3] - artifact_pos[1] + 1);
+        return (parts == num_of_cells) ? true : false;
+    }
+
+    bool can_extract_by_hash_table(const vector<int>& artifact_pos, vector<vector<bool>> &dug_grid)
+    {
+        int parts{0};
+        for (int r = artifact_pos[0]; r <= artifact_pos[2]; ++r)
+            for (int c = artifact_pos[1]; c <= artifact_pos[3]; ++c)
+            {
+                if (dug_grid[r][c])
+                    ++parts;
+            }
+
         int num_of_cells = (artifact_pos[2] - artifact_pos[0] + 1) * (artifact_pos[3] - artifact_pos[1] + 1);
         return (parts == num_of_cells) ? true : false;
     }
