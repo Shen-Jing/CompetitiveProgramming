@@ -47,19 +47,16 @@ class Solution
         {
             slash_pos = strv_path.find('/', i);
             if (slash_pos == string_view::npos)
-                break;
+                slash_pos = len;
           
             string_view path_token = strv_path.substr(i, slash_pos - i);
             i = slash_pos + 1;
-            if (path_token.empty())
+            if (path_token.empty() || path_token == "."sv)
                 continue;
-            if (path_token == ".."sv)
-            {
-                if (!stk.empty())
-                    stk.pop_back();
-            }
-            else if (path_token != "."sv)
+            else if (path_token != ".."sv)
                 stk.emplace_back(path_token);
+            else if (!stk.empty())
+                stk.pop_back();
         }
 
         string canonical_path;
