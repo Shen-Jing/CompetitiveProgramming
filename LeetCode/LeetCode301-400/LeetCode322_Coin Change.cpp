@@ -37,30 +37,41 @@ class Solution
  public:
     int coinChange(vector<int>& coins, int amount)
     {
-        recursive(coins, amount, 0, 0, 0);
+        backtrack(coins, 0, amount, 0);
         return ans_;
     }
 
-    void recursive(const vector<int> &coins, const int amount, int curr_amount, size_t coin_idx, int num_of_coins)
+    void backtrack(const vector<int> &coins, int coin_idx, int target_amount, int num_of_coins)
     {
-        if (coin_idx == coins.size())
-            return;
-        if (curr_amount + coins[coin_idx] == amount)
-            ans_ = num_of_coins + 1;
-        else if (curr_amount + coins[coin_idx] > amount)
-            recursive(coins, amount, curr_amount, coin_idx + 1, num_of_coins);
-        else if (curr_amount + coins[coin_idx] < amount)
+        if (target_amount < 0)
         {
-            recursive(coins, amount, curr_amount, coin_idx + 1, num_of_coins);
-            recursive(coins, amount, curr_amount + coins[coin_idx], coin_idx, num_of_coins + 1);
+            ans_ = (ans_ == numeric_limits<int>::max()) ? -1 : ans_;
+            return;
+        }
+        if (target_amount == 0)
+        {
+            ans_ = (ans_ == -1) ? num_of_coins : min(ans_, num_of_coins);
+            return;
+        }
+
+        ++num_of_coins;
+        for (int i = coin_idx; i < coins.size(); ++i)
+        {
+            backtrack(coins, i, target_amount - coins[i], num_of_coins);
         }
     }
  private:
-    int ans_ = 0;
+    int ans_ = numeric_limits<int>::max();
 };
 
 int main(void)
 {
+    Solution sol;
+
+    vector<int> coins;
+
+    coins = {2, 5, 10, 1};
+    cout << sol.coinChange(coins, 27) << "\n";
 
     return 0;
 }
