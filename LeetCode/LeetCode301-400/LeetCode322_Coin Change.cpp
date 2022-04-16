@@ -45,7 +45,7 @@ class Solution
     int top_down(const vector<int> &coins, int amount)
     {
         if (amount < 0)
-            return numeric_limits<int>::max();
+            return -1;
         if (min_coins_[amount] != numeric_limits<int>::max())
             return min_coins_[amount];
         if (amount == 0)
@@ -53,9 +53,11 @@ class Solution
 
         for (const auto &coin : coins)
         {
-            if (top_down(coins, amount - coin) != numeric_limits<int>::max())
+            if (top_down(coins, amount - coin) != -1)
                 min_coins_[amount] = min(min_coins_[amount], min_coins_[amount - coin] + 1);
         }
+        if (min_coins_[amount] == numeric_limits<int>::max())
+            min_coins_[amount] = -1;
         return min_coins_[amount];
     }
  private:
