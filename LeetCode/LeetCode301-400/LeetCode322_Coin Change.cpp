@@ -37,31 +37,29 @@ class Solution
  public:
     int coinChange(vector<int>& coins, int amount)
     {
-        backtrack(coins, 0, amount, 0);
-        return ans_;
+        min_coins_.assign(amount + 1, numeric_limits<int>::max());
+        top_down(coins, amount);
+        return (min_coins_[amount] == numeric_limits<int>::max()) ? -1 : min_coins_[amount];
     }
 
-    void backtrack(const vector<int> &coins, int coin_idx, int target_amount, int num_of_coins)
+    int top_down(const vector<int> &coins, int amount)
     {
-        if (target_amount < 0)
-        {
-            ans_ = (ans_ == numeric_limits<int>::max()) ? -1 : ans_;
-            return;
-        }
-        if (target_amount == 0)
-        {
-            ans_ = (ans_ == -1) ? num_of_coins : min(ans_, num_of_coins);
-            return;
-        }
+        if (amount < 0)
+            return numeric_limits<int>::max();
+        if (min_coins_[amount] != numeric_limits<int>::max())
+            return min_coins_[amount];
+        if (amount == 0)
+            return min_coins_[amount] = 0;
 
-        ++num_of_coins;
-        for (int i = coin_idx; i < coins.size(); ++i)
+        for (const auto &coin : coins)
         {
-            backtrack(coins, i, target_amount - coins[i], num_of_coins);
+            if (top_down(coins, amount - coin) != numeric_limits<int>::max())
+                min_coins_[amount] = min(min_coins_[amount], min_coins_[amount - coin] + 1);
         }
+        return min_coins_[amount];
     }
  private:
-    int ans_ = numeric_limits<int>::max();
+    vector<int> min_coins_;
 };
 
 int main(void)
