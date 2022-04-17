@@ -40,6 +40,28 @@ class Solution
     }
 
  private:
+    vector<vector<int>> one_pass(vector<int> &nums)
+    {
+        sort(nums.begin(), nums.end());
+
+        vector<vector<int>> ans;
+        int sz = nums.size(), min_diff = nums.back() - nums.front();
+        for (int i = 1; i < sz; ++i)
+        {
+            int diff = abs(nums[i] - nums[i - 1]);
+            if (diff < min_diff)
+            {
+                ans.clear();
+                min_diff = diff;
+            }
+            if (diff == min_diff)
+            {
+                ans.push_back({nums[i - 1], nums[i]});
+            }
+        }
+        return ans;
+    }
+
     vector<vector<int>> two_pass(vector<int> &arr)
     {
         sort(arr.begin(), arr.end());
