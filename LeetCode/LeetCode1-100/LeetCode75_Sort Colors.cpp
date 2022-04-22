@@ -37,7 +37,30 @@ class Solution
  public:
     void sortColors(vector<int> &nums)
     {
+        one_pass(nums);
+    }
 
+private:
+    void one_pass(vector<int> &nums)
+    {
+        int sz = nums.size(),
+            p0{0}, p2{sz - 1};
+        for (int idx = 0; idx < sz && idx <= p2; )
+        {
+            if (nums[idx] == 0)
+            {
+                swap(nums[idx], nums[p0]);
+                ++p0;
+                ++idx;
+            }
+            else if (nums[idx] == 2)
+            {
+                swap(nums[idx], nums[p2]);
+                --p2;
+            }
+            else
+                ++idx;
+        }
     }
 
     void my_counting_sort(vector<int> &nums)
@@ -65,6 +88,11 @@ class Solution
 
 int main(void)
 {
+    Solution sol;
+    vector<int> nums;
+
+    nums = {2, 0, 2, 1, 1, 0};
+    sol.sortColors(nums);
 
     return 0;
 }
