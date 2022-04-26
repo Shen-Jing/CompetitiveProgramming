@@ -116,6 +116,8 @@ class Solution
     vector<int> sortArray(vector<int> &nums)
     {
         init(nums);
+        quick_sort(nums, 0, nums.size() - 1);
+        return nums;
     }
 
  private:
@@ -175,14 +177,40 @@ class Solution
         for (size_t i{left}, out_idx{0}; out_idx < t_idx; ++i, ++out_idx)
             nums[i] = tmp_out[out_idx];
     }
+
+    void quick_sort(vector<int> &nums, int front, int end)
+    {
+        if (front >= end)
+            return;
+        /* Partition */
+        int &pivot{nums[end]};
+        int last_pos{front - 1};
+        for (int idx{front}; idx < end; ++idx)
+        {
+            if (nums[idx] <= pivot)
+            {
+                ++last_pos;
+                swap(nums[last_pos], nums[idx]);
+            }
+        }
+        ++last_pos;
+        swap(pivot, nums[last_pos]);
+
+        quick_sort(nums, front, last_pos - 1);
+        quick_sort(nums, last_pos + 1, end);
+    }
 };
 
 int main(void)
 {
 
     Solution sol;
+    vector<int> nums;
 
-    vector<int> nums{5, 2, 3, 1, 4};
+    nums = {5, 2, 3, 1};
+    sol.sortArray(nums);
+
+    nums = {5, 2, 3, 1, 4};
     sol.sortArray(nums);
 
     nums = {5, 1, 1, 2, 0, 0};
