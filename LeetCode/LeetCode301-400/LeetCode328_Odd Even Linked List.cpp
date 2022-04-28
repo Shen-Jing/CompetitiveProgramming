@@ -53,6 +53,36 @@ class Solution
         odd->next = even_head;
         return odd_head;
     }
+
+ private:
+    /* Practice with Sean (2022-04-22) */
+    ListNode *reorder(ListNode *head)
+    {
+        if (!head || !head->next)
+            return head;
+        ListNode *odd = head, *even = head->next, *even_head = head->next,
+                *curr{head->next->next};
+        int idx = 1;
+        while (curr)
+        {
+            if (idx)
+            {
+                odd->next = curr;
+                odd = odd->next;
+            }
+            else
+            {
+                even->next = curr;
+                even = even->next;
+            }
+            curr = curr->next;
+            /* ~idx: ~1 => -2 */
+            idx = !idx;
+        }
+        odd->next = even_head;
+        even->next = nullptr;
+        return head;
+    }
 };
 
 int main(void)
