@@ -38,7 +38,7 @@ class Solution
  public:
     vector<int> intersect(vector<int>& nums1, vector<int>& nums2)
     {
-
+        return by_sorting(nums1, nums2);
     }
 
  private:
@@ -57,6 +57,33 @@ class Solution
             {
                 ans.emplace_back(num);
                 --freqs[num];
+            }
+        }
+        return ans;
+    }
+
+    vector<int> by_sorting(vector<int>& nums1, vector<int>& nums2)
+    {
+        sort(nums1.begin(), nums1.end());
+        sort(nums2.begin(), nums2.end());
+
+        vector<int> ans;
+        int sz1 = nums1.size(), sz2 = nums2.size();
+        for (int i1 = 0, i2 = 0; i1 < sz1 && i2 < sz2; )
+        {
+            int num1 = nums1[i1], num2 = nums2[i2];
+            if (num1 == num2)
+            {
+                ans.emplace_back(num1);
+                ++i1, ++i2;
+            }
+            else if (num1 > num2)
+            {
+                ++i2;
+            }
+            else
+            {
+                ++i1;
             }
         }
         return ans;
