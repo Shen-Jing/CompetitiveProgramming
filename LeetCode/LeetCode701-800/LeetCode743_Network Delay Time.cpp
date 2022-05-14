@@ -44,7 +44,7 @@ class Solution
         {
             /* Source, Destination, Weight */
             int u = times[e][0] - 1, v = times[e][1] - 1, 
-                w = times[e][2] * -1;
+                w = times[e][2];
             auto edge = make_pair(v, w);
             edge_list[u].emplace_back(edge);
         }
@@ -58,7 +58,6 @@ class Solution
         vector<int> dist(n, numeric_limits<int>::max());
         dist[src] = 0;
 
-        int min_dist = numeric_limits<int>::max();
         /* {dist, target} */
         priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> dist_q;
         dist_q.emplace(0, src);
@@ -75,17 +74,18 @@ class Solution
                 {
                     dist[v] = dist[u] + w;
                     dist_q.emplace(dist[v], v);
-                    min_dist = min(min_dist, dist[v]);
                 }
             }
         }
 
+        int max_dist = numeric_limits<int>::min();
         for (const auto &d : dist)
         {
             if (d == numeric_limits<int>::max())
                 return -1;
+            max_dist = max(max_dist, d);
         }
-        return min_dist * -1;
+        return max_dist;
     }
 };
 
