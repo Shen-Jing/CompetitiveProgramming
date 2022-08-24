@@ -39,25 +39,29 @@ class Solution
  public:
     int longestConsecutive(TreeNode *root)
     {
-        return helper(root);
+        inorder_traverse(root, numeric_limits<int>::min(), 1);
+        return ans_;
     }
 
  private:
     int ans_ = 1;
-    int helper(TreeNode *root)
+    void inorder_traverse(TreeNode *root, int parent_val, int cur_len)
     {
         if (!root)
-            return 0;
-        if (!root->left && !root->right)
-            return 1;
-        int left_len{0}, right_len{0};
-        if (root->left && root->left->val == root->val + 1)
-            left_len = 1 + helper(root->left);
-        if (root->right && root->right->val == root->val + 1)
-            right_len = 1 + helper(root->right);
-        return max(left_len, right_len);
+        {
+            ans_ = max(ans_, cur_len);
+            return;
+        }
+        if (root->val == parent_val + 1)
+        {
+            ++cur_len;
+            ans_ = max(ans_, cur_len);
+        }
+        else
+            cur_len = 1;
+        inorder_traverse(root->left, root->val, cur_len);
+        inorder_traverse(root->right, root->val, cur_len);
     }
-
 };
 
 int main(void)
