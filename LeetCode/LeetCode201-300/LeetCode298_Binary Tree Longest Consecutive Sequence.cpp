@@ -39,13 +39,13 @@ class Solution
  public:
     int longestConsecutive(TreeNode *root)
     {
-        inorder_traverse(root, numeric_limits<int>::min(), 1);
+        preorder_traverse(root, numeric_limits<int>::min(), 1);
         return ans_;
     }
 
  private:
     int ans_ = 1;
-    void inorder_traverse(TreeNode *root, int parent_val, int cur_len)
+    void preorder_traverse(TreeNode *root, int parent_val, int cur_len)
     {
         if (!root)
         {
@@ -59,8 +59,8 @@ class Solution
         }
         else
             cur_len = 1;
-        inorder_traverse(root->left, root->val, cur_len);
-        inorder_traverse(root->right, root->val, cur_len);
+        preorder_traverse(root->left, root->val, cur_len);
+        preorder_traverse(root->right, root->val, cur_len);
     }
 };
 
