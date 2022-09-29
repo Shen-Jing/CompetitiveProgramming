@@ -27,6 +27,16 @@ static auto io = []() {
     return nullptr;
 }();
 
+enum class ScopedTest : std::int64_t {
+    kFirst = 0,
+    kSecond
+};
+
+enum UnScopedTest {
+    kFirst = 0,
+    kSecond
+};
+
 int main(void){
     std::cout << "***Case 0: ***\n";
     bool b;
@@ -78,7 +88,15 @@ int main(void){
 
     printf("***Case 5: Lower bound***\n");
     std::string target{"applepen"};
-    auto lower = std::lower_bound(target.begin(), target.end(), std::string("apple"));
+    /* no match for ‘operator<’ (operand types are ‘char’ and ‘const std::__cxx11::basic_string<char>’) */
+    // auto lower = std::lower_bound(target.begin(), target.end(), std::string("apple"));
+
+    printf("***Case 6: Enum***\n");
+    std::cout << "Size of scoped enum: " << sizeof(ScopedTest) << "\n";
+    std::cout << "Size of enumerator: " << sizeof(ScopedTest::kFirst) << "\n";
+    // std::cout << "Address of enumerator: " << &ScopedTest::kFirst << "\n";  // error: ‘ScopedTest’ is not a class type
+    std::cout << "Size of unscoped enum: " << sizeof(UnScopedTest) << "\n";
+    std::cout << "Size of enumerator: " << sizeof(UnScopedTest::kFirst) << "\n";
 
     return 0;
 }
