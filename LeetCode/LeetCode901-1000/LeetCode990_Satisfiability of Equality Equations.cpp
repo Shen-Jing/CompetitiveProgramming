@@ -38,7 +38,7 @@ struct UnionFind
  public:
     UnionFind()
     {
-        fill(root.begin(), root.end(), -1);  // -1: unvisited
+        iota(begin(root), end(root), 0);
     }
 
     int get_root(int n)
@@ -62,7 +62,7 @@ struct UnionFind
             return;
         int r_x = root[x],
             r_y = root[y];
-        root[y] = r_x;
+        root[r_y] = r_x;
     }
 
  private:
@@ -81,38 +81,35 @@ class Solution
  private:
     bool by_union_find(vector<string> &equations)
     {
+        /**
+         * [Difficulties of One Pass] 
+         * - If the inequality comes first, how to handle the equality afterwards?
+         * - If one of operand is unvisited?
+         */
+
         UnionFind uf;
         for (const auto &eq : equations)
         {
-            int x = eq.front(),
-                y = eq.back();
+            int x = eq.front() - 'a',
+                y = eq.back() - 'a';
             const char &sign = eq[1];
-            if (x > y)
-                swap(x, y);
             
-            /**
-             * [Key points] 
-             * - If the inequality comes first, how to handle the equality afterwards?
-             * - If one of operand is unvisited?
-             */
             if (sign == '=')
             {
-                if (uf.get_root(x) != uf.get_root(y))
-                    return false;
-                if (uf.get_root(x) == -1)
-                {
-                    uf.set_root(x, x);
-                    uf.set_root(y, y);
-                }
                 uf.union_groups(x, y);
             }
-            if (uf.get_root(x) == -1)
-                uf.set_root(x, x);
-            if (uf.get_root(y) == -1)
-                uf.set_root(y, y);
+        }
 
-            if (sign == '!' && uf.get_root(x) == uf.get_root(y))
+        for (const auto &eq : equations)
+        {
+            int x = eq.front() - 'a',
+                y = eq.back() - 'a';
+            const char &sign = eq[1];
+            
+            if (sign == '!' && uf.find_root(x) == uf.find_root(y))
+            {
                 return false;
+            }
         }
         return true;
     }
