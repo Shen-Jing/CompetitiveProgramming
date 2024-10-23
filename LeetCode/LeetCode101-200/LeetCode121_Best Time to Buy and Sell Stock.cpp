@@ -62,6 +62,19 @@ class Solution
         }
         return max_profit;
     }
+
+    int my_dp(const vector<int> &prices)
+    {
+        auto sz = prices.size();
+        vector<int> profits(sz, 0);
+        for (int i = sz - 2; i >= 0; --i)
+        {
+            auto diff = prices[i + 1] - prices[i];
+            auto cur_profit = diff + profits[i + 1];
+            profits[i] = (cur_profit < 0) ? 0 : cur_profit;
+        }
+        return *max_element(profits.begin(), profits.end());
+    }
 };
 
 int main(void)
