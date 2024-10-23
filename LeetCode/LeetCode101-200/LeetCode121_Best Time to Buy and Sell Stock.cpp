@@ -44,7 +44,7 @@ class Solution
     {
         auto sz = prices.size();
         int max_profit{0};
-        for (size_t i = 1; i < sz; ++i)
+        for (size_t i = 0; i < sz - 1; ++i)
         {
             auto max_price = *max_element(prices.begin() + i + 1, prices.end());
             max_profit = max(max_profit, max_price - prices[i]);
@@ -66,6 +66,9 @@ class Solution
 
 int main(void)
 {
+    Solution sol;
+    vector<int> prices{7,1,5,3,6,4};
 
+    sol.maxProfit(prices);
     return 0;
 }
