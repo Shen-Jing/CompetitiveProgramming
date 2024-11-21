@@ -36,40 +36,31 @@ static auto io = [](){
 class Solution
 {
  public:
-    int firstUniqChar(string s)
+    int partitionString(string s)
     {
+        return greedy(s);
     }
 
  private:
-    /* Written on 2019 */
-    int hashtable_and_find_forward(string s)
+    int greedy(const string &s)
     {
-        std::map<char, int> wrd_rcd;
-        for (int i = 0; i < s.size(); ++i)
-        {
-            if (!wrd_rcd.count(s[i]))
-            {
-                int pos = s.find(s[i], i + 1);
-                if (pos == std::string::npos)
-                    return i;
-                wrd_rcd[s[i]] = pos;
-            }
-        }
-        return -1;
-    }
+        array<int, 26> letters_occurencies;
+        fill(letters_occurencies.begin(), letters_occurencies.end(), 0);
 
-    int two_pass_by_hash_table(string s)
-    {
-        unordered_map<int, int> char_cnts;
-        for (const auto &ch : s)
-            ++char_cnts[ch];
-        
+        int cnt_partitions = 1;
         for (int i = 0; i < s.length(); ++i)
         {
-            if (char_cnts[s[i]] == 1)
-                return i;
+            int char_ival = s[i] - 'a';
+            if (letters_occurencies[char_ival] != 0)
+            {
+                ++cnt_partitions;
+                fill(letters_occurencies.begin(), letters_occurencies.end(), 0);
+            }
+
+            ++letters_occurencies[char_ival];
         }
-        return -1;
+
+        return cnt_partitions;
     }
 };
 

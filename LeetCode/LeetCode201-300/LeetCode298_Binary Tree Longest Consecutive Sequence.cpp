@@ -24,6 +24,7 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>
+#include "utils.hpp"
 
 using namespace std;
 
@@ -36,40 +37,30 @@ static auto io = [](){
 class Solution
 {
  public:
-    int firstUniqChar(string s)
+    int longestConsecutive(TreeNode *root)
     {
+        preorder_traverse(root, numeric_limits<int>::min(), 1);
+        return ans_;
     }
 
  private:
-    /* Written on 2019 */
-    int hashtable_and_find_forward(string s)
+    int ans_ = 1;
+    void preorder_traverse(TreeNode *root, int parent_val, int cur_len)
     {
-        std::map<char, int> wrd_rcd;
-        for (int i = 0; i < s.size(); ++i)
+        if (!root)
         {
-            if (!wrd_rcd.count(s[i]))
-            {
-                int pos = s.find(s[i], i + 1);
-                if (pos == std::string::npos)
-                    return i;
-                wrd_rcd[s[i]] = pos;
-            }
+            ans_ = max(ans_, cur_len);
+            return;
         }
-        return -1;
-    }
-
-    int two_pass_by_hash_table(string s)
-    {
-        unordered_map<int, int> char_cnts;
-        for (const auto &ch : s)
-            ++char_cnts[ch];
-        
-        for (int i = 0; i < s.length(); ++i)
+        if (root->val == parent_val + 1)
         {
-            if (char_cnts[s[i]] == 1)
-                return i;
+            ++cur_len;
+            ans_ = max(ans_, cur_len);
         }
-        return -1;
+        else
+            cur_len = 1;
+        preorder_traverse(root->left, root->val, cur_len);
+        preorder_traverse(root->right, root->val, cur_len);
     }
 };
 

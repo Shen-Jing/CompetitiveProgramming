@@ -44,7 +44,7 @@ class Solution
     {
         auto sz = prices.size();
         int max_profit{0};
-        for (size_t i = 1; i < sz; ++i)
+        for (size_t i = 0; i < sz - 1; ++i)
         {
             auto max_price = *max_element(prices.begin() + i + 1, prices.end());
             max_profit = max(max_profit, max_price - prices[i]);
@@ -62,10 +62,26 @@ class Solution
         }
         return max_profit;
     }
+
+    int my_dp(const vector<int> &prices)
+    {
+        auto sz = prices.size();
+        vector<int> profits(sz, 0);
+        for (int i = sz - 2; i >= 0; --i)
+        {
+            auto diff = prices[i + 1] - prices[i];
+            auto cur_profit = diff + profits[i + 1];
+            profits[i] = (cur_profit < 0) ? 0 : cur_profit;
+        }
+        return *max_element(profits.begin(), profits.end());
+    }
 };
 
 int main(void)
 {
+    Solution sol;
+    vector<int> prices{7,1,5,3,6,4};
 
+    sol.maxProfit(prices);
     return 0;
 }

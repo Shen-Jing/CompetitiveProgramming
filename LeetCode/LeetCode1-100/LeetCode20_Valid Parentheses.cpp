@@ -38,14 +38,14 @@ class Solution
     {
         /* round, curly, square */
         stack<char> open_brackets;
-        map<char, char> bracket_mapping{ {'(', ')'}, {'[', ']'}, {'{', '}'} };
+        unordered_map<char, char> bracket_mappings{ {'(', ')'}, {'[', ']'}, {'{', '}'} };
         for (const auto &bracket : s)
         {
-            if (bracket_mapping.count(bracket))  // C++20: .contains
+            if (bracket_mappings.count(bracket))  // C++20: .contains
                 open_brackets.push(bracket);
             else
             {
-                if (open_brackets.empty() || bracket_mapping[open_brackets.top()] != bracket)
+                if (open_brackets.empty() || bracket_mappings[open_brackets.top()] != bracket)
                     return false;
                 open_brackets.pop();
             }

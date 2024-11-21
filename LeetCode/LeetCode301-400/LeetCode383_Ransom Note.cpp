@@ -36,40 +36,26 @@ static auto io = [](){
 class Solution
 {
  public:
-    int firstUniqChar(string s)
+    bool canConstruct(string ransomNote, string magazine)
     {
+        return by_table(ransomNote, magazine);
     }
 
  private:
-    /* Written on 2019 */
-    int hashtable_and_find_forward(string s)
+    bool by_table(const string &target, const string &src)
     {
-        std::map<char, int> wrd_rcd;
-        for (int i = 0; i < s.size(); ++i)
-        {
-            if (!wrd_rcd.count(s[i]))
-            {
-                int pos = s.find(s[i], i + 1);
-                if (pos == std::string::npos)
-                    return i;
-                wrd_rcd[s[i]] = pos;
-            }
-        }
-        return -1;
-    }
-
-    int two_pass_by_hash_table(string s)
-    {
-        unordered_map<int, int> char_cnts;
-        for (const auto &ch : s)
-            ++char_cnts[ch];
+        array<int, 26> letters_cnt;
+        letters_cnt.fill(0);
+        for (const auto &ch : src)
+            ++letters_cnt[ch - 'a'];
         
-        for (int i = 0; i < s.length(); ++i)
+        for (const auto &ch : target)
         {
-            if (char_cnts[s[i]] == 1)
-                return i;
+            if (!letters_cnt[ch - 'a'])
+                return false;
+            --letters_cnt[ch - 'a'];
         }
-        return -1;
+        return true;
     }
 };
 

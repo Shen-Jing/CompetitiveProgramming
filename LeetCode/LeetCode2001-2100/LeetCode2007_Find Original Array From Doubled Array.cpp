@@ -36,40 +36,36 @@ static auto io = [](){
 class Solution
 {
  public:
-    int firstUniqChar(string s)
+    vector<int> findOriginalArray(vector<int> &changed)
     {
+        if (changed.size() & 1)
+            return {};
+        return by_hash_table(changed);
     }
 
  private:
-    /* Written on 2019 */
-    int hashtable_and_find_forward(string s)
+    vector<int> by_hash_table(vector<int> &changed)
     {
-        std::map<char, int> wrd_rcd;
-        for (int i = 0; i < s.size(); ++i)
-        {
-            if (!wrd_rcd.count(s[i]))
-            {
-                int pos = s.find(s[i], i + 1);
-                if (pos == std::string::npos)
-                    return i;
-                wrd_rcd[s[i]] = pos;
-            }
-        }
-        return -1;
-    }
+        unordered_map<int, int> frequencies;
+        for (const auto &val : changed)
+            ++frequencies[val];
 
-    int two_pass_by_hash_table(string s)
-    {
-        unordered_map<int, int> char_cnts;
-        for (const auto &ch : s)
-            ++char_cnts[ch];
-        
-        for (int i = 0; i < s.length(); ++i)
+        vector<int> ans;
+        sort(changed.begin(), changed.end());
+        for (const auto &val : changed)
         {
-            if (char_cnts[s[i]] == 1)
-                return i;
+            if (!frequencies[val])
+                continue;
+            if (frequencies[val * 2] > 0)
+            {
+                ans.emplace_back(val);
+                --frequencies[val];
+                --frequencies[val * 2];
+            }
+            else
+                return {};
         }
-        return -1;
+        return ans;
     }
 };
 

@@ -36,40 +36,26 @@ static auto io = [](){
 class Solution
 {
  public:
-    int firstUniqChar(string s)
+    int numberOfWeakCharacters(vector<vector<int>> &properties)
     {
+        return by_sort(properties);
     }
 
  private:
-    /* Written on 2019 */
-    int hashtable_and_find_forward(string s)
+    int by_sort(vector<vector<int>> &properties)
     {
-        std::map<char, int> wrd_rcd;
-        for (int i = 0; i < s.size(); ++i)
-        {
-            if (!wrd_rcd.count(s[i]))
+        sort(properties.begin(), properties.end());
+        int sz = properties.size(), ans = 0;
+        for (int i = 0; i < sz - 1; ++i)
+            for (int j = i + 1; j < sz; ++j)
             {
-                int pos = s.find(s[i], i + 1);
-                if (pos == std::string::npos)
-                    return i;
-                wrd_rcd[s[i]] = pos;
+                if (properties[i][0] < properties[j][0] && properties[i][1] < properties[j][1])
+                {
+                    ++ans;
+                    break;
+                }
             }
-        }
-        return -1;
-    }
-
-    int two_pass_by_hash_table(string s)
-    {
-        unordered_map<int, int> char_cnts;
-        for (const auto &ch : s)
-            ++char_cnts[ch];
-        
-        for (int i = 0; i < s.length(); ++i)
-        {
-            if (char_cnts[s[i]] == 1)
-                return i;
-        }
-        return -1;
+        return ans;
     }
 };
 
