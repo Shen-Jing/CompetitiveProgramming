@@ -36,52 +36,43 @@ static auto io = [](){
 /// Amortized
 class MyQueue {
  public:
-    MyQueue() {
+    MyQueue()
+    {
         
     }
     
-    void push(int x) {
-        push_stk.push(x);
+    void push(int x)
+    {
+        input_stk.push(x);
     }
     
-    int pop() {
-        if (pop_stk.empty())
-        {
-            while (!push_stk.empty())
-            {
-                pop_stk.push(push_stk.top());
-                push_stk.pop();
-            }
-        }
-        /// All the calls are guranteed to be valid => the push stack must be non-empty
-        int data = pop_stk.top();
-        pop_stk.pop();
+    int pop()
+    {
+        int data = peek();
+        output_stk.pop();
         return data;
     }
     
     int peek()
     {
-        if (pop_stk.empty())
+        if (output_stk.empty())
         {
-            while (!push_stk.empty())
+            while (!input_stk.empty())
             {
-                pop_stk.push(push_stk.top());
-                push_stk.pop();
+                output_stk.push(input_stk.top());
+                input_stk.pop();
             }
-            return pop_stk.top();
         }
-        else
-        {
-            return pop_stk.top();
-        }
-        
+        /// All the calls are guranteed to be valid => the push stack must be non-empty
+        return output_stk.top();
     }
     
-    bool empty() {
-        return push_stk.empty() && pop_stk.empty();
+    bool empty()
+    {
+        return input_stk.empty() && output_stk.empty();
     }
  private:
-    stack<int> push_stk, pop_stk;
+    stack<int> input_stk, output_stk;
 };
 
 /**
