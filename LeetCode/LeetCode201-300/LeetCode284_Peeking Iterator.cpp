@@ -79,6 +79,12 @@ public:
 
 int main(void)
 {
-
+    // PeekingIterator peekingIterator = new PeekingIterator([1, 2, 3]);
+    PeekingIterator peekingIterator = PeekingIterator({1, 2, 3}); // [1,2,3]
+    peekingIterator.next();    // return 1, the pointer moves to the next element [1,2,3].
+    peekingIterator.peek();    // return 2, the pointer does not move [1,2,3].
+    peekingIterator.next();    // return 2, the pointer moves to the next element [1,2,3]
+    peekingIterator.next();    // return 3, the pointer moves to the next element [1,2,3]
+    peekingIterator.hasNext(); // return False
     return 0;
 }
