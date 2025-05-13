@@ -68,11 +68,11 @@ class Solution
                 /// The current optimal value: min([i - 1][k] + abs(num[i] - j))
                 for (int k = 0; k <= j; ++k)
                 {
-                    costs[i][j] = min(costs[i][j], costs[i - 1][k] + abs(nums[i] - k));
-                    min_cost = min(min_cost, costs[i][j]);
+                    costs[i][j] = min(costs[i][j], costs[i - 1][k] + abs(nums[i] - j));
                 }
             }
         }
+        min_cost = *min_element(costs.back().begin(), costs.back().end());
         return min_cost;
     }
 };
