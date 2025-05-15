@@ -56,20 +56,20 @@ class Solution
         int min_cost = numeric_limits<int>::max();
         vector<vector<int>> costs(sz, vector<int>(max_val + 1, numeric_limits<int>::max()));
 
+        /// The previous adjusted value `k`: min([i - 1][k])
+        /// The current adjusted number `j`: abs(num[i] - j)
+        /// costs[i][j] = min(costs[i][j], costs[i - 1][k] + abs(nums[i] - j));
         for (int j = 0; j <= max_val; ++j)
         {
             costs[0][j] = abs(nums[0] - j);
         }
         for (int i = 1; i < sz; ++i)
         {
+            int prev_min = numeric_limits<int>::max();
             for (int j = 0; j <= max_val; ++j)
             {
-                /// The possible adjusted number `k`: 0 to j
-                /// The current optimal value: min([i - 1][k] + abs(num[i] - j))
-                for (int k = 0; k <= j; ++k)
-                {
-                    costs[i][j] = min(costs[i][j], costs[i - 1][k] + abs(nums[i] - j));
-                }
+                prev_min = min(prev_min, costs[i - 1][j]);
+                costs[i][j] = prev_min + abs(nums[i] - j);
             }
         }
         min_cost = *min_element(costs.back().begin(), costs.back().end());
