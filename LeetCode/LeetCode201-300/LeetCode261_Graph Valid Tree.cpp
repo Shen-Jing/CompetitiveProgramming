@@ -38,26 +38,37 @@ class Solution
  public:
     bool validTree(int n, vector<vector<int>>& edges)
     {
-        n_ = n;
+        if (n - 1 != edges.size())
+            return false;
         visited.assign(n, false);
-        return DFS_stack(edges);
-        return DFS(0, 0, edges);
+        /// Transform to adjacency list
+        adj_list.assign(n, vector<int>());
+        for (const auto &e : edges)
+        {
+            int source = e[0],
+                target = e[1];
+            adj_list[source].emplace_back(target);
+            adj_list[target].emplace_back(source);
+        }
+
+        // return DFS_stack(edges);
+        return DFS(0, 0);
     }
 
  private:
-    int n_;
     vector<bool> visited;
-    bool DFS(int parent, int source, vector<vector<int>> &edges)
+    vector<vector<int>> adj_list;
+    /// @return false for containing the cycle (not a valid tree)
+    bool DFS(int parent, int source)
     {
-        for (const auto &neighbor : edges[source])
+        for (const auto &neighbor : adj_list[source])
         {
             if (neighbor == parent)
                 continue;
-            if (visited[neighbor])
+            if (visited[neighbor] || !DFS(source, neighbor))
                 return false;
-            visited[neighbor] = true;
-            DFS(source, neighbor, edges);
         }
+        visited[source] = true;
         return true;
     }
 
