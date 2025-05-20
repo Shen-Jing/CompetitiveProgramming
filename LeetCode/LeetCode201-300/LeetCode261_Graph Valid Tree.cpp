@@ -52,23 +52,29 @@ class Solution
         }
 
         // return DFS_stack(edges);
-        return DFS(0, 0);
+        bool noCycle = noCycle_DFS(0, 0);
+        for (const auto &vis : visited)
+        {
+            if (!vis)
+                return false;
+        }
+        return noCycle;
     }
 
  private:
     vector<bool> visited;
     vector<vector<int>> adj_list;
     /// @return false for containing the cycle (not a valid tree)
-    bool DFS(int parent, int source)
+    bool noCycle_DFS(int parent, int source)
     {
+        visited[source] = true;
         for (const auto &neighbor : adj_list[source])
         {
             if (neighbor == parent)
                 continue;
-            if (visited[neighbor] || !DFS(source, neighbor))
+            if (visited[neighbor] || !noCycle_DFS(source, neighbor))
                 return false;
         }
-        visited[source] = true;
         return true;
     }
 
