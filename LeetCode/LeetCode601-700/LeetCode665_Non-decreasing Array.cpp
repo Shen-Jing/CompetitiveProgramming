@@ -38,7 +38,7 @@ class Solution
  public:
     bool checkPossibility(vector<int> &nums)
     {
-
+        return trivial_scenario_if(nums);
     }
 
  private:
@@ -65,6 +65,28 @@ class Solution
             else
             {
                 cur_min = nums[i];
+            }
+        }
+        return true;
+    }
+
+    /// Enumearte the scenarios previously
+    bool trivial_scenario_if(vector<int> &nums)
+    {
+        int sz = nums.size();
+        for (int i = 1; i + 2 < sz; ++i)
+        {
+            if (nums[i] <= nums[i + 1])
+            {
+                if ((nums[i - 1] > nums[i + 1] && nums[i + 2] > nums[i + 1]) ||
+                    (nums[i - 1] >= nums[i + 1] && nums[i + 2] < nums[i + 1]))
+                    return false;
+                if (nums[i - 1] >= nums[i] && nums[i - 1] <= nums[i + 1])
+                {
+                    if ((nums[i + 1] >= nums[i] && nums[i + 1] <= nums[i + 1]) ||
+                        (nums[i + 1] <= nums[i]))
+                        return false;
+                }
             }
         }
         return true;
