@@ -42,6 +42,7 @@ class Solution
     }
 
  private:
+    /// **Incorrect**
     /// Checks if the given array `nums` can be made non-decreasing by modifying at most one element.
     /// 
     /// 1. Start from the end of the array and iterate backwards.
@@ -74,19 +75,13 @@ class Solution
     bool trivial_scenario_if(vector<int> &nums)
     {
         int sz = nums.size();
-        for (int i = 1; i + 2 < sz; ++i)
+        int err_cnt = 0;
+        for (int i = 2; i + 1 < sz; ++i)
         {
-            if (nums[i] <= nums[i + 1])
+            if (nums[i - 1] > nums[i])
             {
-                if ((nums[i - 1] > nums[i + 1] && nums[i + 2] > nums[i + 1]) ||
-                    (nums[i - 1] >= nums[i + 1] && nums[i + 2] < nums[i + 1]))
+                if (err_cnt++ && (nums[i - 2] > nums[i] || nums[i] > nums[i + 1]))
                     return false;
-                if (nums[i - 1] >= nums[i] && nums[i - 1] <= nums[i + 1])
-                {
-                    if ((nums[i + 1] >= nums[i] && nums[i + 1] <= nums[i + 1]) ||
-                        (nums[i + 1] <= nums[i]))
-                        return false;
-                }
             }
         }
         return true;
