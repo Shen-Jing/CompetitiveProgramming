@@ -76,11 +76,11 @@ class Solution
     {
         int sz = nums.size();
         int err_cnt = 0;
-        for (int i = 2; i + 1 < sz; ++i)
+        for (int i = 1; i < sz; ++i)
         {
             if (nums[i - 1] > nums[i])
             {
-                if (err_cnt++ && (nums[i - 2] > nums[i] || nums[i] > nums[i + 1]))
+                if (err_cnt++ || (i >= 2 && (i + 1 < sz) && (nums[i - 2] > nums[i] || nums[i] > nums[i + 1])))
                     return false;
             }
         }
