@@ -42,8 +42,6 @@ class Solution
         int left, right, sz = nums.size();
         for (left = 0, right = sz - 1; left <= right; )
         {
-            while (nums[right] == val)
-                --right;
             if (nums[left] == val)
             {
                 swap(nums[left], nums[right]);
