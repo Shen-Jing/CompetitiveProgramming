@@ -85,7 +85,7 @@ class Solution
             if (e.category == Event::Category::open)
             {
                 ++balance;
-                if (balance == 1 && prev != -1)
+                if (balance == 1 && prev != -1 && prev < e.time)
                 {
                     results.emplace_back(prev, e.time);
                 }
