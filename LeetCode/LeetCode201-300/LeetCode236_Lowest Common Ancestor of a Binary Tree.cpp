@@ -29,6 +29,13 @@
 
 using namespace std;
 
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+}
+
 static auto io = [](){
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
@@ -38,7 +45,30 @@ static auto io = [](){
 class Solution
 {
  public:
-    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q);
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q)
+    {
+        newMethod(root, p, q);
+        return _common_ancestor;
+    }
+
+    void newMethod(TreeNode* root, TreeNode* p, TreeNode* q)
+    {
+        if (!root)
+            return;
+        int left, right, mid;
+        left = is_exist_byDFS(root->left, p, q) ? 1 : 0;
+        right = is_exist_byDFS(root->right, p, q) ? 1 : 0;
+        mid = is_exist_byDFS(root, p, q) ? 1 : 0;
+
+        if (left + right + mid == 2)
+        {
+            _common_ancestor = root;
+            return;
+        }
+        newMethod(root->left, p, q);
+        newMethod(root->right, p, q);
+    }
+
     TreeNode* oldMethod(TreeNode* root, TreeNode* p, TreeNode* q)
     {
         if (!root)
@@ -63,6 +93,7 @@ class Solution
     }
 
  private:
+    TreeNode *_common_ancestor;
     bool is_exist_byDFS(TreeNode *root, TreeNode *p, TreeNode *q)
     {
         if (!root)
