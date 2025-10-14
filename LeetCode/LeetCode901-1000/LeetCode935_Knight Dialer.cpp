@@ -44,13 +44,17 @@ class Solution
           {6, 8},
           {7, 9},
           {4, 8},
-          {3, 9},
+          {0, 3, 9},
           {},
-          {1, 7},
+          {0, 1, 7},
           {2, 6},
           {1, 3},
           {2, 4}
         };
+        for (auto &row : _states)
+        {
+            row.fill(-1);
+        }
     }
 
     int knightDialer(int n)
@@ -60,26 +64,31 @@ class Solution
 
  private:
     vector<vector<int>> _transitions;
-    int _cnt;
+    array<array<long long, 5001>, 10> _states;
+    int _MOD = 1e9 + 7;
+    long long _cnt;
     int brute_force(int n)
     {
         for (int start_num = 0; start_num <= 9; ++start_num)
         {
-            _cnt += enumerates(start_num, n);
+            /// 🙅‍♂️ old + new % _MOD
+            _cnt = (_cnt + enumerates(start_num, n)) % _MOD;
         }
         return _cnt;
     }
 
-    int enumerates(int start_num, int length)
+    long long enumerates(int start_num, int length)
     {
+        if (_states[start_num][length] != -1)
+            return _states[start_num][length];
         if (length == 1)
-            return 1;
-        int cnt = 0;
+            return _states[start_num][length] = 1;
+        long long cnt = 0;
         for (const auto &next_num : _transitions[start_num])
         {
-            cnt += enumerates(next_num, length - 1) % (1000000007);
+            cnt = (cnt + enumerates(next_num, length - 1)) % _MOD;
         }
-        return cnt;
+        return _states[start_num][length] = cnt;
     }
 };
 
@@ -87,5 +96,6 @@ int main(void)
 {
     Solution sol;
     sol.knightDialer(2);
+    sol.knightDialer(31);
     return 0;
 }
