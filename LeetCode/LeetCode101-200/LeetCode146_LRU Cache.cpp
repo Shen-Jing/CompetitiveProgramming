@@ -40,38 +40,48 @@ class LRUCache
     int get(const int &key)
     {
         // print("get", key);
-        if (key_to_val_.count(key))
+        if (!key_to_iter_.contains(key))
         {
-            key_to_iter_[key] = update(key);
-            return key_to_val_[key];
+            return -1;
         }
-        return -1;
+        auto changed_key_iter = key_to_iter_[key];
+        data_list_.splice(data_list_.end(), data_list_, changed_key_iter);
+        return changed_key_iter->value;
     }
     
     void put(const int &key, const int &value)
     {
         // print("put", key, value);
-        /* If the key is not in the cache,
-           and the cache has no more space to insert. */
-        if (!key_to_val_.count(key) && key_to_val_.size() == capacity_)
+        if (key_to_iter_.contains(key))
         {
-            /* Remove LRU element */
-            const auto removed_key = keys_.front();
-            keys_.pop_front();
-            key_to_val_.erase(removed_key);
-            key_to_iter_.erase(removed_key);
+            /// update the value and move the freshest position
+            auto changed_key_iter = key_to_iter_[key];
+            changed_key_iter->value = value;
+            data_list_.splice(data_list_.end(), data_list_, changed_key_iter);
+            return;
         }
-
-        key_to_val_[key] = value;
-        /* Update priority */
-        key_to_iter_[key] = update(key);
+        /// If the key is not in the cache, and the cache has no more space to insert.
+        if (key_to_iter_.size() == capacity_)
+        {
+            /// Remove LRU element
+            const auto removed_data = data_list_.front();
+            data_list_.pop_front();
+            key_to_iter_.erase(removed_data.key);
+        }
+        /// Insert the new data
+        data_list_.emplace_back(key, value);
+        key_to_iter_[key] = prev(data_list_.end());
     }
 
  private:
+    struct Node
+    {
+      int key;
+      int value;
+    };
     int capacity_;
-    unordered_map<int, int> key_to_val_;
-    unordered_map<int, list<int>::iterator> key_to_iter_;
-    list<int> keys_;
+    unordered_map<int, list<Node>::iterator> key_to_iter_;
+    list<Node> data_list_;
 
     void print(string cmd, int key, int value = -1)
     {
@@ -80,23 +90,9 @@ class LRUCache
             cout << ", " << value;
         cout << ")\n";
 
-        for (const auto &key : keys_)
-            cout << "{" << key << ", " << key_to_val_[key] << "} ";
+        for (const auto &data : data_list_)
+            cout << "{" << data.key << ", " << data.value << "} ";
         cout << "\n";
-    }
-
-    auto update(const int &key) -> decltype(keys_)::iterator
-    {
-        /* If the key exists in cache, remove it
-          (we will reinsert it later) */
-        if (key_to_iter_.count(key))
-        {
-            auto removed_key_iter = key_to_iter_[key];
-            keys_.erase(removed_key_iter);
-        }
-        /*  (re) Insert */
-        keys_.emplace_back(key);
-        return prev(keys_.end());
     }
 };
 
